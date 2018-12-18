@@ -124,15 +124,13 @@ fpr_parity <- function(actuals, predicted, group, cutoff = 0.5, base = NULL) {
   
   # compute value for group 1
   fpr1 <- sum(actuals == 0 & predicted == 1 & group == levels(group)[1]) / 
-    sum(actuals ==0 & group == levels(group)[1])
+    sum(actuals == 0 & group == levels(group)[1])
   
   # compute value for other groups
   for (i in 1:length(levels(group))) {
-    fpr1 <- sum(actuals == 0 & predicted == 1 & group == levels(group)[1]) / 
-      sum(actuals == 0 & group == levels(group)[1])
     fpri <- sum(actuals == 0 & predicted == 1 & group == levels(group)[i]) / 
       sum(actuals == 0 & group == levels(group)[i])
-    val[i] <- fpri / fpr1
+    val[i] <- ifelse(fpr1 != 0, fpri / fpr1, 1)
   }
   
   return(val)
@@ -180,11 +178,9 @@ fnr_parity <- function(actuals, predicted, group, cutoff = 0.5, base = NULL) {
   
   # compute value for other groups
   for (i in 1:length(levels(group))) {
-    fnr1 <- sum(actuals == 1 & predicted == 0 & group == levels(group)[1]) / 
-      sum(actuals == 1 & group == levels(group)[1])
     fnri <- sum(actuals == 1 & predicted == 0 & group == levels(group)[i]) / 
       sum(actuals == 1 & group == levels(group)[i])
-    val[i] <- fnri / fnr1
+    val[i] <- ifelse(fnr1 != 0, fnri / fnr1, 1)
   }
   
   return(val)
@@ -232,12 +228,9 @@ ppv_parity <- function(actuals, predicted, group, cutoff = 0.5, base = NULL) {
   
   # compute value for other groups
   for (i in 1:length(levels(group))) {
-    
-    ppv1 <- sum(actuals == 1 & predicted == 1 & group == levels(group)[1]) / 
-      sum(predicted == 1 & group == levels(group)[1])
     ppvi <- sum(actuals == 1 & predicted == 1 & group == levels(group)[i]) / 
       sum(predicted == 1 & group == levels(group)[i])
-    val[i] <- ppvi / ppv1
+    val[i] <- ifelse(ppv1 != 0, ppvi / ppv1, 1)
   }
   
   return(val)
@@ -287,7 +280,7 @@ npv_parity <- function(actuals, predicted, group, cutoff = 0.5, base = NULL) {
   for (i in 1:length(levels(group))) {
     npvi <- sum(actuals == 0 & predicted == 0 & group == levels(group)[i]) / 
       sum(predicted == 0 & group == levels(group)[i])
-    val[i] <- npvi / npv1
+    val[i] <- ifelse(npv1 != 0, npvi / npv1, 1)
   }
   
   return(val)
@@ -335,11 +328,9 @@ acc_parity <- function(actuals, predicted, group, cutoff = 0.5, base = NULL) {
   
   # compute value for other groups
   for (i in 1:length(levels(group))) {
-    ac1 <- sum(actuals[group == levels(group)[1]] == predicted[group == levels(group)[1]]) / 
-      sum(group == levels(group)[1])
     aci <- sum(actuals[group == levels(group)[i]] == predicted[group == levels(group)[i]]) / 
       sum(group == levels(group)[i])
-    val[i] <- aci / ac1
+    val[i] <- ifelse(ac1 != 0, aci / ac1, 1)
   }
   
   return(val)
