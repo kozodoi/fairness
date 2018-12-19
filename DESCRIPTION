@@ -3,7 +3,7 @@ Title: Algorithmic Fairness Measures
 Version: 0.0.0.1
 Authors@R: person("Nikita", "Kozodoi", email = "nikita.kozodoi@hu-berlin.de", role = c("aut", "cre"))
 Description: This package computes different measures of algorithmic fairness based on a confusion matrix.
-Depends: R (>= 3.5.1)
+Depends: R (>= 3.5.0)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
