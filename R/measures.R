@@ -11,7 +11,7 @@
 #' @examples
 #' df = fairness::compas
 #' dis_impact(df$label_value, df$score, df$race, "Caucasian")
-dis_impact <- function(predicted, group, cutoff = 0.5, base = NULL) {
+dis_impact <- function(predicted, group, base = NULL) {
   
   # check lengths
   if (length(predicted) != length(group)) {
@@ -19,9 +19,8 @@ dis_impact <- function(predicted, group, cutoff = 0.5, base = NULL) {
   }
   
   # convert types
-  group     <- as.factor(group) 
-  predicted <- as.numeric(predicted >= cutoff)
-  
+  group <- as.factor(group) 
+
   # relevel group
   if (is.null(base)) {base <- levels(group)[1]}
   group <- relevel(group, base)
@@ -225,7 +224,7 @@ ppv_parity <- function(actuals, predicted, group, cutoff = 0.5, base = NULL) {
   # compute value for group 1
   ppv1 <- sum(actuals == 1 & predicted == 1 & group == levels(group)[1]) / 
     sum(predicted == 1 & group == levels(group)[1])
-  
+
   # compute value for other groups
   for (i in 1:length(levels(group))) {
     ppvi <- sum(actuals == 1 & predicted == 1 & group == levels(group)[i]) / 
@@ -240,7 +239,7 @@ ppv_parity <- function(actuals, predicted, group, cutoff = 0.5, base = NULL) {
 
 #' NPV Parity
 #'
-#' This function computes the Negative Positive Value Parity metric (see Aeuquitas bias audit toolkit)
+#' This function computes the Negative Prediction Value Parity metric (see Aeuquitas bias audit toolkit)
 #' 
 #' 
 #' @param actuals Vector of actual target values
@@ -275,7 +274,7 @@ npv_parity <- function(actuals, predicted, group, cutoff = 0.5, base = NULL) {
   # compute value for group 1
   npv1 <- sum(actuals == 0 & predicted == 0 & group == levels(group)[1]) / 
     sum(predicted == 0 & group == levels(group)[1])
-  
+
   # compute value for other groups
   for (i in 1:length(levels(group))) {
     npvi <- sum(actuals == 0 & predicted == 0 & group == levels(group)[i]) / 
