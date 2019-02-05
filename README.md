@@ -2,7 +2,7 @@
 
 ## Description
 
-This package contains functions to compute fairness measures of classifiers such as:
+This package contains functions to compute measures of algoroithmic fairness such as:
 - Disparate Impact
 - Demographic Parity
 - False Positive Parity
