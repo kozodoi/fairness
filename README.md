@@ -32,19 +32,19 @@ ls("package:fairness")
 
 ## Example
 
-Loading the sample data set:
+1) Loading the sample data set:
 ```
 df = fairness::compas
 head(df)
 ```
 
-Generating predicted probabilities :
+2) Generating predicted probabilities:
 ```
 probs = df$score
 summary(probs)
 ```
 
-Computing accuracy parity for race:
+3) Computing accuracy parity for race:
 ```
 acc_parity(actuals = df$label_value, predicted = probs, group = df$race, base = "Caucasian")
 ```
