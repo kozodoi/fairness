@@ -1,8 +1,8 @@
-# Algorithmic Fairness
+# Fairness
 
 ## Description
 
-This package contains functions to compute measures of algoroithmic fairness such as:
+This package contains functions to compute measures of algorithmic fairness such as:
 - Disparate Impact
 - Demographic Parity
 - False Positive Parity
