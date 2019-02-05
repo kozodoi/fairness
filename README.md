@@ -1,5 +1,3 @@
-# Fairness
-
 ## Description
 
 This package contains functions to compute measures of algorithmic fairness such as:
