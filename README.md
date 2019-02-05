@@ -11,7 +11,8 @@ This package contains functions to compute measures of algoroithmic fairness suc
 - Negative Prediction Value Parity
 - Accuracy Parity
 
-The fairness measures are computed based on a confusion matrix of a classification model. 
+
+The fairness measures are computed based on a confusion matrix of a classification model.
 
 
 ## Installation
@@ -26,6 +27,26 @@ library("fairness")
 Checking the list of implemented functions:
 ```
 ls("package:fairness")
+```
+
+
+## Example
+
+Loading the sample data set:
+```
+df = fairness::compas
+head(df)
+```
+
+Generating predicted probabilities :
+```
+probs = df$score
+summary(probs)
+```
+
+Computing accuracy parity for race:
+```
+acc_parity(actuals = df$label_value, predicted = probs, group = df$race, base = "Caucasian")
 ```
 
 
