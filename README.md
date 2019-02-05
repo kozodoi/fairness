@@ -1,4 +1,4 @@
-# Fairness
+# Algorithmic Fairness
 
 ## Description
 
