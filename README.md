@@ -11,7 +11,7 @@ This package contains functions to compute fairness measures of classifiers such
 - Negative Prediction Value Parity
 - Accuracy Parity
 
-The fairnes measures are computed based on a confusion matrix of a classification model. 
+The fairness measures are computed based on a confusion matrix of a classification model. 
 
 
 ## Installation
