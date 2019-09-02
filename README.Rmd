@@ -12,7 +12,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # Overview of the fairness R package
 
@@ -20,8 +27,7 @@
 ## The missCompare pipeline
 
 You will find a detailed manual in the missCompare vignette:
-
-```r
+```{r eval = FALSE}
 install.packages("fairness")
 library(fairness)
 vignette("fairness")
