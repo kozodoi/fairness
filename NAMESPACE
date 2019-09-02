@@ -2,7 +2,7 @@
 
 export(acc_parity)
 export(dem_parity)
-export(dis_impact)
+export(disp_impact)
 export(fnr_parity)
 export(fpr_parity)
 export(npv_parity)
