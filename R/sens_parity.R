@@ -1,15 +1,14 @@
-#' @title Negative Predictive Value parity
+#' @title Sensitivity parity
 #'
 #' @description
-#' This function computes the Negative Predictive Value (NPV) parity metric
+#' This function computes the Sensitivity parity metric
 #'
 #' @details
-#' This function computes the Negative Predictive Value (NPV) parity metric as described by the Aeuquitas bias toolkit.
-#' Negative Predictive Values are calculated
-#' by the division of true negatives with all predicted negatives. In the returned
+#' This function computes the Sensitivity parity metric. Sensitivities are calculated
+#' by the division of true positives with all positives (irrespective of predicted values). In the returned
 #' named vector, the reference group will be assigned 1, while all other groups will be assigned values
-#' according to whether their negative predictive values are lower or higher compared to the reference group. Lower
-#' negative predictive values will be reflected in numbers lower than 1 in the returned named vector, thus numbers
+#' according to whether their sensitivities are lower or higher compared to the reference group. Lower
+#' sensitivities will be reflected in numbers lower than 1 in the returned named vector, thus numbers
 #' lower than 1 mean WORSE prediction for the subgroup.
 #'
 #' @param data The dataframe that contains the necessary columns.
@@ -21,18 +20,18 @@
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
 #' @param base Base level for sensitive group comparison
 #'
-#' @name npv_parity
+#' @name sens_parity
 #'
 #' @return
-#' Negative Predictive Value parity metrics for all groups. Lower values compared to the reference group mean lower negative predictive values in the selected subgroups.
+#' Sensitivity parity metrics for all groups. Lower values compared to the reference group mean lower sensitivities in the selected subgroups.
 #'
 #' @examples
 #' df <- fairness::compas
-#' npv_parity(data = df, outcome = df$score, group = df$race, base = "Caucasian")
+#' sens_parity(data = df, outcome = df$score, group = df$race, base = "Caucasian")
 #'
 #' @export
 
-npv_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
+sens_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
                        preds_levels = c("no","yes"), cutoff = 0.5, base = NULL) {
 
   # convert types, sync levels
@@ -65,14 +64,14 @@ npv_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
   # compute value for base group
   cm_base <- caret::confusionMatrix(preds_status[group_status == base],
                                     outcome_status[group_status == base], mode = "everything")
-  metric_base <- cm_base$byClass[4]
+  metric_base <- cm_base$byClass[1]
 
   # compute value for other groups
   for (i in levels(group_status)) {
     cm <- caret::confusionMatrix(preds_status[group_status == i],
                                  outcome_status[group_status == i], mode = "everything")
-    metric_i <- cm$byClass[4]
-    val[i] <- metric_i / metric_base
+    metric_i <- cm$byClass[1]
+    val[i] <-  metric_i / metric_base
   }
 
   return(val)

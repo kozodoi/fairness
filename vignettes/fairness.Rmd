@@ -17,3 +17,5 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(fairness)
 ```
+
+Disclaimer - no metrics are supposed to take over critical thinking about the problem in question.

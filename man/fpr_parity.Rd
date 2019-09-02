@@ -2,26 +2,44 @@
 % Please edit documentation in R/fpr_parity.R
 \name{fpr_parity}
 \alias{fpr_parity}
-\title{FPR Parity}
+\title{False Positive Rate parity}
 \usage{
-fpr_parity(actuals, predicted, group, cutoff = 0.5, base = NULL)
+fpr_parity(data, outcome, group, probs = NULL, preds = NULL,
+  preds_levels = c("no", "yes"), cutoff = 0.5, base = NULL)
 }
 \arguments{
-\item{actuals}{Vector of actual target values}
+\item{data}{The dataframe that contains the necessary columns.}
 
-\item{predicted}{Vector of predicted target values}
+\item{outcome}{The column name of the actual outcomes.}
 
-\item{group}{Sensitive group (binary or factor)}
+\item{group}{Sensitive group to examine.}
 
-\item{cutoff}{Cutoff for rounding the probabilities}
+\item{probs}{The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds need to be defined.}
+
+\item{preds}{The column name of the predicted outcome (categorical outcome). If not defined, argument probs need to be defined.}
+
+\item{preds_levels}{The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.}
+
+\item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
+
+\item{base}{Base level for sensitive group comparison}
 }
 \value{
-FPR Parity metric
+False Positives Rate parity metrics for all groups. Lower values compared to the reference group mean lower false positive error rates in the selected subgroups.
 }
 \description{
-This function computes the False Positive Rate Parity metric (Chouldechova 2017)
+This function computes the False Positive Rate (FPR) parity metric
+}
+\details{
+This function computes the False Positive Rate (FPR) parity metric as described by (Chouldechova 2017). False positive rates are calculated
+by the division of false positives with all negatives (irrespective of predicted values). In the returned
+named vector, the reference group will be assigned 1, while all other groups will be assigned values
+according to whether their false positive rates are lower or higher compared to the reference group. Lower
+false positives error rates will be reflected in numbers lower than 1 in the returned named vector, thus numbers
+lower than 1 mean BETTER prediction for the subgroup.
 }
 \examples{
-df = fairness::compas
-fpr_parity(df$label_value, df$score, df$race, "Caucasian")
+df <- fairness::compas
+fpr_parity(data = df, outcome = df$score, group = df$race, base = "Caucasian")
+
 }

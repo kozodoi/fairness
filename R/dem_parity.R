@@ -2,7 +2,6 @@
 #'
 #' This function computes the Demographic Parity metric (Calders and Verwer 2010)
 #'
-#'
 #' @param predicted Vector of predicted target values
 #' @param group Sensitive group (binary or factor)
 #' @param cutoff Cutoff for rounding the probabilities
