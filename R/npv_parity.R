@@ -12,6 +12,7 @@
 #' df = fairness::compas
 #' npv_parity(df$label_value, df$score, df$race, "Caucasian")
 #' @export
+
 npv_parity <- function(actuals, predicted, group, cutoff = 0.5, base = NULL) {
 
   # check lengths

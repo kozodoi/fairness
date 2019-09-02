@@ -12,6 +12,7 @@
 #' df = fairness::compas
 #' ppv_pariy(df$label_value, df$score, df$race, "Caucasian")
 #' @export
+
 ppv_parity <- function(actuals, predicted, group, cutoff = 0.5, base = NULL) {
 
   # check lengths

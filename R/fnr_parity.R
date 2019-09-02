@@ -12,6 +12,7 @@
 #' df = fairness::compas
 #' fnr_parity(df$label_value, df$score, df$race, "Caucasian")
 #' @export
+
 fnr_parity <- function(actuals, predicted, group, cutoff = 0.5, base = NULL) {
 
   # check lengths

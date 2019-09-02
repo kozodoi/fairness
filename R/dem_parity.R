@@ -11,6 +11,7 @@
 #' @examples
 #' df = fairness::compas
 #' dem_parity(df$score, df$race, "Caucasian")
+
 dem_parity <- function(predicted, group, cutoff = 0.5, base = NULL) {
 
   # check lengths
