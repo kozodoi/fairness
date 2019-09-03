@@ -1,11 +1,12 @@
-#' @title Demographic parity
+#' @title Equalized Odds
 #'
 #' @description
-#' This function computes the Demographic parity metric
+#' This function computes the Equalized Odds metric
 #'
 #' @details
-#' This function computes the Demographic parity metric (also known as Equal Acceptance Rate or Independence) as described by Calders and Verwer 2010. Demographic parity is calculated
-#' based on the comparison of the proportion of all positively classified individuals in all subgroups of the data. In the returned
+#' This function computes the Equalized Odds metric (also known as Equal Opportunity, Positive Rate Parity or Separation) as
+#' described by Hardt et al., 2016 and Zafar et al., 2017. Equalized Odds is calculated
+#' based on ....... In the returned
 #' named vector, the reference group will be assigned 1, while all other groups will be assigned values
 #' according to whether their proportion of positively predicted observations are lower or higher compared to the reference group. Lower
 #' proportions will be reflected in numbers lower than 1 in the returned named vector, thus numbers
@@ -19,19 +20,19 @@
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
 #' @param base Base level for sensitive group comparison
 #'
-#' @name dem_parity
+#' @name equal_odds
 #'
 #' @return
 #' Demographic parity metrics for all groups. Lower values compared to the reference group mean lower proportion of positively predicted observations in the selected subgroups.
 #'
 #' @examples
 #' df <- fairness::compas
-#' dem_parity(data = df, group = df$race, base = "Caucasian")
+#' equal_odds(data = df, group = df$race, base = "Caucasian")
 #'
 #' @export
 
 
-dem_parity <- function(data, group, probs = NULL, preds = NULL,
+equal_odds <- function(data, group, probs = NULL, preds = NULL,
                        preds_levels = c("no","yes"), cutoff = 0.5, base = NULL) {
 
   # convert types, sync levels

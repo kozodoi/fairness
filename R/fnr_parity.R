@@ -4,7 +4,7 @@
 #' This function computes the False Negative Rate (FNR) parity metric
 #'
 #' @details
-#' This function computes the False Negative Rate (FNR) parity metric as described by (Chouldechova 2017). False negative rates are calculated
+#' This function computes the False Negative Rate (FNR) parity metric as described by Chouldechova 2017. False negative rates are calculated
 #' by the division of false negatives with all positives (irrespective of predicted values). In the returned
 #' named vector, the reference group will be assigned 1, while all other groups will be assigned values
 #' according to whether their false negative rates are lower or higher compared to the reference group. Lower

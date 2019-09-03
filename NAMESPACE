@@ -3,6 +3,7 @@
 export(acc_parity)
 export(dem_parity)
 export(disp_impact)
+export(equal_odds)
 export(fnr_parity)
 export(fpr_parity)
 export(mcc_parity)

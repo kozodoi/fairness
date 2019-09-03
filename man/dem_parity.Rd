@@ -2,24 +2,42 @@
 % Please edit documentation in R/dem_parity.R
 \name{dem_parity}
 \alias{dem_parity}
-\title{Demographic Parity}
+\title{Demographic parity}
 \usage{
-dem_parity(predicted, group, cutoff = 0.5, base = NULL)
+dem_parity(data, group, probs = NULL, preds = NULL,
+  preds_levels = c("no", "yes"), cutoff = 0.5, base = NULL)
 }
 \arguments{
-\item{predicted}{Vector of predicted target values}
+\item{data}{The dataframe that contains the necessary columns.}
 
-\item{group}{Sensitive group (binary or factor)}
+\item{group}{Sensitive group to examine.}
 
-\item{cutoff}{Cutoff for rounding the probabilities}
+\item{probs}{The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds need to be defined.}
+
+\item{preds}{The column name of the predicted outcome (categorical outcome). If not defined, argument probs need to be defined.}
+
+\item{preds_levels}{The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.}
+
+\item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
+
+\item{base}{Base level for sensitive group comparison}
 }
 \value{
-DP metric
+Demographic parity metrics for all groups. Lower values compared to the reference group mean lower proportion of positively predicted observations in the selected subgroups.
 }
 \description{
-This function computes the Demographic Parity metric (Calders and Verwer 2010)
+This function computes the Demographic parity metric
+}
+\details{
+This function computes the Demographic parity metric (also known as Equal Acceptance Rate or Independence) as described by Calders and Verwer 2010. Demographic parity is calculated
+based on the comparison of the proportion of all positively classified individuals in all subgroups of the data. In the returned
+named vector, the reference group will be assigned 1, while all other groups will be assigned values
+according to whether their proportion of positively predicted observations are lower or higher compared to the reference group. Lower
+proportions will be reflected in numbers lower than 1 in the returned named vector, thus numbers
+lower than 1 indicate negative disparity for the given subgroup.
 }
 \examples{
-df = fairness::compas
-dem_parity(df$score, df$race, "Caucasian")
+df <- fairness::compas
+dem_parity(data = df, group = df$race, base = "Caucasian")
+
 }
