@@ -25,7 +25,9 @@ mcc_parity(data, outcome, group, probs = NULL, preds = NULL,
 \item{base}{Base level for sensitive group comparison}
 }
 \value{
-Matthews Correlation Coefficient parity metrics for all groups. Lower values compared to the reference group mean Matthews Correlation Coefficients in the selected subgroups.
+\item{Metric}{Matthews Correlation Coefficient parity metrics for all groups. Lower values compared to the reference group mean Matthews Correlation Coefficients in the selected subgroups}
+\item{Metric_plot}{Bar plot of Matthews Correlation Coefficient metric}
+\item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 }
 \description{
 This function computes the Matthews Correlation Coefficient (MCC) parity metric

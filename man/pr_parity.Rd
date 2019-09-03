@@ -4,7 +4,7 @@
 \alias{pr_parity}
 \title{Predictive Rate Parity}
 \usage{
-pr_parity(data, group, probs = NULL, preds = NULL,
+pr_parity(data, outcome, group, probs = NULL, preds = NULL,
   preds_levels = c("no", "yes"), cutoff = 0.5, base = NULL)
 }
 \arguments{
@@ -23,18 +23,21 @@ pr_parity(data, group, probs = NULL, preds = NULL,
 \item{base}{Base level for sensitive group comparison}
 }
 \value{
-Demographic parity metrics for all groups. Lower values compared to the reference group mean lower proportion of positively predicted observations in the selected subgroups.
+\item{Metric}{Predictive Rate Parity metric for all groups. Lower values compared to the reference group mean lower precisions in the selected subgroups}
+\item{Metric_plot}{Bar plot of Predictive Rate Parity metric}
+\item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 }
 \description{
 This function computes the Predictive Rate Parity metric
 }
 \details{
-This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by Zafar et al., 2017. Demographic parity is calculated
-based on the comparison of the proportion of all positively classified individuals in all subgroups of the data. In the returned
+This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by Zafar et al., 2017. Predictive rate parity is calculated
+by the division of true positives with all observations predicted positives. This metrics equals to
+what is traditionally known as precision. In the returned
 named vector, the reference group will be assigned 1, while all other groups will be assigned values
-according to whether their proportion of positively predicted observations are lower or higher compared to the reference group. Lower
-proportions will be reflected in numbers lower than 1 in the returned named vector, thus numbers
-lower than 1 indicate negative disparity for the given subgroup.
+according to whether their precisions are lower or higher compared to the reference group. Lower
+precisions will be reflected in numbers lower than 1 in the returned named vector, thus numbers
+lower than 1 mean WORSE prediction for the subgroup.
 }
 \examples{
 df <- fairness::compas

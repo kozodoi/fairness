@@ -23,7 +23,9 @@ dem_parity(data, group, probs = NULL, preds = NULL,
 \item{base}{Base level for sensitive group comparison}
 }
 \value{
-Demographic parity metrics for all groups. Lower values compared to the reference group mean lower proportion of positively predicted observations in the selected subgroups.
+\item{Metric}{Demographic parity metrics for all groups. Lower values compared to the reference group mean lower proportion of positively predicted observations in the selected subgroups}
+\item{Metric_plot}{Bar plot of Demographic parity metric}
+\item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 }
 \description{
 This function computes the Demographic parity metric

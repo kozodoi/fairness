@@ -25,7 +25,9 @@ fnr_parity(data, outcome, group, probs = NULL, preds = NULL,
 \item{base}{Base level for sensitive group comparison}
 }
 \value{
-False Negative Rate parity metrics for all groups. Lower values compared to the reference group mean lower false negative error rates in the selected subgroups.
+\item{Metric}{False Negative Rate parity metrics for all groups. Lower values compared to the reference group mean lower false negative error rates in the selected subgroups}
+\item{Metric_plot}{Bar plot of False Negative Rate parity metric}
+\item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 }
 \description{
 This function computes the False Negative Rate (FNR) parity metric

@@ -25,7 +25,9 @@ spec_parity(data, outcome, group, probs = NULL, preds = NULL,
 \item{base}{Base level for sensitive group comparison}
 }
 \value{
-Specificity parity metrics for all groups. Lower values compared to the reference group mean lower specificities in the selected subgroups.
+\item{Metric}{Specificity parity metrics for all groups. Lower values compared to the reference group mean lower specificities in the selected subgroups}
+\item{Metric_plot}{Bar plot of Specificity parity metric}
+\item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 }
 \description{
 This function computes the Specificity parity metric

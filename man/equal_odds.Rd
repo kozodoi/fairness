@@ -4,11 +4,13 @@
 \alias{equal_odds}
 \title{Equalized Odds}
 \usage{
-equal_odds(data, group, probs = NULL, preds = NULL,
+equal_odds(data, outcome, group, probs = NULL, preds = NULL,
   preds_levels = c("no", "yes"), cutoff = 0.5, base = NULL)
 }
 \arguments{
 \item{data}{The dataframe that contains the necessary columns.}
+
+\item{outcome}{The column name of the actual outcomes.}
 
 \item{group}{Sensitive group to examine.}
 
@@ -23,22 +25,24 @@ equal_odds(data, group, probs = NULL, preds = NULL,
 \item{base}{Base level for sensitive group comparison}
 }
 \value{
-Demographic parity metrics for all groups. Lower values compared to the reference group mean lower proportion of positively predicted observations in the selected subgroups.
+\item{Metric}{Equalized Odds metric for all groups. Lower values compared to the reference group mean lower sensitivities in the selected subgroups}
+\item{Metric_plot}{Bar plot of Equalized Odds metric}
+\item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 }
 \description{
 This function computes the Equalized Odds metric
 }
 \details{
-This function computes the Equalized Odds metric (also known as Equal Opportunity, Positive Rate Parity or Separation) as
-described by Hardt et al., 2016 and Zafar et al., 2017. Equalized Odds is calculated
-based on ....... In the returned
+This function computes the Equalized Odds metric (also known as Equal Opportunity, Positive Rate Parity or Separation). Equalized Odds are calculated
+by the division of true positives with all positives (irrespective of predicted values). This metrics equals to
+what is traditionally known as sensitivity. In the returned
 named vector, the reference group will be assigned 1, while all other groups will be assigned values
-according to whether their proportion of positively predicted observations are lower or higher compared to the reference group. Lower
-proportions will be reflected in numbers lower than 1 in the returned named vector, thus numbers
-lower than 1 indicate negative disparity for the given subgroup.
+according to whether their sensitivities are lower or higher compared to the reference group. Lower
+sensitivities will be reflected in numbers lower than 1 in the returned named vector, thus numbers
+lower than 1 mean WORSE prediction for the subgroup.
 }
 \examples{
 df <- fairness::compas
-equal_odds(data = df, group = df$race, base = "Caucasian")
+equal_odds(data = df, outcome = df$score, group = df$race, base = "Caucasian")
 
 }

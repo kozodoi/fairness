@@ -24,7 +24,9 @@
 #' @name npv_parity
 #'
 #' @return
-#' Negative Predictive Value parity metrics for all groups. Lower values compared to the reference group mean lower negative predictive values in the selected subgroups.
+#' \item{Metric}{Negative Predictive Value parity metrics for all groups. Lower values compared to the reference group mean lower negative predictive values in the selected subgroups}
+#' \item{Metric_plot}{Bar plot of Negative Predictive Value metric}
+#' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
 #' @examples
 #' df <- fairness::compas
@@ -75,5 +77,37 @@ npv_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
     val[i] <- metric_i / metric_base
   }
 
-  return(val)
+  #conversion of metrics to df
+  val_df <- as.data.frame(val)
+  val_df$groupst <- rownames(val_df)
+  val_df$groupst <- as.factor(val_df$groupst)
+  # relevel group
+  if (is.null(base)) {
+    val_df$groupst <- levels(val_df$groupst)[1]
+  }
+  val_df$groupst <- relevel(val_df$groupst, base)
+
+  p <- ggplot(val_df, aes(x=groupst, weight=val, fill=groupst)) +
+    geom_bar(alpha=.5) +
+    coord_flip() +
+    theme(legend.position = "none") +
+    labs(x = "", y = "Negative Predictive Value Parity")
+
+  #plotting
+  if (!is.null(probs)) {
+    probs_vals <- data[,probs]
+    q <- ggplot(data, aes(x=probs_vals, fill=group_status)) +
+      geom_density(alpha=.5) +
+      labs(x = "Predicted probabilities") +
+      guides(fill = guide_legend(title = "")) +
+      theme(plot.title = element_text(hjust = 0.5)) +
+      xlim(0,1)
+  }
+
+  if (is.null(probs)) {
+    list(Metric = val, Metric_plot = p)
+  } else {
+    list(Metric = val, Metric_plot = p, Probability_plot = q)
+  }
+
 }

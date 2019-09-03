@@ -4,12 +4,14 @@
 #' This function computes the Predictive Rate Parity metric
 #'
 #' @details
-#' This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by Zafar et al., 2017. Demographic parity is calculated
-#' based on the comparison of the proportion of all positively classified individuals in all subgroups of the data. In the returned
+#' This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by Zafar et al., 2017. Predictive rate parity is calculated
+#' by the division of true positives with all observations predicted positives. This metrics equals to
+#' what is traditionally known as precision. In the returned
 #' named vector, the reference group will be assigned 1, while all other groups will be assigned values
-#' according to whether their proportion of positively predicted observations are lower or higher compared to the reference group. Lower
-#' proportions will be reflected in numbers lower than 1 in the returned named vector, thus numbers
-#' lower than 1 indicate negative disparity for the given subgroup.
+#' according to whether their precisions are lower or higher compared to the reference group. Lower
+#' precisions will be reflected in numbers lower than 1 in the returned named vector, thus numbers
+#' lower than 1 mean WORSE prediction for the subgroup.
+#'
 #'
 #' @param data The dataframe that contains the necessary columns.
 #' @param group Sensitive group to examine.
@@ -22,7 +24,9 @@
 #' @name pr_parity
 #'
 #' @return
-#' Demographic parity metrics for all groups. Lower values compared to the reference group mean lower proportion of positively predicted observations in the selected subgroups.
+#' \item{Metric}{Predictive Rate Parity metric for all groups. Lower values compared to the reference group mean lower precisions in the selected subgroups}
+#' \item{Metric_plot}{Bar plot of Predictive Rate Parity metric}
+#' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
 #' @examples
 #' df <- fairness::compas
@@ -30,22 +34,24 @@
 #'
 #' @export
 
-
-pr_parity <- function(data, group, probs = NULL, preds = NULL,
-                       preds_levels = c("no","yes"), cutoff = 0.5, base = NULL) {
+pr_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
+                      preds_levels = c("no","yes"), cutoff = 0.5, base = NULL) {
 
   # convert types, sync levels
   group_status <- as.factor(data[,group])
+  outcome_status <- as.factor(data[,outcome])
+  levels(outcome_status) <- preds_levels
   if (is.null(probs)) {
-    levels(data[,preds]) <- c(0,1)
-    preds_status <- as.numeric(as.character(data[,preds]))
+    preds_status <- as.factor(data[,preds])
   } else {
-    preds_status <- as.numeric(data[,probs] > cutoff)
+    preds_status <- as.factor(as.numeric(data[,probs] > cutoff))
   }
+  levels(preds_status) <- preds_levels
 
   # check lengths
-  if (length(group_status) != length(preds_status)) {
-    stop("Predictions/probabilities and group status must be of the same length")
+  if ((length(outcome_status) != length(preds_status)) |
+      (length(outcome_status) != length(group_status))) {
+    stop("Outcomes, predictions/probabilities and group status must be of the same length")
   }
 
   # relevel group
@@ -59,14 +65,49 @@ pr_parity <- function(data, group, probs = NULL, preds = NULL,
   names(val) <- levels(group_status)
 
   # compute value for base group
-  metric_base <- mean(preds_status[group_status == base])
+  cm_base <- caret::confusionMatrix(preds_status[group_status == base],
+                                    outcome_status[group_status == base], mode = "everything")
+  metric_base <- cm_base$byClass[5]
 
   # compute value for other groups
   for (i in levels(group_status)) {
-    metric_i <- mean(preds_status[group_status == i])
-    val[i] <- metric_i / metric_base
+    cm <- caret::confusionMatrix(preds_status[group_status == i],
+                                 outcome_status[group_status == i], mode = "everything")
+    metric_i <- cm$byClass[5]
+    val[i] <-  metric_i / metric_base
   }
 
-  return(val)
-}
+  #conversion of metrics to df
+  val_df <- as.data.frame(val)
+  val_df$groupst <- rownames(val_df)
+  val_df$groupst <- as.factor(val_df$groupst)
+  # relevel group
+  if (is.null(base)) {
+    val_df$groupst <- levels(val_df$groupst)[1]
+  }
+  val_df$groupst <- relevel(val_df$groupst, base)
 
+  p <- ggplot(val_df, aes(x=groupst, weight=val, fill=groupst)) +
+    geom_bar(alpha=.5) +
+    coord_flip() +
+    theme(legend.position = "none") +
+    labs(x = "", y = "Predictive Rate Parity")
+
+  #plotting
+  if (!is.null(probs)) {
+    probs_vals <- data[,probs]
+    q <- ggplot(data, aes(x=probs_vals, fill=group_status)) +
+      geom_density(alpha=.5) +
+      labs(x = "Predicted probabilities") +
+      guides(fill = guide_legend(title = "")) +
+      theme(plot.title = element_text(hjust = 0.5)) +
+      xlim(0,1)
+  }
+
+  if (is.null(probs)) {
+    list(Metric = val, Metric_plot = p)
+  } else {
+    list(Metric = val, Metric_plot = p, Probability_plot = q)
+  }
+
+}
