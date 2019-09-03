@@ -14,15 +14,11 @@ roc_parity(data, outcome, group, probs, outcome_levels = c("no", "yes"),
 
 \item{group}{Sensitive group to examine.}
 
-\item{probs}{The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds need to be defined.}
+\item{probs}{The column name of the predicted probabilities (numeric between 0 - 1).}
 
 \item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.}
 
 \item{base}{Base level for sensitive group comparison}
-
-\item{preds}{The column name of the predicted outcome (categorical outcome). If not defined, argument probs need to be defined.}
-
-\item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 }
 \value{
 \item{Metric}{ROC AUC values for all groups. Lower values compared to the reference group mean lower ROC AUC values in the selected subgroups}

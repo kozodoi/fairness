@@ -13,7 +13,8 @@ BugReports: https://github.com/kozodoi/Fairness/issues
 Depends: R (>= 3.5.0)
 Imports:
     caret,
-    ggplot2
+    ggplot2,
+    pROC
 Suggests: 
     testthat,
     knitr,
