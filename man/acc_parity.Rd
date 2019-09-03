@@ -5,7 +5,7 @@
 \title{Accuracy parity}
 \usage{
 acc_parity(data, outcome, group, probs = NULL, preds = NULL,
-  preds_levels = c("no", "yes"), cutoff = 0.5, base = NULL)
+  outcome_levels = c("no", "yes"), cutoff = 0.5, base = NULL)
 }
 \arguments{
 \item{data}{The dataframe that contains the necessary columns.}
@@ -18,14 +18,14 @@ acc_parity(data, outcome, group, probs = NULL, preds = NULL,
 
 \item{preds}{The column name of the predicted outcome (categorical outcome). If not defined, argument probs need to be defined.}
 
-\item{preds_levels}{The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.}
+\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.}
 
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
 \item{base}{Base level for sensitive group comparison}
 }
 \value{
-\item{Metric}{Accuracy parity metrics for all groups. Lower values compared to the reference group mean accuracies in the selected subgroups}
+\item{Metric}{Accuracy parity metrics for all groups. Lower values compared to the reference group mean lower accuracies in the selected subgroups}
 \item{Metric_plot}{Bar plot of Accuracy parity metric}
 \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 }
@@ -35,7 +35,7 @@ This function computes the Accuracy parity metric
 \details{
 This function computes the Accuracy parity metric as described by Friedler et al., 2018.
 Accuracy metrics are calculated by the division of correctly predicted observations (the sum
-of all true positives and true negatives) with the number of all predictions In the returned
+of all true positives and true negatives) with the number of all predictions. In the returned
 named vector, the reference group will be assigned 1, while all other groups will be assigned values
 according to whether their accuracies are lower or higher compared to the reference group. Lower
 accuracies will be reflected in numbers lower than 1 in the returned named vector, thus numbers

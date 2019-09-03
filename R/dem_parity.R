@@ -15,7 +15,7 @@
 #' @param group Sensitive group to examine.
 #' @param probs The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds need to be defined.
 #' @param preds The column name of the predicted outcome (categorical outcome). If not defined, argument probs need to be defined.
-#' @param preds_levels The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.
+#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
 #' @param base Base level for sensitive group comparison
 #'
@@ -34,7 +34,7 @@
 
 
 dem_parity <- function(data, group, probs = NULL, preds = NULL,
-                       preds_levels = c("no","yes"), cutoff = 0.5, base = NULL) {
+                       outcome_levels = c("no","yes"), cutoff = 0.5, base = NULL) {
 
   # convert types, sync levels
   group_status <- as.factor(data[,group])
