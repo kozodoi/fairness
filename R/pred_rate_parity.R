@@ -1,15 +1,17 @@
-#' @title Demographic parity
+#' @title Predictive Rate Parity
 #'
 #' @description
-#' This function computes the Demographic parity metric
+#' This function computes the Predictive Rate Parity metric
 #'
 #' @details
-#' This function computes the Demographic parity metric (also known as Statistical Parity, Equal Parity,
-#' Equal Acceptance Rate or Independence) as described by Calders and Verwer 2010. Demographic parity is calculated
-#' based on the comparison of the absolute number of all positively classified individuals in all subgroups of the data. In the returned
+#' This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by Zafar et al., 2017. Predictive rate parity is calculated
+#' by the division of true positives with all observations predicted positives. This metrics equals to
+#' what is traditionally known as precision. In the returned
 #' named vector, the reference group will be assigned 1, while all other groups will be assigned values
-#' according to whether their proportion of positively predicted observations are lower or higher compared to the reference group. Lower
-#' proportions will be reflected in numbers lower than 1 in the returned named vector.
+#' according to whether their precisions are lower or higher compared to the reference group. Lower
+#' precisions will be reflected in numbers lower than 1 in the returned named vector, thus numbers
+#' lower than 1 mean WORSE prediction for the subgroup.
+#'
 #'
 #' @param data The dataframe that contains the necessary columns.
 #' @param group Sensitive group to examine.
@@ -19,35 +21,37 @@
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
 #' @param base Base level for sensitive group comparison
 #'
-#' @name dem_parity
+#' @name pred_rate_parity
 #'
 #' @return
-#' \item{Metric}{Demographic parity metrics for all groups. Lower values compared to the reference group mean lower number of positively predicted observations in the selected subgroups}
-#' \item{Metric_plot}{Bar plot of Demographic parity metric}
+#' \item{Metric}{Predictive Rate Parity metric for all groups. Lower values compared to the reference group mean lower precisions in the selected subgroups}
+#' \item{Metric_plot}{Bar plot of Predictive Rate Parity metric}
 #' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
 #' @examples
 #' df <- fairness::compas
-#' dem_parity(data = df, group = df$race, base = "Caucasian")
+#' pred_rate_parity(data = df, group = df$race, base = "Caucasian")
 #'
 #' @export
 
-
-dem_parity <- function(data, group, probs = NULL, preds = NULL,
-                       outcome_levels = c("no","yes"), cutoff = 0.5, base = NULL) {
+pred_rate_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
+                      outcome_levels = c("no","yes"), cutoff = 0.5, base = NULL) {
 
   # convert types, sync levels
   group_status <- as.factor(data[,group])
+  outcome_status <- as.factor(data[,outcome])
+  levels(outcome_status) <- outcome_levels
   if (is.null(probs)) {
-    levels(data[,preds]) <- c(0,1)
-    preds_status <- as.numeric(as.character(data[,preds]))
+    preds_status <- as.factor(data[,preds])
   } else {
-    preds_status <- as.numeric(data[,probs] > cutoff)
+    preds_status <- as.factor(as.numeric(data[,probs] > cutoff))
   }
+  levels(preds_status) <- outcome_levels
 
   # check lengths
-  if (length(group_status) != length(preds_status)) {
-    stop("Predictions/probabilities and group status must be of the same length")
+  if ((length(outcome_status) != length(preds_status)) |
+      (length(outcome_status) != length(group_status))) {
+    stop("Outcomes, predictions/probabilities and group status must be of the same length")
   }
 
   # relevel group
@@ -61,12 +65,16 @@ dem_parity <- function(data, group, probs = NULL, preds = NULL,
   names(val) <- levels(group_status)
 
   # compute value for base group
-  metric_base <- sum(preds_status[group_status == base])
+  cm_base <- caret::confusionMatrix(preds_status[group_status == base],
+                                    outcome_status[group_status == base], mode = "everything")
+  metric_base <- cm_base$byClass[5]
 
   # compute value for other groups
   for (i in levels(group_status)) {
-    metric_i <- sum(preds_status[group_status == i])
-    val[i] <- metric_i / metric_base
+    cm <- caret::confusionMatrix(preds_status[group_status == i],
+                                 outcome_status[group_status == i], mode = "everything")
+    metric_i <- cm$byClass[5]
+    val[i] <-  metric_i / metric_base
   }
 
   #conversion of metrics to df
@@ -83,7 +91,7 @@ dem_parity <- function(data, group, probs = NULL, preds = NULL,
     geom_bar(alpha=.5) +
     coord_flip() +
     theme(legend.position = "none") +
-    labs(x = "", y = "Demographic Parity")
+    labs(x = "", y = "Predictive Rate Parity")
 
   #plotting
   if (!is.null(probs)) {
@@ -103,4 +111,3 @@ dem_parity <- function(data, group, probs = NULL, preds = NULL,
   }
 
 }
-
