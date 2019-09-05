@@ -94,7 +94,8 @@ dem_parity <- function(data, group, probs = NULL, preds = NULL,
       labs(x = "Predicted probabilities") +
       guides(fill = guide_legend(title = "")) +
       theme(plot.title = element_text(hjust = 0.5)) +
-      xlim(0,1)
+      xlim(0,1) +
+      geom_vline(xintercept = cutoff, linetype="dashed")
   }
 
   if (is.null(probs)) {

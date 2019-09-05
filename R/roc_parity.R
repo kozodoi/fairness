@@ -126,7 +126,8 @@ roc_parity <- function(data, outcome, group, probs,
     labs(x = "Predicted probabilities") +
     guides(fill = guide_legend(title = "")) +
     theme(plot.title = element_text(hjust = 0.5)) +
-    xlim(0,1)
+    xlim(0,1) +
+    geom_vline(xintercept = cutoff, linetype="dashed")
 
   list(Metric = res_table, Metric_plot = p, Probability_plot = q, ROCAUC_plot = r)
 

@@ -3,6 +3,7 @@ library(fairness)
 
 data("compas")
 
+# test for no errors in functions
 test_that("no errors in acc_parity", {
   expect_error(acc_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
                           probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
@@ -63,3 +64,5 @@ test_that("no errors in spec_parity", {
                           probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
                           cutoff = 0.5, base = "Caucasian"), NA)})
 
+
+# test for presence of probability plots
