@@ -26,8 +26,11 @@
 #' \item{ROCAUC_plot}{ROC plots for all subgroups}
 #'
 #' @examples
-#' df <- fairness::compas
-#' roc_parity(data = df, outcome = df$score, group = df$race, base = "Caucasian")
+#' load(compas)
+#' roc_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
+#' probs = "probability", outcome_levels = c("no", "yes"), base = "Caucasian")
+#' roc_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
+#' probs = "probability", outcome_levels = c("no", "yes"), base = "African_American")
 #'
 #' @export
 

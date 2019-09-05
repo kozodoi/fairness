@@ -28,8 +28,13 @@
 #' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
 #' @examples
-#' df <- fairness::compas
-#' spec_parity(data = df, outcome = df$score, group = df$race, base = "Caucasian")
+#' load(compas)
+#' spec_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
+#' probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
+#' cutoff = 0.4, base = "Caucasian")
+#' spec_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
+#' probs = NULL, preds = "predicted", outcome_levels = c("no", "yes"),
+#' cutoff = 0.5, base = "Hispanic")
 #'
 #' @export
 
