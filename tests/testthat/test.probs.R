@@ -64,5 +64,3 @@ test_that("no errors in spec_parity", {
                           probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
                           cutoff = 0.5, base = "Caucasian"), NA)})
 
-
-# test for presence of probability plots
