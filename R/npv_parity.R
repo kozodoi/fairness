@@ -76,7 +76,8 @@ npv_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
   rownames(res_table) <- c("NPV", "NPV Parity")
 
   #conversion of metrics to df
-  val_df <- as.data.frame(val)
+  val_df <- as.data.frame(res_table[2,])
+  colnames(val_df) <- c("val")
   val_df$groupst <- rownames(val_df)
   val_df$groupst <- as.factor(val_df$groupst)
   # relevel group
