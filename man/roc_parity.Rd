@@ -37,7 +37,10 @@ ROC AUC will be reflected in numbers lower than 1 in the returned named vector, 
 lower than 1 mean WORSE prediction for the subgroup.
 }
 \examples{
-df <- fairness::compas
-roc_parity(data = df, outcome = df$score, group = df$race, base = "Caucasian")
+load(compas)
+roc_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
+probs = "probability", outcome_levels = c("no", "yes"), base = "Caucasian")
+roc_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
+probs = "probability", outcome_levels = c("no", "yes"), base = "African_American")
 
 }

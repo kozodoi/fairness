@@ -40,7 +40,12 @@ Matthews Correlation Coefficients rates will be reflected in numbers lower than 
 lower than 1 mean WORSE prediction for the subgroup.
 }
 \examples{
-df <- fairness::compas
-mcc_parity(data = df, outcome = df$score, group = df$race, base = "Caucasian")
+load(compas)
+mcc_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
+probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
+cutoff = 0.4, base = "Caucasian")
+mcc_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
+probs = NULL, preds = "predicted", outcome_levels = c("no", "yes"),
+cutoff = 0.5, base = "Hispanic")
 
 }

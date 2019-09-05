@@ -42,7 +42,12 @@ positive predictive values will be reflected in numbers lower than 1 in the retu
 lower than 1 mean WORSE prediction for the subgroup.
 }
 \examples{
-df <- fairness::compas
-ppv_parity(data = df, outcome = df$score, group = df$race, base = "Caucasian")
+load(compas)
+ppv_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
+probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
+cutoff = 0.4, base = "Caucasian")
+ppv_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
+probs = NULL, preds = "predicted", outcome_levels = c("no", "yes"),
+cutoff = 0.5, base = "Hispanic")
 
 }

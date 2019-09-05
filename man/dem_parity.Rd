@@ -39,7 +39,12 @@ according to whether their proportion of positively predicted observations are l
 proportions will be reflected in numbers lower than 1 in the returned named vector.
 }
 \examples{
-df <- fairness::compas
-dem_parity(data = df, group = df$race, base = "Caucasian")
+load(compas)
+dem_parity(data = compas, group = "ethnicity",
+probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
+cutoff = 0.4, base = "Caucasian")
+dem_parity(data = compas, group = "ethnicity",
+probs = NULL, preds = "predicted", outcome_levels = c("no", "yes"),
+cutoff = 0.5, base = "Hispanic")
 
 }
