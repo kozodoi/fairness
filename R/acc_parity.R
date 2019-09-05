@@ -24,7 +24,7 @@
 #' @name acc_parity
 #'
 #' @return
-#' \item{Metric}{Accuracy parity metrics for all groups. Lower values compared to the reference group mean lower accuracies in the selected subgroups}
+#' \item{Metric}{Raw accuracy metrics for all groups and metrics standardized for the base group (accuracy parity metric). Lower values compared to the reference group mean lower accuracies in the selected subgroups}
 #' \item{Metric_plot}{Bar plot of Accuracy parity metric}
 #' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
@@ -64,18 +64,16 @@ acc_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
   val <- rep(NA, length(levels(group_status)))
   names(val) <- levels(group_status)
 
-  # compute value for base group
-  cm_base <- caret::confusionMatrix(preds_status[group_status == base],
-                                    outcome_status[group_status == base], mode = "everything")
-  metric_base <- cm_base$overall[1]
-
-  # compute value for other groups
+  # compute value for all groups
   for (i in levels(group_status)) {
     cm <- caret::confusionMatrix(preds_status[group_status == i],
                                  outcome_status[group_status == i], mode = "everything")
     metric_i <- cm$overall[1]
-    val[i] <- metric_i / metric_base
+    val[i] <- metric_i
   }
+
+  res_table <- rbind(val, val/val[[1]])
+  rownames(res_table) <- c("Accuracy", "Accuracy Parity")
 
   #conversion of metrics to df
   val_df <- as.data.frame(val)
@@ -105,9 +103,9 @@ acc_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
   }
 
   if (is.null(probs)) {
-    list(Metric = val, Metric_plot = p)
+    list(Metric = res_table, Metric_plot = p)
   } else {
-    list(Metric = val, Metric_plot = p, Probability_plot = q)
+    list(Metric = res_table, Metric_plot = p, Probability_plot = q)
   }
 
 }

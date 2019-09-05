@@ -22,7 +22,7 @@
 #' @name mcc_parity
 #'
 #' @return
-#' \item{Metric}{Matthews Correlation Coefficient parity metrics for all groups. Lower values compared to the reference group mean Matthews Correlation Coefficients in the selected subgroups}
+#' \item{Metric}{Raw Matthews Correlation Coefficient metrics for all groups and metrics standardized for the base group (parity metric). Lower values compared to the reference group mean Matthews Correlation Coefficients in the selected subgroups}
 #' \item{Metric_plot}{Bar plot of Matthews Correlation Coefficient metric}
 #' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
@@ -62,22 +62,7 @@ mcc_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
   val <- rep(NA, length(levels(group_status)))
   names(val) <- levels(group_status)
 
-  # compute value for base group
-  cm_base <- caret::confusionMatrix(preds_status[group_status == base],
-                                    outcome_status[group_status == base], mode = "everything")
-  TP <- as.numeric(cm_base$table[4])
-  TN <- as.numeric(cm_base$table[1])
-  FP <- as.numeric(cm_base$table[2])
-  FN <- as.numeric(cm_base$table[3])
-  numerator <- (TP*TN)-(FP*FN)
-  denominator <- sqrt((TP+FP)*(TP+FN)*(TN+FP)*(TN+FN))
-  if (denominator == 0) {
-    metric_base <- 0
-  } else {
-    metric_base <- numerator/denominator
-  }
-
-  # compute value for other groups
+  # compute value for all groups
   for (i in levels(group_status)) {
     cm <- caret::confusionMatrix(preds_status[group_status == i],
                                  outcome_status[group_status == i], mode = "everything")
@@ -92,8 +77,11 @@ mcc_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
     } else {
       metric_i <- numerator/denominator
     }
-    val[i] <- metric_i / mmetric_base
+    val[i] <- metric_i
   }
+
+  res_table <- rbind(val, val/val[[1]])
+  rownames(res_table) <- c("MCC", "MCC Parity")
 
   #conversion of metrics to df
   val_df <- as.data.frame(val)
@@ -123,9 +111,9 @@ mcc_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
   }
 
   if (is.null(probs)) {
-    list(Metric = val, Metric_plot = p)
+    list(Metric = res_table, Metric_plot = p)
   } else {
-    list(Metric = val, Metric_plot = p, Probability_plot = q)
+    list(Metric = res_table, Metric_plot = p, Probability_plot = q)
   }
 
 }

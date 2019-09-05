@@ -23,7 +23,7 @@
 #' @name fnr_parity
 #'
 #' @return
-#' \item{Metric}{False Negative Rate parity metrics for all groups. Lower values compared to the reference group mean lower false negative error rates in the selected subgroups}
+#' \item{Metric}{Raw false negative rates for all groups and metrics standardized for the base group (false negative rate parity metric). Lower values compared to the reference group mean lower false negative error rates in the selected subgroups}
 #' \item{Metric_plot}{Bar plot of False Negative Rate parity metric}
 #' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
@@ -63,18 +63,16 @@ fnr_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
   val <- rep(NA, length(levels(group_status)))
   names(val) <- levels(group_status)
 
-  # compute value for base group
-  cm_base <- caret::confusionMatrix(preds_status[group_status == base],
-                                    outcome_status[group_status == base], mode = "everything")
-  metric_base <- cm_base$table[3]/sum(cm_base$table[3],cm_base$table[4])
-
-  # compute value for other groups
+  # compute value for all groups
   for (i in levels(group_status)) {
     cm <- caret::confusionMatrix(preds_status[group_status == i],
                                  outcome_status[group_status == i], mode = "everything")
     metric_i <- cm$table[3]/sum(cm$table[3],cm$table[4])
-    val[i] <- metric_i / metric_base
+    val[i] <- metric_i
   }
+
+  res_table <- rbind(val, val/val[[1]])
+  rownames(res_table) <- c("FNR", "FNR Parity")
 
   #conversion of metrics to df
   val_df <- as.data.frame(val)
@@ -104,9 +102,9 @@ fnr_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
   }
 
   if (is.null(probs)) {
-    list(Metric = val, Metric_plot = p)
+    list(Metric = res_table, Metric_plot = p)
   } else {
-    list(Metric = val, Metric_plot = p, Probability_plot = q)
+    list(Metric = res_table, Metric_plot = p, Probability_plot = q)
   }
 
 }

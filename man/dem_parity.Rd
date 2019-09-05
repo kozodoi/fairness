@@ -23,7 +23,7 @@ dem_parity(data, group, probs = NULL, preds = NULL,
 \item{base}{Base level for sensitive group comparison}
 }
 \value{
-\item{Metric}{Demographic parity metrics for all groups. Lower values compared to the reference group mean lower number of positively predicted observations in the selected subgroups}
+\item{Metric}{Absolute number of positive classifications for all groups and metrics standardized for the base group (demographic parity metric). Lower values compared to the reference group mean lower number of positively predicted observations in the selected subgroups}
 \item{Metric_plot}{Bar plot of Demographic parity metric}
 \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 }

@@ -22,7 +22,7 @@
 #' @name dem_parity
 #'
 #' @return
-#' \item{Metric}{Demographic parity metrics for all groups. Lower values compared to the reference group mean lower number of positively predicted observations in the selected subgroups}
+#' \item{Metric}{Absolute number of positive classifications for all groups and metrics standardized for the base group (demographic parity metric). Lower values compared to the reference group mean lower number of positively predicted observations in the selected subgroups}
 #' \item{Metric_plot}{Bar plot of Demographic parity metric}
 #' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
@@ -60,14 +60,14 @@ dem_parity <- function(data, group, probs = NULL, preds = NULL,
   val <- rep(NA, length(levels(group_status)))
   names(val) <- levels(group_status)
 
-  # compute value for base group
-  metric_base <- sum(preds_status[group_status == base])
-
-  # compute value for other groups
+  # compute value for all groups
   for (i in levels(group_status)) {
     metric_i <- sum(preds_status[group_status == i])
-    val[i] <- metric_i / metric_base
+    val[i] <- metric_i
   }
+
+  res_table <- rbind(val, val/val[[1]])
+  rownames(res_table) <- c("Positively classified", "Demographic Parity")
 
   #conversion of metrics to df
   val_df <- as.data.frame(val)
@@ -97,9 +97,9 @@ dem_parity <- function(data, group, probs = NULL, preds = NULL,
   }
 
   if (is.null(probs)) {
-    list(Metric = val, Metric_plot = p)
+    list(Metric = res_table, Metric_plot = p)
   } else {
-    list(Metric = val, Metric_plot = p, Probability_plot = q)
+    list(Metric = res_table, Metric_plot = p, Probability_plot = q)
   }
 
 }

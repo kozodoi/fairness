@@ -1,11 +1,11 @@
 #' @title ROC AUC parity
 #'
 #' @description
-#' This function computes the Accuracy parity metric
+#' This function computes the ROC AUC parity metric
 #'
 #' @details
-#' This function computes the ROC AUC values for each subgroup. In the returned
-#' named vector, the reference group will be assigned 1, while all other groups will be assigned values
+#' This function computes the ROC AUC values for each subgroup. In the returned table,
+#' the reference group will be assigned 1, while all other groups will be assigned values
 #' according to whether their ROC AUC values are lower or higher compared to the reference group. Lower
 #' ROC AUC will be reflected in numbers lower than 1 in the returned named vector, thus numbers
 #' lower than 1 mean WORSE prediction for the subgroup.
@@ -20,8 +20,7 @@
 #' @name roc_parity
 #'
 #' @return
-#' \item{Metric}{ROC AUC values for all groups. Lower values compared to the reference group mean lower ROC AUC values in the selected subgroups}
-#' \item{ROCAUC_overlap}{The value of overlapping ROC AUC values}
+#' \item{Metric}{Raw ROC AUC metrics for all groups and metrics standardized for the base group (parity metric). Lower values compared to the reference group mean lower ROC AUC values in the selected subgroups}
 #' \item{Metric_plot}{Bar plot of ROC AUC metric}
 #' \item{Probability_plot}{Density plot of predicted probabilities per subgroup}
 #' \item{ROCAUC_plot}{ROC plots for all subgroups}
@@ -31,7 +30,6 @@
 #' roc_parity(data = df, outcome = df$score, group = df$race, base = "Caucasian")
 #'
 #' @export
-
 
 
 roc_parity <- function(data, outcome, group, probs,
@@ -59,24 +57,51 @@ roc_parity <- function(data, outcome, group, probs,
   val <- rep(NA, length(levels(group_status)))
   names(val) <- levels(group_status)
 
-  # compute value for base group
-  roc_base <- roc(predictor=probs_vals[group_status == base],
-                  response=outcome_status[group_status == base],
-                  levels=levels(outcome_status),
-                  ci=T)
-  val[1] <- as.numeric(roc_base$auc)
+  # compute value for all groups=
+  for (i in 1:length(levels(group_status))) {
+    temproc <- pROC::roc(predictor=probs_vals[group_status == levels(group_status)[i]],
+                         response=outcome_status[group_status == levels(group_status)[i]],
+                         levels=levels(outcome_status), ci=T)
+    val[i] <- as.numeric(temproc[[9]])
+    assign(paste0("grouproc_", i), temproc)
+  }
 
-  # compute value for other group
-  roc_i <- roc(predictor=probs_vals[group_status != base],
-               response=outcome_status[group_status != base],
-               levels=levels(outcome_status),
-               ci=T)
-  val[2] <- as.numeric(roc_i$auc)
-  val <- val/val[1]
+  if (length(levels(group_status)) == 2) {
+    r <- pROC::ggroc(list(grouproc_1, grouproc_2)) +
+      geom_abline(intercept = 1,slope = 1) +
+      labs(x = "Specificity", y = "Sensitivity") +
+      theme(legend.title = element_blank()) +
+      scale_color_discrete(labels = names(val))
+  } else if (length(levels(group_status)) == 3) {
+    r <- pROC::ggroc(list(grouproc_1, grouproc_2, grouproc_3)) +
+      geom_abline(intercept = 1,slope = 1) +
+      labs(x = "Specificity", y = "Sensitivity") +
+      theme(legend.title = element_blank()) +
+      scale_color_discrete(labels = names(val))
+  } else if (length(levels(group_status)) == 4) {
+    r <- pROC::ggroc(list(grouproc_1, grouproc_2, grouproc_3, grouproc_4)) +
+      geom_abline(intercept = 1,slope = 1) +
+      labs(x = "Specificity", y = "Sensitivity") +
+      theme(legend.title = element_blank()) +
+      scale_color_discrete(labels = names(val))
+  } else if (length(levels(group_status)) == 5) {
+    r <- pROC::ggroc(list(grouproc_1, grouproc_2, grouproc_3, grouproc_4, grouproc_5)) +
+      geom_abline(intercept = 1,slope = 1) +
+      labs(x = "Specificity", y = "Sensitivity") +
+      theme(legend.title = element_blank()) +
+      scale_color_discrete(labels = names(val))
+  } else if (length(levels(group_status)) == 6) {
+    r <- pROC::ggroc(list(grouproc_1, grouproc_2, grouproc_3, grouproc_4, grouproc_5, grouproc_6)) +
+      geom_abline(intercept = 1,slope = 1) +
+      labs(x = "Specificity", y = "Sensitivity") +
+      theme(legend.title = element_blank()) +
+      scale_color_discrete(labels = names(val))
+  } else {
+    r <- NULL
+  }
 
-  #find the overlapping ROC AUCs (roc_ol)
-  #roc_ol <- roc.test(roc_base, roc_i, method = "bootstrap", boot.n=1000)
-  #roc_ol$estimate
+  res_table <- rbind(val, val/val[[1]])
+  rownames(res_table) <- c("ROC AUC", "ROC AUC Parity")
 
   #conversion of metrics to df
   val_df <- as.data.frame(val)
@@ -102,8 +127,6 @@ roc_parity <- function(data, outcome, group, probs,
     theme(plot.title = element_text(hjust = 0.5)) +
     xlim(0,1)
 
-  r <- #plot for ROC curves here
-
-    list(Metric = val, ROCAUC_overlap = roc_ol, Metric_plot = p, Probability_plot = q, ROCAUC_plot = r)
+  list(Metric = res_table, Metric_plot = p, Probability_plot = q, ROCAUC_plot = r)
 
 }

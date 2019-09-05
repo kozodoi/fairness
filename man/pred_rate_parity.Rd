@@ -23,7 +23,7 @@ pred_rate_parity(data, outcome, group, probs = NULL, preds = NULL,
 \item{base}{Base level for sensitive group comparison}
 }
 \value{
-\item{Metric}{Predictive Rate Parity metric for all groups. Lower values compared to the reference group mean lower precisions in the selected subgroups}
+\item{Metric}{Raw precision metrics for all groups and metrics standardized for the base group (predictive rate parity metric). Lower values compared to the reference group mean lower precisions in the selected subgroups}
 \item{Metric_plot}{Bar plot of Predictive Rate Parity metric}
 \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 }
@@ -31,7 +31,8 @@ pred_rate_parity(data, outcome, group, probs = NULL, preds = NULL,
 This function computes the Predictive Rate Parity metric
 }
 \details{
-This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by Zafar et al., 2017. Predictive rate parity is calculated
+This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by
+Zafar et al., 2017. Predictive rate parity is calculated
 by the division of true positives with all observations predicted positives. This metrics equals to
 what is traditionally known as precision. In the returned
 named vector, the reference group will be assigned 1, while all other groups will be assigned values

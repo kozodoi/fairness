@@ -25,7 +25,7 @@ ppv_parity(data, outcome, group, probs = NULL, preds = NULL,
 \item{base}{Base level for sensitive group comparison}
 }
 \value{
-\item{Metric}{Positive Predictive Value parity metrics for all groups. Lower values compared to the reference group mean lower positive predictive values in the selected subgroups}
+\item{Metric}{Raw positive predictive values for all groups and metrics standardized for the base group (positive predictive value parity metric). Lower values compared to the reference group mean lower positive predictive values in the selected subgroups}
 \item{Metric_plot}{Bar plot of Positive Predictive Value metric}
 \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 }

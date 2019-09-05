@@ -17,7 +17,7 @@
 # Overview of the fairness R package
 
 **fairness** is a ..
-## The missCompare pipeline
+## The fairness pipeline
 
 You will find a detailed manual in the missCompare vignette:
 

@@ -25,7 +25,7 @@ fpr_parity(data, outcome, group, probs = NULL, preds = NULL,
 \item{base}{Base level for sensitive group comparison}
 }
 \value{
-\item{Metric}{False Positives Rate parity metrics for all groups. Lower values compared to the reference group mean lower false positive error rates in the selected subgroups}
+\item{Metric}{Raw false positive rates for all groups and metrics standardized for the base group (false positive rate parity metric). Lower values compared to the reference group mean lower false positive error rates in the selected subgroups}
 \item{Metric_plot}{Bar plot of False Positives Rate metric}
 \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 }

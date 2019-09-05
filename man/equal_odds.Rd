@@ -25,7 +25,7 @@ equal_odds(data, outcome, group, probs = NULL, preds = NULL,
 \item{base}{Base level for sensitive group comparison}
 }
 \value{
-\item{Metric}{Equalized Odds metric for all groups. Lower values compared to the reference group mean lower sensitivities in the selected subgroups}
+\item{Metric}{Raw sensitivities for all groups and metrics standardized for the base group (equalized odds parity metric). Lower values compared to the reference group mean lower sensitivities in the selected subgroups}
 \item{Metric_plot}{Bar plot of Equalized Odds metric}
 \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 }

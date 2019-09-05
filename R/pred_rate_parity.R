@@ -4,7 +4,8 @@
 #' This function computes the Predictive Rate Parity metric
 #'
 #' @details
-#' This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by Zafar et al., 2017. Predictive rate parity is calculated
+#' This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by
+#' Zafar et al., 2017. Predictive rate parity is calculated
 #' by the division of true positives with all observations predicted positives. This metrics equals to
 #' what is traditionally known as precision. In the returned
 #' named vector, the reference group will be assigned 1, while all other groups will be assigned values
@@ -24,7 +25,7 @@
 #' @name pred_rate_parity
 #'
 #' @return
-#' \item{Metric}{Predictive Rate Parity metric for all groups. Lower values compared to the reference group mean lower precisions in the selected subgroups}
+#' \item{Metric}{Raw precision metrics for all groups and metrics standardized for the base group (predictive rate parity metric). Lower values compared to the reference group mean lower precisions in the selected subgroups}
 #' \item{Metric_plot}{Bar plot of Predictive Rate Parity metric}
 #' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
@@ -64,18 +65,16 @@ pred_rate_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
   val <- rep(NA, length(levels(group_status)))
   names(val) <- levels(group_status)
 
-  # compute value for base group
-  cm_base <- caret::confusionMatrix(preds_status[group_status == base],
-                                    outcome_status[group_status == base], mode = "everything")
-  metric_base <- cm_base$byClass[5]
-
-  # compute value for other groups
+  # compute value for all groups
   for (i in levels(group_status)) {
     cm <- caret::confusionMatrix(preds_status[group_status == i],
                                  outcome_status[group_status == i], mode = "everything")
     metric_i <- cm$byClass[5]
-    val[i] <-  metric_i / metric_base
+    val[i] <-  metric_i
   }
+
+  res_table <- rbind(val, val/val[[1]])
+  rownames(res_table) <- c("Precision", "Predictive Rate Parity")
 
   #conversion of metrics to df
   val_df <- as.data.frame(val)
@@ -105,9 +104,9 @@ pred_rate_parity <- function(data, outcome, group, probs = NULL, preds = NULL,
   }
 
   if (is.null(probs)) {
-    list(Metric = val, Metric_plot = p)
+    list(Metric = res_table, Metric_plot = p)
   } else {
-    list(Metric = val, Metric_plot = p, Probability_plot = q)
+    list(Metric = res_table, Metric_plot = p, Probability_plot = q)
   }
 
 }
