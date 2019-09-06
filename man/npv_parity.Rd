@@ -43,11 +43,11 @@ lower than 1 mean WORSE prediction for the subgroup.
 }
 \examples{
 load(compas)
-npv_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
-probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
-cutoff = 0.4, base = "Caucasian")
-npv_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
-probs = NULL, preds = "predicted", outcome_levels = c("no", "yes"),
-cutoff = 0.5, base = "Hispanic")
+npv_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
+probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
+cutoff = 0.4, base = 'Caucasian')
+npv_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
+probs = NULL, preds = 'predicted', outcome_levels = c('no', 'yes'),
+cutoff = 0.5, base = 'Hispanic')
 
 }

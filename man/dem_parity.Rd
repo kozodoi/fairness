@@ -40,11 +40,11 @@ proportions will be reflected in numbers lower than 1 in the returned named vect
 }
 \examples{
 load(compas)
-dem_parity(data = compas, group = "ethnicity",
-probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
-cutoff = 0.4, base = "Caucasian")
-dem_parity(data = compas, group = "ethnicity",
-probs = NULL, preds = "predicted", outcome_levels = c("no", "yes"),
-cutoff = 0.5, base = "Hispanic")
+dem_parity(data = compas, group = 'ethnicity',
+probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
+cutoff = 0.4, base = 'Caucasian')
+dem_parity(data = compas, group = 'ethnicity',
+probs = NULL, preds = 'predicted', outcome_levels = c('no', 'yes'),
+cutoff = 0.5, base = 'Hispanic')
 
 }

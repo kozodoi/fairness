@@ -38,9 +38,9 @@ lower than 1 mean WORSE prediction for the subgroup.
 }
 \examples{
 load(compas)
-roc_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
-probs = "probability", outcome_levels = c("no", "yes"), base = "Caucasian")
-roc_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
-probs = "probability", outcome_levels = c("no", "yes"), base = "African_American")
+roc_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
+probs = 'probability', outcome_levels = c('no', 'yes'), base = 'Caucasian')
+roc_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
+probs = 'probability', outcome_levels = c('no', 'yes'), base = 'African_American')
 
 }

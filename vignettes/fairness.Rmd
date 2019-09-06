@@ -1,21 +1,90 @@
 ---
-title: "fairness"
+title: "A complete tutorial to the fairness R package"
+author: "Tibor V. Varga & Nikita Kozodoi"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{fairness}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{devtools}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+#library(fairness)
 ```
 
-```{r setup}
+To date, a number of algorithmic group fairness metrics have been proposed. The most commonly used metrics, such as demographic parity, proportional parity, equalized odds and predictive rate parity are commonly used metrics to evaluate fairness between groups in classification problems (supervised machine learning algorithms). Multiple other metrics have been proposed that use various metrics from the confusion matrix (e.g. false positive rate parity, false negative rate parity). The fairness R package provides a tool to easily calculate these metrics for given predicted probabilities or predicted classes between sensitive groups of populations. The package also provides visualizations that makes it easier to comprehend these metrics and biases between subgroups of the data.
+
+Disclaimer! None of the implemented metrics are supposed to take over critical thinking about the problem in question.
+
+## Installation of the fairness R package
+
+```{r eval = FALSE}
+install.packages("fairness")
 library(fairness)
 ```
 
-Disclaimer - no metrics are supposed to take over critical thinking about the problem in question.
+## Description of data: *compas*
+
+The data you will be able to use for this tutorial is a simlified version of the landmark COMPAS dataset. You can read more about the dataset here, here and here. To load the dataset, all you need to do is:
+
+```{r eval = TRUE}
+data("compas")
+```
+
+The compas dataframe contains nine columns: The outcome is "Two_yr_Recidivism", i.e. whether an individual will commit a crime in two years or not. Variables exist in the data about prior criminal record ("Number_of_Priors" and "Misdemeanor") and basic features such as age, categorized ("Age_Above_FourtyFive" and "Age_Below_TwentyFive"), sex ("Female") and ethnicity ("ethnicity"). You don't really need to delve into the data much, we have already ran a prediction model using *all variables* to predict "Two_yr_Recidivism" and concatenated the predicted probabilities ("probability") and predicted classes ("predicted") to the data. You will be able to use the "probability" and "predicted" columns directly in your analysis.
+
+However, please feel free to set up other prediction models (e.g. excluding sensitive group information, such as sex and ethnicity) and use your generated predicted probabilities or classes to assess group fairness.
+
+## Algorithmic group fairness metrics
+
+The package currently has 10 metrics and two other comparisons implemented. Many of these metrics are mutually exclusive - results from a given classification most often cannot be fair in terms of all evaluated group fairness metrics. Here, all these functions will be introduced - for the sake of simplicity, we will use predicted probabilities for all these functions instead of predicted classes. Note that in case of defining predicted probabilities, a cutoff needs to be defined in order to generate positive (1) or negative (0) predicted classes.
+
+### *Demographic parity*
+Demographic parity is defined as
+
+### *Proportional parity*
+### *Equalized odds*
+### *Predictive rate parity*
+### *Accuracy parity*
+### *False negative rate parity*
+### *False positive rate parity*
+### *Positive predictive value parity*
+### *Negative predictive value parity*
+### *Specificity parity*
+
+### *ROC AUC comparison*
+### *Matthews Correlation coefficient comparison*
+
+
+## Output and visualizations
+
+All functions output results and matching barcharts that provide visual cues about the parity metrics for the defined sensitive subgroups. For instance, let's look at predictive rate parity with ethnicity being set as the sensitive group:
+
+XXXX
+
+When probabilites are defined, an extra density plot will be output with the distributions of probabilities of all subgroups and the user-defined cutoff:
+
+XXXX
+
+The function related to ROC AUC comparisons will output ROC curves for each subgroups:
+
+XXXX
+
+## Closing words
+
+You have read through the fairness R package tutorial and by now, you have a solid grip on algorithmic group fairness metrics. We hope that you will be able to use this R package in your data analysis! Please let us know if you have any issues here -  [fairness GitHub](https://github.com/kozodoi/Fairness/issues) - or contact the authors if you have any feedback!
+
+ -- authors of the fairness R package
+
+
+
+
+
+
+
