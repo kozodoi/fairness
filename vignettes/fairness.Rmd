@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 #library(fairness)
 ```
 
-To date, a number of algorithmic group fairness metrics have been proposed. The most commonly used metrics, such as demographic parity, proportional parity, equalized odds and predictive rate parity are commonly used metrics to evaluate fairness between groups in classification problems (supervised machine learning algorithms). Multiple other metrics have been proposed that use various metrics from the confusion matrix (e.g. false positive rate parity, false negative rate parity). The fairness R package provides a tool to easily calculate these metrics for given predicted probabilities or predicted classes between sensitive groups of populations. The package also provides visualizations that makes it easier to comprehend these metrics and biases between subgroups of the data.
+To date, a number of algorithmic group fairness metrics have been proposed. Demographic parity, proportional parity, equalized odds and predictive rate parity are the most commonly used metrics to evaluate fairness between groups in classification problems (supervised machine learning algorithms). Multiple other metrics have been proposed that use various metrics from the confusion matrix (e.g. false positive rate parity, false negative rate parity). The fairness R package provides a tool to easily calculate these metrics for given predicted probabilities or predicted classes between sensitive groups of populations. The package also provides visualizations that makes it easier to comprehend these metrics and biases between subgroups of the data.
 
-Disclaimer! None of the implemented metrics are supposed to take over critical thinking about the problem in question.
+Disclaimer! None of the implemented metrics are supposed to replace critical thinking about the problem in question.
 
 ## Installation of the fairness R package
 
@@ -33,17 +33,17 @@ library(fairness)
 
 The data you will be able to use for this tutorial is a simlified version of the landmark COMPAS dataset. You can read more about the dataset here, here and here. To load the dataset, all you need to do is:
 
-```{r eval = TRUE}
+```{r eval = FALSE}
 data("compas")
 ```
 
-The compas dataframe contains nine columns: The outcome is "Two_yr_Recidivism", i.e. whether an individual will commit a crime in two years or not. Variables exist in the data about prior criminal record ("Number_of_Priors" and "Misdemeanor") and basic features such as age, categorized ("Age_Above_FourtyFive" and "Age_Below_TwentyFive"), sex ("Female") and ethnicity ("ethnicity"). You don't really need to delve into the data much, we have already ran a prediction model using *all variables* to predict "Two_yr_Recidivism" and concatenated the predicted probabilities ("probability") and predicted classes ("predicted") to the data. You will be able to use the "probability" and "predicted" columns directly in your analysis.
+The compas dataframe contains nine columns: The outcome is *Two_yr_Recidivism*, i.e. whether an individual will commit a crime in two years or not. Variables exist in the data about prior criminal record (*Number_of_Priors* and *Misdemeanor*) and basic features such as age, categorized (*Age_Above_FourtyFive* and *Age_Below_TwentyFive*), sex (*Female*) and ethnicity (*ethnicity*). You don't really need to delve into the data much, we have already ran a prediction model using **all variables** to predict *Two_yr_Recidivism* and concatenated the predicted probabilities (*probability*) and predicted classes (*predicted*) to the data. You will be able to use the *probability* and *predicted* columns directly in your analysis.
 
 However, please feel free to set up other prediction models (e.g. excluding sensitive group information, such as sex and ethnicity) and use your generated predicted probabilities or classes to assess group fairness.
 
 ## Algorithmic group fairness metrics
 
-The package currently has 10 metrics and two other comparisons implemented. Many of these metrics are mutually exclusive - results from a given classification most often cannot be fair in terms of all evaluated group fairness metrics. Here, all these functions will be introduced - for the sake of simplicity, we will use predicted probabilities for all these functions instead of predicted classes. Note that in case of defining predicted probabilities, a cutoff needs to be defined in order to generate positive (1) or negative (0) predicted classes.
+The package currently includes 10 fairness metrics and two other comparisons implemented. Many of these metrics are mutually exclusive - results from a given classification most often cannot be fair in terms of all evaluated group fairness metrics. Below, all these functions will be introduced in detail - for the sake of simplicity, we will use predicted probabilities for all these functions instead of predicted classes. Note that in case of defining predicted probabilities, a cutoff needs to be defined in order to generate positive (1) or negative (0) predicted classes.
 
 ### *Demographic parity*
 Demographic parity is defined as
