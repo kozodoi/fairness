@@ -34,7 +34,7 @@ This function computes the Predictive Rate Parity metric
 This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by
 Zafar et al., 2017. Predictive rate parity is calculated
 by the division of true positives with all observations predicted positives. This metrics equals to
-what is traditionally known as precision. In the returned
+what is traditionally known as precision or positive predictive value. In the returned
 named vector, the reference group will be assigned 1, while all other groups will be assigned values
 according to whether their precisions are lower or higher compared to the reference group. Lower
 precisions will be reflected in numbers lower than 1 in the returned named vector, thus numbers
