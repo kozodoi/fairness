@@ -105,12 +105,10 @@ output$Metric
 ```
 
 Bar chart for the equalized odds metric:
-```{r , echo = FALSE, fig.width=5, fig.height=3}
-print(output$Metric_plot)
-```
+<a href="https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf"><img src="https://raw.githubusercontent.com/rstudio/cheatsheets/master/pngs/thumbnails/data-transformation-cheatsheet-thumbs.png" width="630" height="252"/></a>
 
 Predicted probability plot for all subgroups:
-```{r , echo = FALSE, fig.width=5, fig.height=3}
+```{r , echo = FALSE, example}
 print(output$Probability_plot)
 ```
 
