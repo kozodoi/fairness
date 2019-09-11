@@ -39,11 +39,6 @@ test_that("number of outputs in npv_parity", {
                           probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
                           cutoff = 0.5, base = "Caucasian")), 3)})
 
-test_that("number of outputs in ppv_parity", {
-  expect_equal(length(ppv_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
-                          probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
-                          cutoff = 0.5, base = "Caucasian")), 3)})
-
 test_that("number of outputs in pred_rate_parity", {
   expect_equal(length(pred_rate_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
                                 probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
@@ -97,11 +92,6 @@ test_that("number of outputs in mcc_parity", {
 
 test_that("number of outputs in npv_parity", {
   expect_equal(length(npv_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
-                                 probs = NULL, preds = "predicted", outcome_levels = c("no", "yes"),
-                                 cutoff = 0.5, base = "Caucasian")), 2)})
-
-test_that("number of outputs in ppv_parity", {
-  expect_equal(length(ppv_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
                                  probs = NULL, preds = "predicted", outcome_levels = c("no", "yes"),
                                  cutoff = 0.5, base = "Caucasian")), 2)})
 

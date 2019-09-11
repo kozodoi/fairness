@@ -39,11 +39,6 @@ test_that("no errors in npv_parity", {
                           probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
                           cutoff = 0.5, base = "Caucasian"), NA)})
 
-test_that("no errors in ppv_parity", {
-  expect_error(ppv_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
-                          probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
-                          cutoff = 0.5, base = "Caucasian"), NA)})
-
 test_that("no errors in pred_rate_parity", {
   expect_error(pred_rate_parity(data = compas, outcome = "Two_yr_Recidivism", group = "ethnicity",
                           probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
