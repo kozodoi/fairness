@@ -76,7 +76,8 @@ The data already contains all variables necessary to run all parity metrics. In 
 ### Running a selected function
 
 ```{r eval = FALSE}
-prop_parity(data=compas, 
+equal_odds(data=compas, 
+           outcome = "Two_yr_Recidivism",
            group="ethnicity",
            probs="probability", 
            preds = NULL,
@@ -88,7 +89,8 @@ prop_parity(data=compas,
 ### Taking a look at the output
 
 ```{r eval = TRUE, echo = FALSE}
-output <- prop_parity(data=compas, 
+output <- equal_odds(data=compas, 
+           outcome = "Two_yr_Recidivism",
            group="ethnicity",
            probs="probability", 
            preds = NULL,
@@ -98,17 +100,17 @@ output <- prop_parity(data=compas,
 ```
 
 Metrics for propor parity:     
-```{r , echo = FALSE, fig.width=5, fig.height=3}
+```{r , echo = FALSE, fig.width=3, fig.height=2}
 output$Metric
 ```
 
 Bar chart for the demographic parity metric:
-```{r , echo = FALSE, fig.width=5, fig.height=3}
+```{r , echo = FALSE, fig.width=3, fig.height=2}
 output$Metric_plot
 ```
 
 Predicted probability plot for all subgroups:
-```{r , echo = FALSE, fig.width=5, fig.height=3}
+```{r , echo = FALSE, fig.width=3, fig.height=2}
 output$Probability_plot
 ```
 

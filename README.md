@@ -71,7 +71,8 @@ The data already contains all variables necessary to run all parity metrics. In 
 
 
 ```r
-prop_parity(data=compas, 
+equal_odds(data=compas, 
+           outcome = "Two_yr_Recidivism",
            group="ethnicity",
            probs="probability", 
            preds = NULL,
@@ -87,12 +88,12 @@ prop_parity(data=compas,
 Metrics for propor parity:     
 
 ```
-#>                     Caucasian African_American     Asian  Hispanic
-#> Proportion          0.3195435         0.591811 0.1290323 0.2927308
-#> Proportional Parity 1.0000000         1.852051 0.4038018 0.9160907
-#>                     Native_American     Other
-#> Proportion                0.4545455 0.2478134
-#> Proportional Parity       1.4224838 0.7755232
+#>                Caucasian African_American     Asian Hispanic
+#> Sensitivity    0.7782982        0.5845443 0.9130435 0.809375
+#> Equalized odds 1.0000000        0.7510544 1.1731281 1.039929
+#>                Native_American     Other
+#> Sensitivity          0.6666667 0.8493151
+#> Equalized odds       0.8565697 1.0912463
 ```
 
 Bar chart for the demographic parity metric:

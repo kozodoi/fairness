@@ -36,9 +36,9 @@
 #'
 #' @export
 
-prop_parity <- function(data, group, probs = NULL, preds = NULL, outcome_levels = c("no", 
+prop_parity <- function(data, group, probs = NULL, preds = NULL, outcome_levels = c("no",
     "yes"), cutoff = 0.5, base = NULL) {
-    
+
     # convert types, sync levels
     group_status <- as.factor(data[, group])
     if (is.null(probs)) {
@@ -47,31 +47,31 @@ prop_parity <- function(data, group, probs = NULL, preds = NULL, outcome_levels 
     } else {
         preds_status <- as.numeric(data[, probs] > cutoff)
     }
-    
+
     # check lengths
     if (length(group_status) != length(preds_status)) {
         stop("Predictions/probabilities and group status must be of the same length")
     }
-    
+
     # relevel group
     if (is.null(base)) {
         base <- levels(group_status)[1]
     }
     group_status <- relevel(group_status, base)
-    
+
     # placeholder
     val <- rep(NA, length(levels(group_status)))
     names(val) <- levels(group_status)
-    
+
     # compute value for all groups
     for (i in levels(group_status)) {
         metric_i <- mean(preds_status[group_status == i])
         val[i] <- metric_i
     }
-    
+
     res_table <- rbind(val, val/val[[1]])
     rownames(res_table) <- c("Proportion", "Proportional Parity")
-    
+
     # conversion of metrics to df
     val_df <- as.data.frame(res_table[2, ])
     colnames(val_df) <- c("val")
@@ -82,24 +82,24 @@ prop_parity <- function(data, group, probs = NULL, preds = NULL, outcome_levels 
         val_df$groupst <- levels(val_df$groupst)[1]
     }
     val_df$groupst <- relevel(val_df$groupst, base)
-    
-    p <- ggplot(val_df, aes(x = groupst, weight = val, fill = groupst)) + geom_bar(alpha = 0.5) + 
-        coord_flip() + theme(legend.position = "none") + labs(x = "", y = "Demographic Parity")
-    
+
+    p <- ggplot(val_df, aes(x = groupst, weight = val, fill = groupst)) + geom_bar(alpha = 0.5) +
+        coord_flip() + theme(legend.position = "none") + labs(x = "", y = "Proportional Parity")
+
     # plotting
     if (!is.null(probs)) {
         probs_vals <- data[, probs]
-        q <- ggplot(data, aes(x = probs_vals, fill = group_status)) + geom_density(alpha = 0.5) + 
-            labs(x = "Predicted probabilities") + guides(fill = guide_legend(title = "")) + 
-            theme(plot.title = element_text(hjust = 0.5)) + xlim(0, 1) + geom_vline(xintercept = cutoff, 
+        q <- ggplot(data, aes(x = probs_vals, fill = group_status)) + geom_density(alpha = 0.5) +
+            labs(x = "Predicted probabilities") + guides(fill = guide_legend(title = "")) +
+            theme(plot.title = element_text(hjust = 0.5)) + xlim(0, 1) + geom_vline(xintercept = cutoff,
             linetype = "dashed")
     }
-    
+
     if (is.null(probs)) {
         list(Metric = res_table, Metric_plot = p)
     } else {
         list(Metric = res_table, Metric_plot = p, Probability_plot = q)
     }
-    
+
 }
 
