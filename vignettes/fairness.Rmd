@@ -10,12 +10,16 @@ vignette: >
   %\VignetteDepends{devtools}
 ---
 
+```{r, include=FALSE}
+devtools::load_all(".")
+```
+
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-#library(fairness)
+library(fairness)
 ```
 
 To date, a number of algorithmic group fairness metrics have been proposed. Demographic parity, proportional parity, equalized odds and predictive rate parity are the most commonly used metrics to evaluate fairness between groups in classification problems (supervised machine learning algorithms). Multiple other metrics have been proposed that use various metrics from the confusion matrix (e.g. false positive rate parity, false negative rate parity). The fairness R package provides a tool to easily calculate these metrics for given predicted probabilities or predicted classes between sensitive groups of populations. The package also provides visualizations that makes it easier to comprehend these metrics and biases between subgroups of the data.
@@ -33,7 +37,7 @@ library(fairness)
 
 The data you will be able to use for this tutorial is a simlified version of the landmark COMPAS dataset. You can read more about the dataset here, here and here. To load the dataset, all you need to do is:
 
-```{r eval = FALSE}
+```{r eval = TRUE}
 data("compas")
 ```
 
@@ -63,7 +67,7 @@ Formula: (TP + FP)
 
 ```{r eval = FALSE}
 dem_parity(data=compas, 
-           group="African_American",
+           group="ethnicity",
            probs="probability", 
            preds = NULL,
            outcome_levels = c("no","yes"), 
@@ -77,7 +81,7 @@ Formula: (TP + FP) / (TP + FP + TN + FN)
 
 ```{r eval = FALSE}
 prop_parity(data=compas, 
-            group="African_American",
+            group="ethnicity",
             probs="probability", 
             preds = NULL,
             outcome_levels = c("no","yes"), 
@@ -94,7 +98,7 @@ Formula: TP / (TP + FN)
 ```{r eval = FALSE}
 equal_odds(data=compas, 
            outcome="Two_yr_Recidivism", 
-           group="African_American",
+           group="ethnicity",
            probs = "probability", 
            preds = NULL,
            outcome_levels = c("no","yes"), 
@@ -109,7 +113,7 @@ Formula: TP / (TP + FP)
 ```{r eval = FALSE}
 pred_rate_parity(data=compas, 
                  outcome="Two_yr_Recidivism", 
-                 group="African_American",
+                 group="ethnicity",
                  probs = "probability", 
                  preds = NULL,
                  outcome_levels = c("no","yes"), 
@@ -124,7 +128,7 @@ Formula: (TP + TN) / (TP + FP + TN + FN)
 ```{r eval = FALSE}
 acc_parity(data=compas, 
            outcome="Two_yr_Recidivism", 
-           group="African_American",
+           group="ethnicity",
            probs = "probability", 
            preds = NULL,
            outcome_levels = c("no","yes"), 
@@ -139,7 +143,7 @@ Formula: FN / (TP + FN)
 ```{r eval = FALSE}
 fnr_parity(data=compas, 
            outcome="Two_yr_Recidivism", 
-           group="African_American",
+           group="ethnicity",
            probs = "probability", 
            preds = NULL,
            outcome_levels = c("no","yes"), 
@@ -154,7 +158,7 @@ Formula: FP / (TN + FP)
 ```{r eval = FALSE}
 fpr_parity(data=compas, 
            outcome="Two_yr_Recidivism", 
-           group="African_American",
+           group="ethnicity",
            probs = "probability", 
            preds = NULL,
            outcome_levels = c("no","yes"), 
@@ -163,13 +167,13 @@ fpr_parity(data=compas,
 ```
 
 ### *Negative predictive value parity*
-Negative predictive value parity is achieved if the negative predictive values (division of true negatives with all predicted negatives) in the subgroups are close to each other.     
+Negative predictive value parity is achieved if the negative predictive values (division of true negatives with all predicted negatives) in the subgroups are close to each other. This function can be considered the "inverse" of Predictive rate parity.      
 Formula: TN / (TN + FN)
 
 ```{r eval = FALSE}
 npv_parity(data=compas, 
            outcome="Two_yr_Recidivism", 
-           group="African_American",
+           group="ethnicity",
            probs = "probability", 
            preds = NULL,
            outcome_levels = c("no","yes"), 
@@ -178,13 +182,13 @@ npv_parity(data=compas,
 ```
 
 ### *Specificity parity*
-Specificity parity is achieved if the specificities (division of true negatives with all negatives) in the subgroups are close to each other.     
+Specificity parity is achieved if the specificities (division of true negatives with all negatives) in the subgroups are close to each other. This function can be considered the "inverse" of Equalized odds.        
 Formula: TN / (TN + FP)
 
 ```{r eval = FALSE}
 spec_parity(data=compas, 
             outcome="Two_yr_Recidivism", 
-            group="African_American",
+            group="ethnicity",
             probs = "probability", 
             preds = NULL,
             outcome_levels = c("no","yes"), 
@@ -200,7 +204,7 @@ This function calculates ROC AUC and visualizes ROC curves for all subgroups. No
 ```{r eval = FALSE}
 roc_parity(data=compas, 
            outcome="Two_yr_Recidivism", 
-           group="African_American",
+           group="ethnicity",
            probs = "probability", 
            outcome_levels = c("no","yes"), 
            base = "African_American")
@@ -208,12 +212,12 @@ roc_parity(data=compas,
 
 ### *Matthews correlation coefficient comparison*
 The Matthews correlation coefficient takes all 4 classes of the confusion matrix into consideration. According to some, it is the single most powerful metric in binary classification problems, especially for data with class imbalances.     
-Formula: (TP×TN-FP×FN)/√((TP+FP)(TP+FN)(TN+FP)(TN+FN))
+Formula: (TP×TN-FP×FN)/√((TP+FP)×(TP+FN)×(TN+FP)×(TN+FN))
 
 ```{r eval = FALSE}
 mcc_parity(data=compas, 
            outcome="Two_yr_Recidivism", 
-           group="African_American",
+           group="ethnicity",
            probs = "probability", 
            preds = NULL,
            outcome_levels = c("no","yes"), 
@@ -224,17 +228,74 @@ mcc_parity(data=compas,
 
 ## Output and visualizations
 
-All functions output results and matching barcharts that provide visual cues about the parity metrics for the defined sensitive subgroups. For instance, let's look at predictive rate parity with ethnicity being set as the sensitive group:
+All functions output results and matching barcharts that provide visual cues about the parity metrics for the defined sensitive subgroups. For instance, let's look at predictive rate parity with ethnicity being set as the sensitive group and considering Caucasians as the "base" group:
 
-XXXX
+```{r echo = FALSE}
+output <- pred_rate_parity(data=compas, 
+                 outcome="Two_yr_Recidivism", 
+                 group="ethnicity",
+                 probs = "probability", 
+                 preds = NULL,
+                 outcome_levels = c("no","yes"), 
+                 cutoff = 0.5, 
+                 base = "Caucasian")
+```
+```{r }
+output$Metric
+```
+
+In the upper row, the raw precision values are shown for all ethnicities, and in the row below, the relative precisions compared to Caucasians (1) are shown. Note that in case an other ethnic group is set as the base group (e.g. Hispanic), the raw precision values do not change, only the relative metrics:
+```{r echo = FALSE}
+output <- pred_rate_parity(data=compas, 
+                 outcome="Two_yr_Recidivism", 
+                 group="ethnicity",
+                 probs = "probability", 
+                 preds = NULL,
+                 outcome_levels = c("no","yes"), 
+                 cutoff = 0.5, 
+                 base = "Hispanic")
+```
+```{r }
+output$Metric
+```
+
+A standard output is a barchart that shows the relative metrics for all subgoups. For the previous case (when Hispanic is defined as the base group), this plot would look like this:
+```{r , fig.width=5, fig.height=3}
+output$Metric_plot
+```
 
 When probabilites are defined, an extra density plot will be output with the distributions of probabilities of all subgroups and the user-defined cutoff:
+```{r , fig.width=5, fig.height=3}
+output$Probability_plot
+```
 
-XXXX
+Another example would be comparing males vs. females in terms of recidivism prediction and defining a 0.4 cutoff:
+```{r echo = FALSE}
+output <- pred_rate_parity(data=compas, 
+                 outcome="Two_yr_Recidivism", 
+                 group="Female",
+                 probs = "probability", 
+                 preds = NULL,
+                 outcome_levels = c("no","yes"), 
+                 cutoff = 0.4, 
+                 base = "Male")
+```
+```{r , fig.width=5, fig.height=3}
+output$Probability_plot
+```
 
-The function related to ROC AUC comparisons will output ROC curves for each subgroups:
-
-XXXX
+The function related to ROC AUC comparisons will output ROC curves for each subgroups. Let's look at the plot, also comparing males vs. females:
+```{r echo = FALSE, message=FALSE}
+output <- roc_parity(data=compas, 
+                 outcome="Two_yr_Recidivism", 
+                 group="Female",
+                 probs = "probability", 
+                 outcome_levels = c("no","yes"), 
+                 base = "Male")
+```
+```{r , fig.width=5, fig.height=3}
+output$ROCAUC_plot
+```
 
 ## Closing words
 

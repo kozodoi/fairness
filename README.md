@@ -14,68 +14,92 @@
 
 
 
+
 # Overview of the fairness R package
 
-**fairness** is a ..
-## The fairness pipeline
+The fairness R package provides a tool to easily calculate algorithmic fairness metrics for given predicted probabilities or predicted classes between sensitive groups of populations. It also provides additional opportunities to compare various other prediction metrics between subgroups. 
 
-You will find a detailed manual in the missCompare vignette:
+You can load the package by running:
 
 ```r
 install.packages("fairness")
 library(fairness)
+```
+
+## The fairness pipeline
+
+You will find a detailed tutorial in the missCompare vignette. We recommend that you spend some time going through the vignette, as it contains a much more in-depth description of the fairness package compared to this brief readme.
+
+
+```r
 vignette("fairness")
 ```
 
 ## Description
 
-This package contains functions to compute measures of algorithmic fairness such as:
-- Disparate Impact
-- Demographic Parity
-- False Positive Parity
-- False Negative Parity
-- Positive Prediction Value Parity
-- Negative Prediction Value Parity
-- Accuracy Parity
+This package contains functions to compute the most commonly used metrics of algorithmic fairness such as:   
+
+- Demographic parity
+- Proportional parity
+- Equalized odds
+- Predictive rate parity
+
+In addition, the following comparisons are also implemented:    
+
+- False positive rate parity
+- False negative rate parity
+- Accuracy parity
+- Negative predictive value parity
+- Specificity parity
+- ROC AUC comparison
+- MCC comparison
+
+Most fairness measures are computed based on the confusion matrix resulting from a model fit of a given classification model.
+
+## Brief tutorial
+
+### Loading the COMPAS sample data set
 
 
-The fairness measures are computed based on a confusion matrix of a classification model.
-
-
-## Installation
-
-
-Installing the package:
-```
-devtools::install_github("kozodoi/Fairness")
-library("fairness")
-```
-
-Checking the list of implemented functions:
-```
-ls("package:fairness")
-```
-
-
-## Example
-
-1) Loading the sample data set:
-```
-df = fairness::compas
-head(df)
+```r
+data("compas")
 ```
 
-2) Generating predicted probabilities:
-```
-probs = df$score
-summary(probs)
+The data already contains all variables necessary to run all parity metrics. In case you set up your own predictive model, you will need to concatenate predicted probabilities or predictions (0/1) to your original dataset.
+
+### Running a selected function
+
+
+```r
+prop_parity(data=compas, 
+           group="ethnicity",
+           probs="probability", 
+           preds = NULL,
+           outcome_levels = c("no","yes"), 
+           cutoff = 0.5, 
+           base = "Caucasian")
 ```
 
-3) Computing accuracy parity for race:
+### Taking a look at the output
+
+
+
+Metrics for propor parity:     
+
 ```
-acc_parity(actuals = df$label_value, predicted = probs, group = df$race, base = "Caucasian")
+#>                     Caucasian African_American     Asian  Hispanic
+#> Proportion          0.3195435         0.591811 0.1290323 0.2927308
+#> Proportional Parity 1.0000000         1.852051 0.4038018 0.9160907
+#>                     Native_American     Other
+#> Proportion                0.4545455 0.2478134
+#> Proportional Parity       1.4224838 0.7755232
 ```
 
+Bar chart for the demographic parity metric:
+<img src="man/figures/README-unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="100%" />
+
+Predicted probability plot for all subgroups:
+<img src="man/figures/README-unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="100%" />
 
 ## Acknowledgments
 - Calders, T., & Verwer, S. (2010). Three naive Bayes approaches for discrimination-free classification. Data Mining and Knowledge Discovery, 21(2), 277-292.

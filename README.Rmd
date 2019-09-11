@@ -20,68 +20,97 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+```{r, include=FALSE}
+devtools::load_all(".")
+```
 
 # Overview of the fairness R package
 
-**fairness** is a ..
-## The fairness pipeline
+The fairness R package provides a tool to easily calculate algorithmic fairness metrics for given predicted probabilities or predicted classes between sensitive groups of populations. It also provides additional opportunities to compare various other prediction metrics between subgroups. 
 
-You will find a detailed manual in the missCompare vignette:
+You can load the package by running:
 ```{r eval = FALSE}
 install.packages("fairness")
 library(fairness)
+```
+
+## The fairness pipeline
+
+You will find a detailed tutorial in the missCompare vignette. We recommend that you spend some time going through the vignette, as it contains a much more in-depth description of the fairness package compared to this brief readme.
+
+```{r eval = FALSE}
 vignette("fairness")
 ```
 
 ## Description
 
-This package contains functions to compute measures of algorithmic fairness such as:
-- Disparate Impact
-- Demographic Parity
-- False Positive Parity
-- False Negative Parity
-- Positive Prediction Value Parity
-- Negative Prediction Value Parity
-- Accuracy Parity
+This package contains functions to compute the most commonly used metrics of algorithmic fairness such as:   
 
+- Demographic parity
+- Proportional parity
+- Equalized odds
+- Predictive rate parity
 
-The fairness measures are computed based on a confusion matrix of a classification model.
+In addition, the following comparisons are also implemented:    
 
+- False positive rate parity
+- False negative rate parity
+- Accuracy parity
+- Negative predictive value parity
+- Specificity parity
+- ROC AUC comparison
+- MCC comparison
 
-## Installation
+Most fairness measures are computed based on the confusion matrix resulting from a model fit of a given classification model.
 
+## Brief tutorial
 
-Installing the package:
-```
-devtools::install_github("kozodoi/Fairness")
-library("fairness")
-```
+### Loading the COMPAS sample data set
 
-Checking the list of implemented functions:
-```
-ls("package:fairness")
-```
-
-
-## Example
-
-1) Loading the sample data set:
-```
-df = fairness::compas
-head(df)
+```{r eval = TRUE}
+data("compas")
 ```
 
-2) Generating predicted probabilities:
-```
-probs = df$score
-summary(probs)
+The data already contains all variables necessary to run all parity metrics. In case you set up your own predictive model, you will need to concatenate predicted probabilities or predictions (0/1) to your original dataset.
+
+### Running a selected function
+
+```{r eval = FALSE}
+prop_parity(data=compas, 
+           group="ethnicity",
+           probs="probability", 
+           preds = NULL,
+           outcome_levels = c("no","yes"), 
+           cutoff = 0.5, 
+           base = "Caucasian")
 ```
 
-3) Computing accuracy parity for race:
-```
-acc_parity(actuals = df$label_value, predicted = probs, group = df$race, base = "Caucasian")
+### Taking a look at the output
+
+```{r eval = TRUE, echo = FALSE}
+output <- prop_parity(data=compas, 
+           group="ethnicity",
+           probs="probability", 
+           preds = NULL,
+           outcome_levels = c("no","yes"), 
+           cutoff = 0.5, 
+           base = "Caucasian")
 ```
 
+Metrics for propor parity:     
+```{r , echo = FALSE, fig.width=5, fig.height=3}
+output$Metric
+```
+
+Bar chart for the demographic parity metric:
+```{r , echo = FALSE, fig.width=5, fig.height=3}
+output$Metric_plot
+```
+
+Predicted probability plot for all subgroups:
+```{r , echo = FALSE, fig.width=5, fig.height=3}
+output$Probability_plot
+```
 
 ## Acknowledgments
 - Calders, T., & Verwer, S. (2010). Three naive Bayes approaches for discrimination-free classification. Data Mining and Knowledge Discovery, 21(2), 277-292.
