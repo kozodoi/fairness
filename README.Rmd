@@ -105,13 +105,12 @@ output$Metric
 ```
 
 Bar chart for the equalized odds metric:
-![Bar plot](https://github.com/kozodoi/Fairness/tree/master/man/figures/Plot_bar.png)
+![Bar plot](man/figures/Plot_bar.png)
 
 
 Predicted probability plot for all subgroups:
-```{r , echo = FALSE, example}
-print(output$Probability_plot)
-```
+![Bar plot](man/figures/Plot_prob.png)
+
 
 
 ## Acknowledgments

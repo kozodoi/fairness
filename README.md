@@ -97,11 +97,12 @@ Metrics for equalized odds:
 ```
 
 Bar chart for the equalized odds metric:
-![Bar plot](https://github.com/kozodoi/Fairness/tree/master/man/figures/Plot_bar.png)
+![Bar plot](man/figures/Plot_bar.png)
 
 
 Predicted probability plot for all subgroups:
-<img src="man/figures/README-example-1.png" title="plot of chunk example" alt="plot of chunk example" width="100%" />
+![Bar plot](man/figures/Plot_prob.png)
+
 
 
 ## Acknowledgments
