@@ -29,7 +29,7 @@
 #' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
 #' @examples
-#' load(compas)
+#' data(compas)
 #' acc_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
 #' probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
 #' cutoff = 0.4, base = 'Caucasian')

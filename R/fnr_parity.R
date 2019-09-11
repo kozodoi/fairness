@@ -28,7 +28,7 @@
 #' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
 #' @examples
-#' load(compas)
+#' data(compas)
 #' fnr_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
 #' probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
 #' cutoff = 0.4, base = 'Caucasian')
@@ -38,9 +38,9 @@
 #'
 #' @export
 
-fnr_parity <- function(data, outcome, group, probs = NULL, preds = NULL, outcome_levels = c("no", 
+fnr_parity <- function(data, outcome, group, probs = NULL, preds = NULL, outcome_levels = c("no",
     "yes"), cutoff = 0.5, base = NULL) {
-    
+
     # convert types, sync levels
     group_status <- as.factor(data[, group])
     outcome_status <- as.factor(data[, outcome])
@@ -51,34 +51,34 @@ fnr_parity <- function(data, outcome, group, probs = NULL, preds = NULL, outcome
         preds_status <- as.factor(as.numeric(data[, probs] > cutoff))
     }
     levels(preds_status) <- outcome_levels
-    
+
     # check lengths
-    if ((length(outcome_status) != length(preds_status)) | (length(outcome_status) != 
+    if ((length(outcome_status) != length(preds_status)) | (length(outcome_status) !=
         length(group_status))) {
         stop("Outcomes, predictions/probabilities and group status must be of the same length")
     }
-    
+
     # relevel group
     if (is.null(base)) {
         base <- levels(group_status)[1]
     }
     group_status <- relevel(group_status, base)
-    
+
     # placeholder
     val <- rep(NA, length(levels(group_status)))
     names(val) <- levels(group_status)
-    
+
     # compute value for all groups
     for (i in levels(group_status)) {
-        cm <- caret::confusionMatrix(preds_status[group_status == i], outcome_status[group_status == 
+        cm <- caret::confusionMatrix(preds_status[group_status == i], outcome_status[group_status ==
             i], mode = "everything")
         metric_i <- cm$table[3]/sum(cm$table[3], cm$table[4])
         val[i] <- metric_i
     }
-    
+
     res_table <- rbind(val, val/val[[1]])
     rownames(res_table) <- c("FNR", "FNR Parity")
-    
+
     # conversion of metrics to df
     val_df <- as.data.frame(res_table[2, ])
     colnames(val_df) <- c("val")
@@ -89,23 +89,23 @@ fnr_parity <- function(data, outcome, group, probs = NULL, preds = NULL, outcome
         val_df$groupst <- levels(val_df$groupst)[1]
     }
     val_df$groupst <- relevel(val_df$groupst, base)
-    
-    p <- ggplot(val_df, aes(x = groupst, weight = val, fill = groupst)) + geom_bar(alpha = 0.5) + 
+
+    p <- ggplot(val_df, aes(x = groupst, weight = val, fill = groupst)) + geom_bar(alpha = 0.5) +
         coord_flip() + theme(legend.position = "none") + labs(x = "", y = "False Negative Rate Parity")
-    
+
     # plotting
     if (!is.null(probs)) {
         probs_vals <- data[, probs]
-        q <- ggplot(data, aes(x = probs_vals, fill = group_status)) + geom_density(alpha = 0.5) + 
-            labs(x = "Predicted probabilities") + guides(fill = guide_legend(title = "")) + 
-            theme(plot.title = element_text(hjust = 0.5)) + xlim(0, 1) + geom_vline(xintercept = cutoff, 
+        q <- ggplot(data, aes(x = probs_vals, fill = group_status)) + geom_density(alpha = 0.5) +
+            labs(x = "Predicted probabilities") + guides(fill = guide_legend(title = "")) +
+            theme(plot.title = element_text(hjust = 0.5)) + xlim(0, 1) + geom_vline(xintercept = cutoff,
             linetype = "dashed")
     }
-    
+
     if (is.null(probs)) {
         list(Metric = res_table, Metric_plot = p)
     } else {
         list(Metric = res_table, Metric_plot = p, Probability_plot = q)
     }
-    
+
 }

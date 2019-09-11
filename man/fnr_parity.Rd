@@ -41,7 +41,7 @@ false negative error rates will be reflected in numbers lower than 1 in the retu
 lower than 1 mean BETTER prediction for the subgroup.
 }
 \examples{
-load(compas)
+data(compas)
 fnr_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
 probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
 cutoff = 0.4, base = 'Caucasian')

@@ -39,7 +39,7 @@ according to whether their proportion of positively predicted observations are l
 proportions will be reflected in numbers lower than 1 in the returned named vector.
 }
 \examples{
-load(compas)
+data(compas)
 dem_parity(data = compas, group = 'ethnicity',
 probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
 cutoff = 0.4, base = 'Caucasian')

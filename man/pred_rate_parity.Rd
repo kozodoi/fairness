@@ -10,6 +10,8 @@ pred_rate_parity(data, outcome, group, probs = NULL, preds = NULL,
 \arguments{
 \item{data}{The dataframe that contains the necessary columns.}
 
+\item{outcome}{The column name of the actual outcomes.}
+
 \item{group}{Sensitive group to examine.}
 
 \item{probs}{The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds need to be defined.}
@@ -41,7 +43,7 @@ precisions will be reflected in numbers lower than 1 in the returned named vecto
 lower than 1 mean WORSE prediction for the subgroup.
 }
 \examples{
-load(compas)
+data(compas)
 pred_rate_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
 probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
 cutoff = 0.4, base = 'Caucasian')

@@ -26,7 +26,7 @@
 #' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
 #' @examples
-#' load(compas)
+#' data(compas)
 #' prop_parity(data = compas, group = 'ethnicity',
 #' probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
 #' cutoff = 0.4, base = 'Caucasian')

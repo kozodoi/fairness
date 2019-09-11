@@ -42,7 +42,7 @@ sensitivities will be reflected in numbers lower than 1 in the returned named ve
 lower than 1 mean WORSE prediction for the subgroup.
 }
 \examples{
-load(compas)
+data(compas)
 equal_odds(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
 probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
 cutoff = 0.4, base = 'Caucasian')

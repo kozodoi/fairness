@@ -40,7 +40,7 @@ Matthews Correlation Coefficients rates will be reflected in numbers lower than 
 lower than 1 mean WORSE prediction for the subgroup.
 }
 \examples{
-load(compas)
+data(compas)
 mcc_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
 probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
 cutoff = 0.4, base = 'Caucasian')

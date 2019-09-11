@@ -15,6 +15,7 @@
 #'
 #'
 #' @param data The dataframe that contains the necessary columns.
+#' @param outcome The column name of the actual outcomes.
 #' @param group Sensitive group to examine.
 #' @param probs The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds need to be defined.
 #' @param preds The column name of the predicted outcome (categorical outcome). If not defined, argument probs need to be defined.
@@ -30,7 +31,7 @@
 #' \item{Probability_plot}{Density plot of predicted probabilities per subgroup. Only plotted if probabilities are defined}
 #'
 #' @examples
-#' load(compas)
+#' data(compas)
 #' pred_rate_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
 #' probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
 #' cutoff = 0.4, base = 'Caucasian')

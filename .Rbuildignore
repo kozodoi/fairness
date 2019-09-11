@@ -1,2 +1,10 @@
 ^fairness\.Rproj$
 ^\.Rproj\.user$
+^CRAN-RELEASE$
+^README\.Rmd$
+^README\.md$
+^README\.html$
+^cran-comments\.md$
+^\.travis\.yml$
+^Meta$
+^doc$

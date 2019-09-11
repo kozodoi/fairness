@@ -42,7 +42,7 @@ negative predictive values will be reflected in numbers lower than 1 in the retu
 lower than 1 mean WORSE prediction for the subgroup.
 }
 \examples{
-load(compas)
+data(compas)
 npv_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
 probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
 cutoff = 0.4, base = 'Caucasian')
