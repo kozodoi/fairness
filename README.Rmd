@@ -99,20 +99,17 @@ output <- equal_odds(data=compas,
            base = "Caucasian")
 ```
 
-Metrics for propor parity:     
-```{r , echo = FALSE, fig.width=3, fig.height=2}
+Metrics for equalized odds:     
+```{r , echo = FALSE}
 output$Metric
 ```
 
-Bar chart for the demographic parity metric:
-```{r , echo = FALSE, fig.width=3, fig.height=2}
-output$Metric_plot
-```
+Bar chart for the equalized odds metric:
+<img src="../man/figures/Plot_bar.png" width = "100%"/>
 
 Predicted probability plot for all subgroups:
-```{r , echo = FALSE, fig.width=3, fig.height=2}
-output$Probability_plot
-```
+<img src="../man/figures/Plot_prob.png" width = "100%"/>
+
 
 ## Acknowledgments
 - Calders, T., & Verwer, S. (2010). Three naive Bayes approaches for discrimination-free classification. Data Mining and Knowledge Discovery, 21(2), 277-292.

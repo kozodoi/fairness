@@ -85,7 +85,7 @@ equal_odds(data=compas,
 
 
 
-Metrics for propor parity:     
+Metrics for equalized odds:     
 
 ```
 #>                Caucasian African_American     Asian Hispanic
@@ -96,11 +96,12 @@ Metrics for propor parity:
 #> Equalized odds       0.8565697 1.0912463
 ```
 
-Bar chart for the demographic parity metric:
-<img src="man/figures/README-unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="100%" />
+Bar chart for the equalized odds metric:
+<img src="../man/figures/Plot_bar.png" width = "100%"/>
 
 Predicted probability plot for all subgroups:
-<img src="man/figures/README-unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="100%" />
+<img src="../man/figures/Plot_prob.png" width = "100%"/>
+
 
 ## Acknowledgments
 - Calders, T., & Verwer, S. (2010). Three naive Bayes approaches for discrimination-free classification. Data Mining and Knowledge Discovery, 21(2), 277-292.
