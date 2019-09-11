@@ -43,23 +43,183 @@ However, please feel free to set up other prediction models (e.g. excluding sens
 
 ## Algorithmic group fairness metrics
 
-The package currently includes 10 fairness metrics and two other comparisons implemented. Many of these metrics are mutually exclusive - results from a given classification most often cannot be fair in terms of all evaluated group fairness metrics. Below, all these functions will be introduced in detail - for the sake of simplicity, we will use predicted probabilities for all these functions instead of predicted classes. Note that in case of defining predicted probabilities, a cutoff needs to be defined in order to generate positive (1) or negative (0) predicted classes.
+The package currently includes nine fairness metrics and two other comparisons implemented. Many of these metrics are mutually exclusive - results from a given classification most often cannot be fair in terms of all evaluated group fairness metrics. Below, all these functions will be introduced in detail - for the sake of simplicity, we will use predicted probabilities for all these functions instead of predicted classes. Note that for all functions, in case of defining predicted probabilities, a cutoff needs to be defined in order to generate positive (1) or negative (0) predicted classes. Also, for all functions, a base group needs to be defined - all other groups will be compared to this subgroup in terms of fairness metrics.
+
+### An outlook on the confusion matrix
+
+Most fairness metrics use various measures calculated from the confusion matrix. The confusion matrix is comprised of four distinct classes:   
+
+1. **True positives (TP)**: True class positive and predicted positive (correct classification)     
+2. **False positives (FP)**: True class negative and predicted positive (incorrect classification)     
+3. **True negatives (TN)**: True class negative and predicted negative (correct classification)    
+4. **False negatives (FN)**: True class positive and predicted negative (incorrect classification)    
+
+All fairness metrics are calculated using one or more of these measures. For a detailed overview of various measures and precise definitions, please click [here](https://en.wikipedia.org/wiki/Confusion_matrix), [here](https://towardsdatascience.com/understanding-confusion-matrix-a9ad42dcfd62) or [here](https://www.geeksforgeeks.org/confusion-matrix-machine-learning/).
+
 
 ### *Demographic parity*
-Demographic parity is defined as
+Demographic parity is achieved if the absolute number of positive predictions in the subgroups are close to each other. This measure does not take true class into consideration, only positive predictions.    
+Formula: (TP + FP)
+
+```{r eval = FALSE}
+dem_parity(data=compas, 
+           group="African_American",
+           probs="probability", 
+           preds = NULL,
+           outcome_levels = c("no","yes"), 
+           cutoff = 0.5, 
+           base = "Caucasian")
+```
 
 ### *Proportional parity*
+Proportional parity is very similar to Demographic parity. Proportional parity is achieved if the proportion of positive predictions in the subgroups are close to each other. This measure does not take true class into consideration, only positive predictions.    
+Formula: (TP + FP) / (TP + FP + TN + FN)
+
+```{r eval = FALSE}
+prop_parity(data=compas, 
+            group="African_American",
+            probs="probability", 
+            preds = NULL,
+            outcome_levels = c("no","yes"), 
+            cutoff = 0.5, 
+            base = "Caucasian")
+```
+
+All the rest of the functions take the true class into consideration.    
+
 ### *Equalized odds*
+Equalized odds are achieved if the sensitivities (true positives divided by all positives) in the subgroups are close to each other.     
+Formula: TP / (TP + FN)
+
+```{r eval = FALSE}
+equal_odds(data=compas, 
+           outcome="Two_yr_Recidivism", 
+           group="African_American",
+           probs = "probability", 
+           preds = NULL,
+           outcome_levels = c("no","yes"), 
+           cutoff = 0.5, 
+           base = "African_American")
+```
+
 ### *Predictive rate parity*
+Predictive rate parity is achieved if the precisions or positive predictive values (true positives divided by all predicted positive) in the subgroups are close to each other.     
+Formula: TP / (TP + FP)
+
+```{r eval = FALSE}
+pred_rate_parity(data=compas, 
+                 outcome="Two_yr_Recidivism", 
+                 group="African_American",
+                 probs = "probability", 
+                 preds = NULL,
+                 outcome_levels = c("no","yes"), 
+                 cutoff = 0.5, 
+                 base = "African_American")
+```
+
 ### *Accuracy parity*
+Accuracy parity is achieved if the accuracies (all accurately classified divided by all predictions) in the subgroups are close to each other.     
+Formula: (TP + TN) / (TP + FP + TN + FN)
+
+```{r eval = FALSE}
+acc_parity(data=compas, 
+           outcome="Two_yr_Recidivism", 
+           group="African_American",
+           probs = "probability", 
+           preds = NULL,
+           outcome_levels = c("no","yes"), 
+           cutoff = 0.5, 
+           base = "African_American")
+```
+
 ### *False negative rate parity*
+False negative rate parity is achieved if the false negative rates (division of false negatives with all positives) in the subgroups are close to each other.     
+Formula: FN / (TP + FN)
+
+```{r eval = FALSE}
+fnr_parity(data=compas, 
+           outcome="Two_yr_Recidivism", 
+           group="African_American",
+           probs = "probability", 
+           preds = NULL,
+           outcome_levels = c("no","yes"), 
+           cutoff = 0.5, 
+           base = "African_American")
+```
+
 ### *False positive rate parity*
-### *Positive predictive value parity*
+False positive rate parity is achieved if the false positive rates (division of false positives with all negatives) in the subgroups are close to each other.     
+Formula: FP / (TN + FP)
+
+```{r eval = FALSE}
+fpr_parity(data=compas, 
+           outcome="Two_yr_Recidivism", 
+           group="African_American",
+           probs = "probability", 
+           preds = NULL,
+           outcome_levels = c("no","yes"), 
+           cutoff = 0.5, 
+           base = "African_American")
+```
+
 ### *Negative predictive value parity*
+Negative predictive value parity is achieved if the negative predictive values (division of true negatives with all predicted negatives) in the subgroups are close to each other.     
+Formula: TN / (TN + FN)
+
+```{r eval = FALSE}
+npv_parity(data=compas, 
+           outcome="Two_yr_Recidivism", 
+           group="African_American",
+           probs = "probability", 
+           preds = NULL,
+           outcome_levels = c("no","yes"), 
+           cutoff = 0.5, 
+           base = "African_American")
+```
+
 ### *Specificity parity*
+Specificity parity is achieved if the specificities (division of true negatives with all negatives) in the subgroups are close to each other.     
+Formula: TN / (TN + FP)
+
+```{r eval = FALSE}
+spec_parity(data=compas, 
+            outcome="Two_yr_Recidivism", 
+            group="African_American",
+            probs = "probability", 
+            preds = NULL,
+            outcome_levels = c("no","yes"), 
+            cutoff = 0.5, 
+            base = "African_American")
+```
+
+Two additional comparisons are implemented, namely ROC AUC and Matthews correlation coefficient comparisons.    
 
 ### *ROC AUC comparison*
-### *Matthews Correlation coefficient comparison*
+This function calculates ROC AUC and visualizes ROC curves for all subgroups. Note that probabilities must be defined for this function. Also, as ROC evaluates all possible cutoffs, the cutoff argument is excluded from this function.    
+
+```{r eval = FALSE}
+roc_parity(data=compas, 
+           outcome="Two_yr_Recidivism", 
+           group="African_American",
+           probs = "probability", 
+           outcome_levels = c("no","yes"), 
+           base = "African_American")
+```
+
+### *Matthews correlation coefficient comparison*
+The Matthews correlation coefficient takes all 4 classes of the confusion matrix into consideration. According to some, it is the single most powerful metric in binary classification problems, especially for data with class imbalances.     
+Formula: (TP×TN-FP×FN)/√((TP+FP)(TP+FN)(TN+FP)(TN+FN))
+
+```{r eval = FALSE}
+mcc_parity(data=compas, 
+           outcome="Two_yr_Recidivism", 
+           group="African_American",
+           probs = "probability", 
+           preds = NULL,
+           outcome_levels = c("no","yes"), 
+           cutoff = 0.5, 
+           base = "African_American")
+```
 
 
 ## Output and visualizations

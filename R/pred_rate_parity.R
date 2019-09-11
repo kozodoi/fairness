@@ -7,7 +7,7 @@
 #' This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by
 #' Zafar et al., 2017. Predictive rate parity is calculated
 #' by the division of true positives with all observations predicted positives. This metrics equals to
-#' what is traditionally known as precision. In the returned
+#' what is traditionally known as precision or positive predictive value. In the returned
 #' named vector, the reference group will be assigned 1, while all other groups will be assigned values
 #' according to whether their precisions are lower or higher compared to the reference group. Lower
 #' precisions will be reflected in numbers lower than 1 in the returned named vector, thus numbers
@@ -40,9 +40,9 @@
 #'
 #' @export
 
-pred_rate_parity <- function(data, outcome, group, probs = NULL, preds = NULL, outcome_levels = c("no", 
+pred_rate_parity <- function(data, outcome, group, probs = NULL, preds = NULL, outcome_levels = c("no",
     "yes"), cutoff = 0.5, base = NULL) {
-    
+
     # convert types, sync levels
     group_status <- as.factor(data[, group])
     outcome_status <- as.factor(data[, outcome])
@@ -53,34 +53,34 @@ pred_rate_parity <- function(data, outcome, group, probs = NULL, preds = NULL, o
         preds_status <- as.factor(as.numeric(data[, probs] > cutoff))
     }
     levels(preds_status) <- outcome_levels
-    
+
     # check lengths
-    if ((length(outcome_status) != length(preds_status)) | (length(outcome_status) != 
+    if ((length(outcome_status) != length(preds_status)) | (length(outcome_status) !=
         length(group_status))) {
         stop("Outcomes, predictions/probabilities and group status must be of the same length")
     }
-    
+
     # relevel group
     if (is.null(base)) {
         base <- levels(group_status)[1]
     }
     group_status <- relevel(group_status, base)
-    
+
     # placeholder
     val <- rep(NA, length(levels(group_status)))
     names(val) <- levels(group_status)
-    
+
     # compute value for all groups
     for (i in levels(group_status)) {
-        cm <- caret::confusionMatrix(preds_status[group_status == i], outcome_status[group_status == 
+        cm <- caret::confusionMatrix(preds_status[group_status == i], outcome_status[group_status ==
             i], mode = "everything")
         metric_i <- cm$byClass[5]
         val[i] <- metric_i
     }
-    
+
     res_table <- rbind(val, val/val[[1]])
     rownames(res_table) <- c("Precision", "Predictive Rate Parity")
-    
+
     # conversion of metrics to df
     val_df <- as.data.frame(res_table[2, ])
     colnames(val_df) <- c("val")
@@ -91,23 +91,23 @@ pred_rate_parity <- function(data, outcome, group, probs = NULL, preds = NULL, o
         val_df$groupst <- levels(val_df$groupst)[1]
     }
     val_df$groupst <- relevel(val_df$groupst, base)
-    
-    p <- ggplot(val_df, aes(x = groupst, weight = val, fill = groupst)) + geom_bar(alpha = 0.5) + 
+
+    p <- ggplot(val_df, aes(x = groupst, weight = val, fill = groupst)) + geom_bar(alpha = 0.5) +
         coord_flip() + theme(legend.position = "none") + labs(x = "", y = "Predictive Rate Parity")
-    
+
     # plotting
     if (!is.null(probs)) {
         probs_vals <- data[, probs]
-        q <- ggplot(data, aes(x = probs_vals, fill = group_status)) + geom_density(alpha = 0.5) + 
-            labs(x = "Predicted probabilities") + guides(fill = guide_legend(title = "")) + 
-            theme(plot.title = element_text(hjust = 0.5)) + xlim(0, 1) + geom_vline(xintercept = cutoff, 
+        q <- ggplot(data, aes(x = probs_vals, fill = group_status)) + geom_density(alpha = 0.5) +
+            labs(x = "Predicted probabilities") + guides(fill = guide_legend(title = "")) +
+            theme(plot.title = element_text(hjust = 0.5)) + xlim(0, 1) + geom_vline(xintercept = cutoff,
             linetype = "dashed")
     }
-    
+
     if (is.null(probs)) {
         list(Metric = res_table, Metric_plot = p)
     } else {
         list(Metric = res_table, Metric_plot = p, Probability_plot = q)
     }
-    
+
 }
