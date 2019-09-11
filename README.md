@@ -97,10 +97,10 @@ Metrics for equalized odds:
 ```
 
 Bar chart for the equalized odds metric:
-<img src="../man/figures/Plot_bar.png" width = "100%"/>
+<img src="man/figures/README-unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="100%" />
 
 Predicted probability plot for all subgroups:
-<img src="../man/figures/Plot_prob.png" width = "100%"/>
+<img src="man/figures/README-unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="100%" />
 
 
 ## Acknowledgments

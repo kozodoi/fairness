@@ -105,10 +105,14 @@ output$Metric
 ```
 
 Bar chart for the equalized odds metric:
-<img src="../man/figures/Plot_bar.png" width = "100%"/>
+```{r , echo = FALSE, fig.width=5, fig.height=3}
+print(output$Metric_plot)
+```
 
 Predicted probability plot for all subgroups:
-<img src="../man/figures/Plot_prob.png" width = "100%"/>
+```{r , echo = FALSE, fig.width=5, fig.height=3}
+print(output$Probability_plot)
+```
 
 
 ## Acknowledgments
