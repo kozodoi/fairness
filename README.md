@@ -97,10 +97,10 @@ Metrics for equalized odds:
 ```
 
 Bar chart for the equalized odds metric:
-<img src="man/figures/README-example-1.png" title="plot of chunk example" alt="plot of chunk example" width="100%" />
+<a href="https://github.com/kozodoi/Fairness/tree/master/man/figures/Plot_bar.png"><img src="https://github.com/kozodoi/Fairness/tree/master/man/figures/Plot_bar.png" width="630" height="252"/></a>
 
 Predicted probability plot for all subgroups:
-<img src="man/figures/README-unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="100%" />
+<img src="man/figures/README-example-1.png" title="plot of chunk example" alt="plot of chunk example" width="100%" />
 
 
 ## Acknowledgments
