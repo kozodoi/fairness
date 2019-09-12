@@ -1,23 +1,25 @@
-#' Simplified COMPAS dataset
+#' Modified COMPAS dataset
 #'
 #' @description
-#' \code{\link{compas}} is a custom made dataframe that resembles a real-life clinical dataset.
-#' The correlations between variables, the data means, SDs and ranges are realistic, but
-#' the dataset is constructed by simulations and manual data input. The dataset contains
-#' missing values (approximately 10\% missing overall), and values are missing in a realistic pattern.
+#' \code{\link{compas}} is a landmark dataset to study algorithmic (un)fairness. This data was used to
+#' predict recidivism (whether a criminal will reoffend or not) in the USA. The tool was meant to overcome
+#' human biases and offer an algorithmic, fair solution to predict recidivism in a diverse population.
+#' However, the algorithm ended up propagating existing social biases and thus, offeren an unfair algorithmic
+#' solution to the problem. In this dataset, a model to predict recidivism has already been fit and predicted
+#' probabilities and predicted status (yes/no) for recidivism have been concatenated to the original data.
 #'
-#' @format A data frame with 2500 rows and 12 variables:
+#' @format A data frame with 6172 rows and 9 variables:
 #' \describe{
-#'   \item{Two_yr_Recidivism}{factor, age, in years, 2.88\% missing - in general, age is not likely have lots of missing data in a realistic dataset, therefore only a few values are missing here randomly, e.g. due to mistakes in data input}
-#'   \item{Number_of_Priors}{numeric, male=1 and female=2, 2.88\% missing - similar to age, sex information is also not likely have missing data in a realistic dataset, no values are missing here}
-#'   \item{Age_Above_FourtyFive}{factor, waist circumference, in cm, 4.12\% missing - anthropometric data is easy to collect, therefore only a small fraction is missing here, often missing together with BMI, the other anthropometric variable}
-#'   \item{Age_Below_TwentyFive}{factor, body mass index, in kg/m2, 4.16\% missing - anthropometric data is easy to collect, therefore only a small fraction is missing here, often missing together with waist, the other anthropometric variable}
-#'   \item{Female}{factor, systolic blood pressure, in mmHg, 8.84\% missing - in a realistic fashion, SBP is almost always missing together with DBP}
-#'   \item{Misdemeanor}{factor, diastolic blood pressure, in mmHg, 8.84\% missing - in a realistic fashion, DBP is almost always missing together with SBP}
-#'   \item{ethnicity}{factor, blood fasting glucose concentration, in mmol/dl, 5.84\% missing - often missing together with other clinical variables}
-#'   \item{probability}{numeric, predicted probabilities}
-#'   \item{predicted}{numeric, predicted values, 0/1 for no/yes}
+#'   \item{Two_yr_Recidivism}{factor, yes/no for recidivism or no recidivism. This is the outcome or target in this dataset}
+#'   \item{Number_of_Priors}{numeric, number of priors, normalized to mean = 0 and standard deviation = 1}
+#'   \item{Age_Above_FourtyFive}{factor, yes/no for age above 45 years or not}
+#'   \item{Age_Below_TwentyFive}{factor, yes/no for age below 25 years or not}
+#'   \item{Female}{factor, yes/no for females and males}
+#'   \item{Misdemeanor}{factor, yes/no for has recoder misdemeanor(s) or not}
+#'   \item{ethnicity}{factor, Caucasian, African American, Asian, Hispanic, Native American or Other}
+#'   \item{probability}{numeric, predicted probabilities for recidivism, ranges from 0 to 1}
+#'   \item{predicted}{numeric, predicted values for recidivism, 0/1 for no/yes}
 #' }
 #'
-#' @source The dataset is simulated and undergone manual configuration.
+#' @source The dataset is downloaded from Kaggle (https://www.kaggle.com/danofer/compass) and has undergone modifications (e.g. ethinicity was originally encoded using one-hot encoding, number or priors have been normalized, variables have been renamed, prediction model was fit and predicted probabilities and predicted status were concatenated to the original dataset).
 "compas"
