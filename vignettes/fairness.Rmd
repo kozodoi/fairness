@@ -51,7 +51,7 @@ The package currently includes nine fairness metrics and two other comparisons i
 
 ### An outlook on the confusion matrix
 
-Most fairness metrics use various measures calculated from the confusion matrix. The confusion matrix is comprised of four distinct classes:   
+Most fairness metrics use various measures calculated from the confusion matrix. The confusion matrix is comprised of four distinct classes:    
 
 1. **True positives (TP)**: True class positive and predicted positive (correct classification)     
 2. **False positives (FP)**: True class negative and predicted positive (incorrect classification)     
@@ -63,7 +63,7 @@ All fairness metrics are calculated using one or more of these measures. For a d
 
 ### *Demographic parity*
 Demographic parity is achieved if the absolute number of positive predictions in the subgroups are close to each other. This measure does not take true class into consideration, only positive predictions.    
-Formula: (TP + FP)
+Formula: **(TP + FP)**
 
 ```{r eval = FALSE}
 dem_parity(data=compas, 
@@ -77,7 +77,7 @@ dem_parity(data=compas,
 
 ### *Proportional parity*
 Proportional parity is very similar to Demographic parity. Proportional parity is achieved if the proportion of positive predictions in the subgroups are close to each other. This measure does not take true class into consideration, only positive predictions.    
-Formula: (TP + FP) / (TP + FP + TN + FN)
+Formula: **(TP + FP) / (TP + FP + TN + FN)**
 
 ```{r eval = FALSE}
 prop_parity(data=compas, 
@@ -93,7 +93,7 @@ All the rest of the functions take the true class into consideration.
 
 ### *Equalized odds*
 Equalized odds are achieved if the sensitivities (true positives divided by all positives) in the subgroups are close to each other.     
-Formula: TP / (TP + FN)
+Formula: **TP / (TP + FN)**
 
 ```{r eval = FALSE}
 equal_odds(data=compas, 
@@ -108,7 +108,7 @@ equal_odds(data=compas,
 
 ### *Predictive rate parity*
 Predictive rate parity is achieved if the precisions or positive predictive values (true positives divided by all predicted positive) in the subgroups are close to each other.     
-Formula: TP / (TP + FP)
+Formula: **TP / (TP + FP)**
 
 ```{r eval = FALSE}
 pred_rate_parity(data=compas, 
@@ -123,7 +123,7 @@ pred_rate_parity(data=compas,
 
 ### *Accuracy parity*
 Accuracy parity is achieved if the accuracies (all accurately classified divided by all predictions) in the subgroups are close to each other.     
-Formula: (TP + TN) / (TP + FP + TN + FN)
+Formula: **(TP + TN) / (TP + FP + TN + FN)**
 
 ```{r eval = FALSE}
 acc_parity(data=compas, 
@@ -138,7 +138,7 @@ acc_parity(data=compas,
 
 ### *False negative rate parity*
 False negative rate parity is achieved if the false negative rates (division of false negatives with all positives) in the subgroups are close to each other.     
-Formula: FN / (TP + FN)
+Formula: **FN / (TP + FN)**
 
 ```{r eval = FALSE}
 fnr_parity(data=compas, 
@@ -153,7 +153,7 @@ fnr_parity(data=compas,
 
 ### *False positive rate parity*
 False positive rate parity is achieved if the false positive rates (division of false positives with all negatives) in the subgroups are close to each other.     
-Formula: FP / (TN + FP)
+Formula: **FP / (TN + FP)**
 
 ```{r eval = FALSE}
 fpr_parity(data=compas, 
@@ -168,7 +168,7 @@ fpr_parity(data=compas,
 
 ### *Negative predictive value parity*
 Negative predictive value parity is achieved if the negative predictive values (division of true negatives with all predicted negatives) in the subgroups are close to each other. This function can be considered the "inverse" of Predictive rate parity.      
-Formula: TN / (TN + FN)
+Formula: **TN / (TN + FN)**
 
 ```{r eval = FALSE}
 npv_parity(data=compas, 
@@ -183,7 +183,7 @@ npv_parity(data=compas,
 
 ### *Specificity parity*
 Specificity parity is achieved if the specificities (division of true negatives with all negatives) in the subgroups are close to each other. This function can be considered the "inverse" of Equalized odds.        
-Formula: TN / (TN + FP)
+Formula: **TN / (TN + FP)**
 
 ```{r eval = FALSE}
 spec_parity(data=compas, 
@@ -212,7 +212,7 @@ roc_parity(data=compas,
 
 ### *Matthews correlation coefficient comparison*
 The Matthews correlation coefficient takes all 4 classes of the confusion matrix into consideration. According to some, it is the single most powerful metric in binary classification problems, especially for data with class imbalances.     
-Formula: (TP×TN-FP×FN)/√((TP+FP)×(TP+FN)×(TN+FP)×(TN+FN))
+Formula: **(TP×TN-FP×FN)/√((TP+FP)×(TP+FN)×(TN+FP)×(TN+FN))**
 
 ```{r eval = FALSE}
 mcc_parity(data=compas, 

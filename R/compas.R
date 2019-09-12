@@ -21,5 +21,5 @@
 #'   \item{predicted}{numeric, predicted values for recidivism, 0/1 for no/yes}
 #' }
 #'
-#' @source The dataset is downloaded from Kaggle (https://www.kaggle.com/danofer/compass) and has undergone modifications (e.g. ethinicity was originally encoded using one-hot encoding, number or priors have been normalized, variables have been renamed, prediction model was fit and predicted probabilities and predicted status were concatenated to the original dataset).
+#' @source The dataset is downloaded from Kaggle \url{https://www.kaggle.com/danofer/compass} and has undergone modifications (e.g. ethinicity was originally encoded using one-hot encoding, number or priors have been normalized, variables have been renamed, prediction model was fit and predicted probabilities and predicted status were concatenated to the original dataset).
 "compas"
