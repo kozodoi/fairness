@@ -4,8 +4,8 @@
 \alias{dem_parity}
 \title{Demographic parity}
 \usage{
-dem_parity(data, group, probs = NULL, preds = NULL,
-  outcome_levels = c("no", "yes"), cutoff = 0.5, base = NULL)
+dem_parity(data, group, probs = NULL, preds = NULL, cutoff = 0.5,
+  base = NULL)
 }
 \arguments{
 \item{data}{The dataframe that contains the necessary columns.}
@@ -15,8 +15,6 @@ dem_parity(data, group, probs = NULL, preds = NULL,
 \item{probs}{The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds need to be defined.}
 
 \item{preds}{The column name of the predicted outcome (categorical outcome). If not defined, argument probs need to be defined.}
-
-\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.}
 
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
@@ -41,10 +39,10 @@ proportions will be reflected in numbers lower than 1 in the returned named vect
 \examples{
 data(compas)
 dem_parity(data = compas, group = 'ethnicity',
-probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
+probs = 'probability', preds = NULL,
 cutoff = 0.4, base = 'Caucasian')
 dem_parity(data = compas, group = 'ethnicity',
-probs = NULL, preds = 'predicted', outcome_levels = c('no', 'yes'),
+probs = NULL, preds = 'predicted',
 cutoff = 0.5, base = 'Hispanic')
 
 }

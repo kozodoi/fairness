@@ -15,7 +15,6 @@
 #' @param group Sensitive group to examine.
 #' @param probs The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds need to be defined.
 #' @param preds The column name of the predicted outcome (categorical outcome). If not defined, argument probs need to be defined.
-#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
 #' @param base Base level for sensitive group comparison
 #'
@@ -29,17 +28,16 @@
 #' @examples
 #' data(compas)
 #' dem_parity(data = compas, group = 'ethnicity',
-#' probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
+#' probs = 'probability', preds = NULL,
 #' cutoff = 0.4, base = 'Caucasian')
 #' dem_parity(data = compas, group = 'ethnicity',
-#' probs = NULL, preds = 'predicted', outcome_levels = c('no', 'yes'),
+#' probs = NULL, preds = 'predicted',
 #' cutoff = 0.5, base = 'Hispanic')
 #'
 #' @export
 
 
-dem_parity <- function(data, group, probs = NULL, preds = NULL, outcome_levels = c("no",
-    "yes"), cutoff = 0.5, base = NULL) {
+dem_parity <- function(data, group, probs = NULL, preds = NULL, cutoff = 0.5, base = NULL) {
 
     # convert types, sync levels
     group_status <- as.factor(data[, group])

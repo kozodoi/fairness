@@ -4,8 +4,8 @@
 \alias{prop_parity}
 \title{Proportional parity}
 \usage{
-prop_parity(data, group, probs = NULL, preds = NULL,
-  outcome_levels = c("no", "yes"), cutoff = 0.5, base = NULL)
+prop_parity(data, group, probs = NULL, preds = NULL, cutoff = 0.5,
+  base = NULL)
 }
 \arguments{
 \item{data}{The dataframe that contains the necessary columns.}
@@ -15,8 +15,6 @@ prop_parity(data, group, probs = NULL, preds = NULL,
 \item{probs}{The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds need to be defined.}
 
 \item{preds}{The column name of the predicted outcome (categorical outcome). If not defined, argument probs need to be defined.}
-
-\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.}
 
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
@@ -31,19 +29,19 @@ prop_parity(data, group, probs = NULL, preds = NULL,
 This function computes the Proportional parity metric
 }
 \details{
-This function computes the Proportional parity metric (also known as Impact Parity or Minimizing Disparate Impact) as described by Calders and Verwer 2010. Demographic parity is calculated
-based on the comparison of the absolute number of all positively classified individuals in all subgroups of the data. In the returned
-named vector, the reference group will be assigned 1, while all other groups will be assigned values
+This function computes the Proportional parity metric (also known as Impact Parity or Minimizing Disparate Impact) as described by Calders and Verwer 2010. 
+Proportional parity is calculated based on the comparison of the absolute number of all positively classified individuals in all subgroups of the data. 
+In the returned named vector, the reference group will be assigned 1, while all other groups will be assigned values
 according to whether their proportion of positively predicted observations are lower or higher compared to the reference group. Lower
 proportions will be reflected in numbers lower than 1 in the returned named vector.
 }
 \examples{
 data(compas)
 prop_parity(data = compas, group = 'ethnicity',
-probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
+probs = 'probability', preds = NULL, 
 cutoff = 0.4, base = 'Caucasian')
 prop_parity(data = compas, group = 'ethnicity',
-probs = NULL, preds = 'predicted', outcome_levels = c('no', 'yes'),
+probs = NULL, preds = 'predicted', 
 cutoff = 0.5, base = 'Hispanic')
 
 }
