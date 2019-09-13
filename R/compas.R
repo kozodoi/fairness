@@ -14,7 +14,7 @@
 #'   \item{Number_of_Priors}{numeric, number of priors, normalized to mean = 0 and standard deviation = 1}
 #'   \item{Age_Above_FourtyFive}{factor, yes/no for age above 45 years or not}
 #'   \item{Age_Below_TwentyFive}{factor, yes/no for age below 25 years or not}
-#'   \item{Female}{factor, yes/no for females and males}
+#'   \item{Female}{factor, female/male for gender}
 #'   \item{Misdemeanor}{factor, yes/no for has recoder misdemeanor(s) or not}
 #'   \item{ethnicity}{factor, Caucasian, African American, Asian, Hispanic, Native American or Other}
 #'   \item{probability}{numeric, predicted probabilities for recidivism, ranges from 0 to 1}
