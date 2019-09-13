@@ -35,7 +35,7 @@ library(fairness)
 
 ## Description of data: *compas*
 
-The data you will be able to use for this tutorial is a simlified version of the landmark COMPAS dataset. You can read more about the dataset here, here and here. To load the dataset, all you need to do is:
+This package includes two datasets to study algorithmic fairness: *compas* and *german*. In this tutorial, you will be able to use a simlified version of the landmark COMPAS dataset. You can read more about the dataset [here](https://github.com/propublica/compas-analysis). To load the dataset, all you need to do is:
 
 ```{r eval = TRUE}
 data("compas")
