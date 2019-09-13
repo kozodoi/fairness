@@ -66,13 +66,13 @@ Demographic parity is achieved if the absolute number of positive predictions in
 Formula: **(TP + FP)**
 
 ```{r eval = FALSE}
-dem_parity(data=compas, 
-           group="ethnicity",
-           probs="probability", 
+dem_parity(data  = compas, 
+           group = "ethnicity",
+           probs = "probability", 
            preds = NULL,
            outcome_levels = c("no","yes"), 
            cutoff = 0.5, 
-           base = "Caucasian")
+           base   = "Caucasian")
 ```
 
 ### *Proportional parity*
@@ -80,13 +80,13 @@ Proportional parity is very similar to Demographic parity. Proportional parity i
 Formula: **(TP + FP) / (TP + FP + TN + FN)**
 
 ```{r eval = FALSE}
-prop_parity(data=compas, 
-            group="ethnicity",
-            probs="probability", 
+prop_parity(data  = compas, 
+            group = "ethnicity",
+            probs = "probability", 
             preds = NULL,
             outcome_levels = c("no","yes"), 
             cutoff = 0.5, 
-            base = "Caucasian")
+            base   = "Caucasian")
 ```
 
 All the rest of the functions take the true class into consideration.    
@@ -96,14 +96,14 @@ Equalized odds are achieved if the sensitivities (true positives divided by all 
 Formula: **TP / (TP + FN)**
 
 ```{r eval = FALSE}
-equal_odds(data=compas, 
-           outcome="Two_yr_Recidivism", 
-           group="ethnicity",
-           probs = "probability", 
-           preds = NULL,
+equal_odds(data    = compas, 
+           outcome = "Two_yr_Recidivism", 
+           group   = "ethnicity",
+           probs   = "probability", 
+           preds   = NULL,
            outcome_levels = c("no","yes"), 
            cutoff = 0.5, 
-           base = "African_American")
+           base   = "African_American")
 ```
 
 ### *Predictive rate parity*
@@ -111,14 +111,14 @@ Predictive rate parity is achieved if the precisions or positive predictive valu
 Formula: **TP / (TP + FP)**
 
 ```{r eval = FALSE}
-pred_rate_parity(data=compas, 
-                 outcome="Two_yr_Recidivism", 
-                 group="ethnicity",
-                 probs = "probability", 
-                 preds = NULL,
+pred_rate_parity(data    = compas, 
+                 outcome = "Two_yr_Recidivism", 
+                 group   = "ethnicity",
+                 probs   = "probability", 
+                 preds   = NULL,
                  outcome_levels = c("no","yes"), 
                  cutoff = 0.5, 
-                 base = "African_American")
+                 base   = "African_American")
 ```
 
 ### *Accuracy parity*
@@ -126,14 +126,14 @@ Accuracy parity is achieved if the accuracies (all accurately classified divided
 Formula: **(TP + TN) / (TP + FP + TN + FN)**
 
 ```{r eval = FALSE}
-acc_parity(data=compas, 
-           outcome="Two_yr_Recidivism", 
-           group="ethnicity",
-           probs = "probability", 
-           preds = NULL,
+acc_parity(data    = compas, 
+           outcome = "Two_yr_Recidivism", 
+           group   = "ethnicity",
+           probs   = "probability", 
+           preds   = NULL,
            outcome_levels = c("no","yes"), 
            cutoff = 0.5, 
-           base = "African_American")
+           base   = "African_American")
 ```
 
 ### *False negative rate parity*
@@ -141,14 +141,14 @@ False negative rate parity is achieved if the false negative rates (division of 
 Formula: **FN / (TP + FN)**
 
 ```{r eval = FALSE}
-fnr_parity(data=compas, 
-           outcome="Two_yr_Recidivism", 
-           group="ethnicity",
-           probs = "probability", 
-           preds = NULL,
+fnr_parity(data    = compas, 
+           outcome = "Two_yr_Recidivism", 
+           group   = "ethnicity",
+           probs   = "probability", 
+           preds   = NULL,
            outcome_levels = c("no","yes"), 
            cutoff = 0.5, 
-           base = "African_American")
+           base   = "African_American")
 ```
 
 ### *False positive rate parity*
@@ -156,14 +156,14 @@ False positive rate parity is achieved if the false positive rates (division of 
 Formula: **FP / (TN + FP)**
 
 ```{r eval = FALSE}
-fpr_parity(data=compas, 
-           outcome="Two_yr_Recidivism", 
-           group="ethnicity",
-           probs = "probability", 
-           preds = NULL,
+fpr_parity(data    = compas, 
+           outcome = "Two_yr_Recidivism", 
+           group   = "ethnicity",
+           probs   = "probability", 
+           preds   = NULL,
            outcome_levels = c("no","yes"), 
            cutoff = 0.5, 
-           base = "African_American")
+           base   = "African_American")
 ```
 
 ### *Negative predictive value parity*
@@ -171,14 +171,14 @@ Negative predictive value parity is achieved if the negative predictive values (
 Formula: **TN / (TN + FN)**
 
 ```{r eval = FALSE}
-npv_parity(data=compas, 
-           outcome="Two_yr_Recidivism", 
-           group="ethnicity",
-           probs = "probability", 
-           preds = NULL,
+npv_parity(data    = compas, 
+           outcome = "Two_yr_Recidivism", 
+           group   = "ethnicity",
+           probs   = "probability", 
+           preds   = NULL,
            outcome_levels = c("no","yes"), 
            cutoff = 0.5, 
-           base = "African_American")
+           base   = "African_American")
 ```
 
 ### *Specificity parity*
@@ -186,14 +186,14 @@ Specificity parity is achieved if the specificities (division of true negatives 
 Formula: **TN / (TN + FP)**
 
 ```{r eval = FALSE}
-spec_parity(data=compas, 
-            outcome="Two_yr_Recidivism", 
-            group="ethnicity",
-            probs = "probability", 
-            preds = NULL,
+spec_parity(data    = compas, 
+            outcome = "Two_yr_Recidivism", 
+            group   = "ethnicity",
+            probs   = "probability", 
+            preds   = NULL,
             outcome_levels = c("no","yes"), 
             cutoff = 0.5, 
-            base = "African_American")
+            base   = "African_American")
 ```
 
 Two additional comparisons are implemented, namely ROC AUC and Matthews correlation coefficient comparisons.    
@@ -202,10 +202,10 @@ Two additional comparisons are implemented, namely ROC AUC and Matthews correlat
 This function calculates ROC AUC and visualizes ROC curves for all subgroups. Note that probabilities must be defined for this function. Also, as ROC evaluates all possible cutoffs, the cutoff argument is excluded from this function.    
 
 ```{r eval = FALSE}
-roc_parity(data=compas, 
-           outcome="Two_yr_Recidivism", 
-           group="ethnicity",
-           probs = "probability", 
+roc_parity(data    = compas, 
+           outcome = "Two_yr_Recidivism", 
+           group   = "ethnicity",
+           probs   = "probability", 
            outcome_levels = c("no","yes"), 
            base = "African_American")
 ```
@@ -215,14 +215,14 @@ The Matthews correlation coefficient takes all 4 classes of the confusion matrix
 Formula: **(TP×TN-FP×FN)/√((TP+FP)×(TP+FN)×(TN+FP)×(TN+FN))**
 
 ```{r eval = FALSE}
-mcc_parity(data=compas, 
-           outcome="Two_yr_Recidivism", 
-           group="ethnicity",
-           probs = "probability", 
-           preds = NULL,
+mcc_parity(data    = compas, 
+           outcome = "Two_yr_Recidivism", 
+           group   = "ethnicity",
+           probs   = "probability", 
+           preds   = NULL,
            outcome_levels = c("no","yes"), 
            cutoff = 0.5, 
-           base = "African_American")
+           base   = "African_American")
 ```
 
 
@@ -231,14 +231,14 @@ mcc_parity(data=compas,
 All functions output results and matching barcharts that provide visual cues about the parity metrics for the defined sensitive subgroups. For instance, let's look at predictive rate parity with ethnicity being set as the sensitive group and considering Caucasians as the "base" group:
 
 ```{r echo = FALSE}
-output <- pred_rate_parity(data=compas, 
-                 outcome="Two_yr_Recidivism", 
-                 group="ethnicity",
-                 probs = "probability", 
-                 preds = NULL,
+output <- pred_rate_parity(data = compas, 
+                 outcome = "Two_yr_Recidivism", 
+                 group   = "ethnicity",
+                 probs   = "probability", 
+                 preds   = NULL,
                  outcome_levels = c("no","yes"), 
                  cutoff = 0.5, 
-                 base = "Caucasian")
+                 base   = "Caucasian")
 ```
 ```{r }
 output$Metric
@@ -246,14 +246,14 @@ output$Metric
 
 In the upper row, the raw precision values are shown for all ethnicities, and in the row below, the relative precisions compared to Caucasians (1) are shown. Note that in case an other ethnic group is set as the base group (e.g. Hispanic), the raw precision values do not change, only the relative metrics:
 ```{r echo = FALSE}
-output <- pred_rate_parity(data=compas, 
-                 outcome="Two_yr_Recidivism", 
-                 group="ethnicity",
-                 probs = "probability", 
-                 preds = NULL,
+output <- pred_rate_parity(data = compas, 
+                 outcome = "Two_yr_Recidivism", 
+                 group   = "ethnicity",
+                 probs   = "probability", 
+                 preds   = NULL,
                  outcome_levels = c("no","yes"), 
                  cutoff = 0.5, 
-                 base = "Hispanic")
+                 base   = "Hispanic")
 ```
 ```{r }
 output$Metric
@@ -271,11 +271,11 @@ output$Probability_plot
 
 Another example would be comparing males vs. females in terms of recidivism prediction and defining a 0.4 cutoff:
 ```{r echo = FALSE}
-output <- pred_rate_parity(data=compas, 
-                 outcome="Two_yr_Recidivism", 
-                 group="Female",
-                 probs = "probability", 
-                 preds = NULL,
+output <- pred_rate_parity(data = compas, 
+                 outcome = "Two_yr_Recidivism", 
+                 group   = "Female",
+                 probs   = "probability", 
+                 preds   = NULL,
                  outcome_levels = c("no","yes"), 
                  cutoff = 0.4, 
                  base = "Male")
@@ -286,11 +286,11 @@ output$Probability_plot
 
 The function related to ROC AUC comparisons will output ROC curves for each subgroups. Let's look at the plot, also comparing males vs. females:
 ```{r echo = FALSE, message=FALSE}
-output <- roc_parity(data=compas, 
-                 outcome="Two_yr_Recidivism", 
-                 group="Female",
-                 probs = "probability", 
-                 outcome_levels = c("no","yes"), 
+output <- roc_parity(data = compas, 
+                 outcome  = "Two_yr_Recidivism", 
+                 group    = "Female",
+                 probs    = "probability", 
+                 outcome_levels = c("no", "yes"), 
                  base = "Male")
 ```
 ```{r , fig.width=5, fig.height=3}
