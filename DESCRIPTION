@@ -21,6 +21,7 @@ Depends: R (>= 3.5.0)
 Imports:
     caret,
     ggplot2,
+    e1071,
     pROC,
     devtools
 Suggests: 
