@@ -17,7 +17,7 @@
 
 # Overview of the fairness R package
 
-The fairness R package provides a tool to easily calculate algorithmic fairness metrics for given predicted probabilities or predicted classes between sensitive groups of populations. It also provides additional opportunities to compare various other prediction metrics between subgroups. 
+The fairness R package provides a tool to easily calculate algorithmic fairness metrics for given predicted probabilities or predicted classes between different sensitive groups. It also provides additional opportunities to visualize and compare other prediction metrics between the subgroups. 
 
 You can load the package by running:
 
@@ -54,7 +54,7 @@ In addition, the following comparisons are also implemented:
 - ROC AUC comparison
 - MCC comparison
 
-Most fairness measures are computed based on the confusion matrix resulting from a model fit of a given classification model.
+Most fairness measures are computed based on the confusion matrix resulting from fitting a binary classification model.
 
 ## Brief tutorial
 
@@ -65,20 +65,20 @@ Most fairness measures are computed based on the confusion matrix resulting from
 data("compas")
 ```
 
-The data already contains all variables necessary to run all parity metrics. In case you set up your own predictive model, you will need to concatenate predicted probabilities or predictions (0/1) to your original dataset.
+The data already contains all variables necessary to run all parity metrics. In case you set up your own predictive model, you will need to concatenate predicted probabilities or predictions (0/1) to your original dataset or supply them as a vector to the corresponding metric function.
 
 ### Running a selected function
 
 
 ```r
-equal_odds(data=compas, 
-           outcome = "Two_yr_Recidivism",
-           group="ethnicity",
-           probs="probability", 
-           preds = NULL,
-           outcome_levels = c("no","yes"), 
-           cutoff = 0.5, 
-           base = "Caucasian")
+equal_odds(data           = compas, 
+           outcome        = "Two_yr_Recidivism",
+           outcome_values = c("no", "yes"),
+           group          = "ethnicity",
+           probs          = "probability", 
+           preds          = NULL,
+           cutoff         = 0.5, 
+           base           = "Caucasian")
 ```
 
 ### Taking a look at the output
