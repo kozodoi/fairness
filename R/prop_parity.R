@@ -12,8 +12,8 @@
 #'
 #' @param data The dataframe that contains the necessary columns.
 #' @param group Sensitive group to examine.
-#' @param probs The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds needs to be defined.
-#' @param preds The column name of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.
+#' @param probs The column name or vector of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds needs to be defined.
+#' @param preds The column name or vector of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
 #' @param base Base level for sensitive group comparison
 #'
@@ -43,10 +43,16 @@ prop_parity <- function(data, group, probs = NULL, preds = NULL, cutoff = 0.5, b
         stop({"Either probs or preds have to be supplied"})
     }
     if (is.null(probs)) {
-        levels(data[, preds]) <- c(0, 1)
-        preds_status <- as.numeric(as.character(data[, preds]))
+        if (length(preds) == 1) {
+            preds <- data[, preds]
+        }
+        levels(preds) <- c(0, 1)
+        preds_status <- as.numeric(as.character(preds))
     } else {
-        preds_status <- as.numeric(data[, probs] > cutoff)
+        if (length(probs) == 1) {
+            probs <- data[, probs]
+        }
+        preds_status <- as.numeric(probs > cutoff)
     }
 
     # check lengths
@@ -78,6 +84,7 @@ prop_parity <- function(data, group, probs = NULL, preds = NULL, cutoff = 0.5, b
     colnames(val_df) <- c("val")
     val_df$groupst <- rownames(val_df)
     val_df$groupst <- as.factor(val_df$groupst)
+    
     # relevel group
     if (is.null(base)) {
         val_df$groupst <- levels(val_df$groupst)[1]
@@ -90,7 +97,7 @@ prop_parity <- function(data, group, probs = NULL, preds = NULL, cutoff = 0.5, b
     # plotting
     if (!is.null(probs)) {
         probs_vals <- data[, probs]
-        q <- ggplot(data, aes(x = probs_vals, fill = group_status)) + geom_density(alpha = 0.5) +
+        q <- ggplot(data, aes(x = probs, fill = group_status)) + geom_density(alpha = 0.5) +
             labs(x = "Predicted probabilities") + guides(fill = guide_legend(title = "")) +
             theme(plot.title = element_text(hjust = 0.5)) + xlim(0, 1) + geom_vline(xintercept = cutoff,
             linetype = "dashed")

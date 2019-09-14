@@ -13,7 +13,7 @@
 #' @param data The dataframe that contains the necessary columns.
 #' @param outcome The column name of the actual outcomes.
 #' @param group Sensitive group to examine.
-#' @param probs The column name of the predicted probabilities (numeric between 0 - 1).
+#' @param probs The column name or vector of the predicted probabilities (numeric between 0 - 1).
 #' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.
 #' @param base Base level for sensitive group comparison
 #'
@@ -45,7 +45,11 @@ roc_parity <- function(data, outcome, group, probs,
         outcome_levels <- unique(outcome_status)
     }
     levels(outcome_status) <- outcome_levels
-    probs_vals <- as.numeric(data[, probs])
+    if (length(probs) == 1) {
+        probs <- data[, probs]
+    } else {
+        probs <- probs
+    }
 
     # check lengths
     if ((length(outcome_status) != length(probs_vals)) | (length(outcome_status) !=
@@ -113,8 +117,7 @@ roc_parity <- function(data, outcome, group, probs,
     p <- ggplot(val_df, aes(x = groupst, weight = val, fill = groupst)) + geom_bar(alpha = 0.5) +
         coord_flip() + theme(legend.position = "none") + labs(x = "", y = "Predictive Rate Parity")
 
-    probs_vals <- data[, probs]
-    q <- ggplot(data, aes(x = probs_vals, fill = group_status)) + geom_density(alpha = 0.5) +
+    q <- ggplot(data, aes(x = probs, fill = group_status)) + geom_density(alpha = 0.5) +
         labs(x = "Predicted probabilities") + guides(fill = guide_legend(title = "")) +
         theme(plot.title = element_text(hjust = 0.5)) + xlim(0, 1)
 

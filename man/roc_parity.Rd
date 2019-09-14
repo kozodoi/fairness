@@ -14,7 +14,7 @@ roc_parity(data, outcome, group, probs, outcome_levels = NULL,
 
 \item{group}{Sensitive group to examine.}
 
-\item{probs}{The column name of the predicted probabilities (numeric between 0 - 1).}
+\item{probs}{The column name or vector of the predicted probabilities (numeric between 0 - 1).}
 
 \item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.}
 

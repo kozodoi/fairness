@@ -14,9 +14,9 @@ npv_parity(data, outcome, group, probs = NULL, preds = NULL,
 
 \item{group}{Sensitive group to examine.}
 
-\item{probs}{The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds need to be defined.}
+\item{probs}{The column name or vector of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds needs to be defined.}
 
-\item{preds}{The column name of the predicted outcome (categorical outcome). If not defined, argument probs need to be defined.}
+\item{preds}{The column name or vector of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.}
 
 \item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.}
 
