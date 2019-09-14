@@ -4,7 +4,7 @@
 \alias{roc_parity}
 \title{ROC AUC parity}
 \usage{
-roc_parity(data, outcome, group, probs, outcome_levels = c("no", "yes"),
+roc_parity(data, outcome, group, probs, outcome_levels = NULL,
   base = NULL)
 }
 \arguments{
@@ -16,7 +16,7 @@ roc_parity(data, outcome, group, probs, outcome_levels = c("no", "yes"),
 
 \item{probs}{The column name of the predicted probabilities (numeric between 0 - 1).}
 
-\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.}
+\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.}
 
 \item{base}{Base level for sensitive group comparison}
 }

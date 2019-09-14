@@ -14,9 +14,9 @@
 #' @param data The dataframe that contains the necessary columns.
 #' @param outcome The column name of the actual outcomes.
 #' @param group Sensitive group to examine.
-#' @param probs The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds need to be defined.
-#' @param preds The column name of the predicted outcome (categorical outcome). If not defined, argument probs need to be defined.
-#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.
+#' @param probs The column name of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds needs to be defined.
+#' @param preds The column name of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.
+#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
 #' @param base Base level for sensitive group comparison
 #'
@@ -38,13 +38,19 @@
 #'
 #' @export
 
-fnr_parity <- function(data, outcome, group, probs = NULL, preds = NULL, outcome_levels = c("no",
-    "yes"), cutoff = 0.5, base = NULL) {
+fnr_parity <- function(data, outcome, group, 
+                       probs = NULL, preds = NULL, outcome_levels = NULL, cutoff = 0.5, base = NULL) {
 
     # convert types, sync levels
     group_status <- as.factor(data[, group])
     outcome_status <- as.factor(data[, outcome])
+    if (is.null(outcome_levels)) {
+        outcome_levels <- unique(outcome_status)
+    }
     levels(outcome_status) <- outcome_levels
+    if (is.null(probs) & is.null(preds)) {
+        stop({"Either probs or preds have to be supplied"})
+    }
     if (is.null(probs)) {
         preds_status <- as.factor(data[, preds])
     } else {

@@ -14,7 +14,7 @@
 #' @param outcome The column name of the actual outcomes.
 #' @param group Sensitive group to examine.
 #' @param probs The column name of the predicted probabilities (numeric between 0 - 1).
-#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.
+#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.
 #' @param base Base level for sensitive group comparison
 #'
 #' @name roc_parity
@@ -35,12 +35,15 @@
 #' @export
 
 
-roc_parity <- function(data, outcome, group, probs, outcome_levels = c("no", "yes"),
-    base = NULL) {
+roc_parity <- function(data, outcome, group, probs, 
+                       outcome_levels = NULL, base = NULL) {
 
     # convert types, sync levels
     group_status <- as.factor(data[, group])
     outcome_status <- as.factor(data[, outcome])
+    if (is.null(outcome_levels)) {
+        outcome_levels <- unique(outcome_status)
+    }
     levels(outcome_status) <- outcome_levels
     probs_vals <- as.numeric(data[, probs])
 

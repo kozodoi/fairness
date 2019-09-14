@@ -5,7 +5,7 @@
 \title{Predictive Rate Parity}
 \usage{
 pred_rate_parity(data, outcome, group, probs = NULL, preds = NULL,
-  outcome_levels = c("no", "yes"), cutoff = 0.5, base = NULL)
+  outcome_levels = NULL, cutoff = 0.5, base = NULL)
 }
 \arguments{
 \item{data}{The dataframe that contains the necessary columns.}
@@ -18,7 +18,7 @@ pred_rate_parity(data, outcome, group, probs = NULL, preds = NULL,
 
 \item{preds}{The column name of the predicted outcome (categorical outcome). If not defined, argument probs need to be defined.}
 
-\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). As these levels are commonly defined as yes/no, the function uses this as default.}
+\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.}
 
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
