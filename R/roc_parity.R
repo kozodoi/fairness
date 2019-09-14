@@ -52,7 +52,7 @@ roc_parity <- function(data, outcome, group, probs,
     }
 
     # check lengths
-    if ((length(outcome_status) != length(probs_vals)) | (length(outcome_status) !=
+    if ((length(outcome_status) != length(probs)) | (length(outcome_status) !=
         length(group_status))) {
         stop("Outcomes, probabilities and group status must be of the same length")
     }
@@ -69,7 +69,7 @@ roc_parity <- function(data, outcome, group, probs,
 
     # compute value for all groups=
     for (i in 1:length(levels(group_status))) {
-        temproc <- pROC::roc(predictor = probs_vals[group_status == levels(group_status)[i]],
+        temproc <- pROC::roc(predictor = probs[group_status == levels(group_status)[i]],
             response = outcome_status[group_status == levels(group_status)[i]], levels = levels(outcome_status),
             ci = T)
         val[i] <- as.numeric(temproc[[9]])
