@@ -1,10 +1,10 @@
 #' Modified german credit dataset
 #'
 #' @description
-#' \code{\link{german}} is a credit scoring data set that can be used to study algorithmic (un)fairness. 
-#' This data was used to predict defaults on consumer loans on a german market. In this dataset, a model 
-#' to predict default has already been fit and predicted probabilities and predicted status (yes/no) 
-#' for deafault have been concatenated to the original data.
+#' \code{\link{german}} is a credit scoring data set that can be used to study algorithmic (un)fairness.
+#' This data was used to predict defaults on consumer loans in the German market. In this dataset, a model
+#' to predict default has already been fit and predicted probabilities and predicted status (yes/no)
+#' for default have been concatenated to the original data.
 #'
 #' @format A data frame with 1000 rows and 25 variables:
 #' \describe{
@@ -20,7 +20,7 @@
 #'   \item{Resident_since}{factor, present residence since}
 #'   \item{Property}{factor, property}
 #'   \item{Age}{numeric, age in years}
-#'   \item{Other_plan}{factor, other installment plans }
+#'   \item{Other_plans}{factor, other installment plans }
 #'   \item{Housing}{factor, housing}
 #'   \item{Num_credits}{numeric, Number of existing credits at this bank}
 #'   \item{Job}{factor, job}

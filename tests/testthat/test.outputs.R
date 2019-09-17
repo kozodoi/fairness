@@ -11,7 +11,7 @@ test_that("number of outputs in acc_parity", {
 
 test_that("number of outputs in dem_parity", {
   expect_equal(length(dem_parity(data = compas, group = "ethnicity",
-                          probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
+                          probs = "probability", preds = NULL,
                           cutoff = 0.5, base = "Caucasian")), 3)})
 
 test_that("number of outputs in equal_odds", {
@@ -46,7 +46,7 @@ test_that("number of outputs in pred_rate_parity", {
 
 test_that("number of outputs in prop_parity", {
   expect_equal(length(prop_parity(data = compas, group = "ethnicity",
-                           probs = "probability", preds = NULL, outcome_levels = c("no", "yes"),
+                           probs = "probability", preds = NULL,
                            cutoff = 0.5, base = "Caucasian")), 3)})
 
 test_that("number of outputs in roc_parity", {
@@ -67,7 +67,7 @@ test_that("number of outputs in acc_parity", {
 
 test_that("number of outputs in dem_parity", {
   expect_equal(length(dem_parity(data = compas, group = "ethnicity",
-                                 probs = NULL, preds = "predicted", outcome_levels = c("no", "yes"),
+                                 probs = NULL, preds = "predicted",
                                  cutoff = 0.5, base = "Caucasian")), 2)})
 
 test_that("number of outputs in equal_odds", {
@@ -102,7 +102,7 @@ test_that("number of outputs in pred_rate_parity", {
 
 test_that("number of outputs in prop_parity", {
   expect_equal(length(prop_parity(data = compas, group = "ethnicity",
-                                  probs = NULL, preds = "predicted", outcome_levels = c("no", "yes"),
+                                  probs = NULL, preds = "predicted",
                                   cutoff = 0.5, base = "Caucasian")), 2)})
 
 test_that("number of outputs in spec_parity", {

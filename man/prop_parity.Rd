@@ -29,8 +29,8 @@ prop_parity(data, group, probs = NULL, preds = NULL, cutoff = 0.5,
 This function computes the Proportional parity metric
 }
 \details{
-This function computes the Proportional parity metric (also known as Impact Parity or Minimizing Disparate Impact) as described by Calders and Verwer 2010. 
-Proportional parity is calculated based on the comparison of the absolute number of all positively classified individuals in all subgroups of the data. 
+This function computes the Proportional parity metric (also known as Impact Parity or Minimizing Disparate Impact) as described by Calders and Verwer 2010.
+Proportional parity is calculated based on the comparison of the proportion of all positively classified individuals in all subgroups of the data.
 In the returned named vector, the reference group will be assigned 1, while all other groups will be assigned values
 according to whether their proportion of positively predicted observations are lower or higher compared to the reference group. Lower
 proportions will be reflected in numbers lower than 1 in the returned named vector.
@@ -38,10 +38,10 @@ proportions will be reflected in numbers lower than 1 in the returned named vect
 \examples{
 data(compas)
 prop_parity(data = compas, group = 'ethnicity',
-probs = 'probability', preds = NULL, 
+probs = 'probability', preds = NULL,
 cutoff = 0.4, base = 'Caucasian')
 prop_parity(data = compas, group = 'ethnicity',
-probs = NULL, preds = 'predicted', 
+probs = NULL, preds = 'predicted',
 cutoff = 0.5, base = 'Hispanic')
 
 }
