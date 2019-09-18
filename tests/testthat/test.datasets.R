@@ -13,12 +13,17 @@ test_that("number of cols in compas", {
 test_that("number of rows in compas", {
   expect_equal(nrow(compas), 6172)})
 
-files <- lapply(list.files(system.file('extdata', package = 'fairness'), full.names = TRUE), read.delim, sep=" ")
-german <- files[[1]]
+#files <- lapply(list.files(system.file('extdata', package = 'fairness'), full.names = TRUE), read.delim, sep=" ")
+#german <- files[[1]]
 
-test_that("is german a data frame", {
-  expect_true(is.data.frame(german))})
-test_that("number of cols in german", {
-  expect_equal(ncol(german), 23)})
-test_that("number of rows in german", {
-  expect_equal(nrow(german), 1000)})
+test_that("no warning when loading germancredit", {
+  expect_warning(data("germancredit"), NA)})
+
+data("germancredit")
+
+test_that("is germancredit a data frame", {
+  expect_true(is.data.frame(germancredit))})
+test_that("number of cols in germancredit", {
+  expect_equal(ncol(germancredit), 23)})
+test_that("number of rows in germancredit", {
+  expect_equal(nrow(germancredit), 1000)})
