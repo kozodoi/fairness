@@ -4,7 +4,7 @@
 \name{german}
 \alias{german}
 \title{Modified german credit dataset}
-\format{A data frame with 1000 rows and 25 variables:
+\format{A data frame with 1000 rows and 23 variables:
 \describe{
   \item{Account_status}{factor, status of existing checking account}
   \item{Duration}{numeric, loan duration in month}
@@ -27,8 +27,6 @@
   \item{Foreign}{factor, foreign worker}
   \item{BAD}{factor, GOOD/BAD for whether a customer has defaulted on a loan. This is the outcome or target in this dataset}
   \item{Female}{factor, female/male for gender}
-  \item{Age_Above_FourtyFive}{factor, yes/no for age above 45 years or not}
-  \item{Age_Below_TwentyFive}{factor, yes/no for age below 25 years or not}
   \item{probability}{numeric, predicted probabilities for default, ranges from 0 to 1}
   \item{predicted}{numeric, predicted values for default, 0/1 for no/yes}
 }}
