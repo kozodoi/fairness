@@ -1,8 +1,5 @@
 #' Modified german credit dataset
 #'
-#' @docType data
-#' @usage data(german)
-#'
 #' @description
 #' \code{\link{german}} is a credit scoring data set that can be used to study algorithmic (un)fairness.
 #' This data was used to predict defaults on consumer loans in the German market. In this dataset, a model

@@ -1,8 +1,5 @@
 #' Modified COMPAS dataset
 #'
-#' @docType data
-#' @usage data(compas)
-#'
 #' @description
 #' \code{\link{compas}} is a landmark dataset to study algorithmic (un)fairness. This data was used to
 #' predict recidivism (whether a criminal will reoffend or not) in the USA. The tool was meant to overcome

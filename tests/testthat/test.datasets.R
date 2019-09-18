@@ -21,6 +21,6 @@ data("german")
 test_that("is german a data frame", {
   expect_true(is.data.frame(german))})
 test_that("number of cols in german", {
-  expect_equal(ncol(german), 25)})
+  expect_equal(ncol(german), 23)})
 test_that("number of rows in german", {
   expect_equal(nrow(german), 1000)})
