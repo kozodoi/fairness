@@ -20,7 +20,7 @@
 The dataset is downloaded from Kaggle \url{https://www.kaggle.com/danofer/compass} and has undergone modifications (e.g. ethinicity was originally encoded using one-hot encoding, number or priors have been normalized, variables have been renamed, prediction model was fit and predicted probabilities and predicted status were concatenated to the original dataset).
 }
 \usage{
-compas
+data(compas)
 }
 \description{
 \code{\link{compas}} is a landmark dataset to study algorithmic (un)fairness. This data was used to

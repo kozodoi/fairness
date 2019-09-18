@@ -34,7 +34,7 @@
 The dataset has undergone modifications (e.g. categorical variables were encoded, prediction model was fit and predicted probabilities and predicted status were concatenated to the original dataset).
 }
 \usage{
-german
+data(german)
 }
 \description{
 \code{\link{german}} is a credit scoring data set that can be used to study algorithmic (un)fairness.
