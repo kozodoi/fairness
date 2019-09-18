@@ -2,6 +2,7 @@
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Licence](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/)
+[![Build Status](https://travis-ci.org/kozodoi/Fairness.svg?branch=master)](https://travis-ci.com/kozodoi/Fairness)
 
 ---
 
@@ -73,7 +74,7 @@ The data already contains all variables necessary to run all parity metrics. In 
 ```r
 equal_odds(data           = compas, 
            outcome        = "Two_yr_Recidivism",
-           outcome_values = c("no", "yes"),
+           outcome_levels = c("no","yes"), 
            group          = "ethnicity",
            probs          = "probability", 
            preds          = NULL,
@@ -84,16 +85,31 @@ equal_odds(data           = compas,
 ### Taking a look at the output
 
 
-
-Metrics for equalized odds:     
-
 ```
+#> $Metric
 #>                Caucasian African_American     Asian Hispanic
 #> Sensitivity    0.7782982        0.5845443 0.9130435 0.809375
 #> Equalized odds 1.0000000        0.7510544 1.1731281 1.039929
 #>                Native_American     Other
 #> Sensitivity          0.6666667 0.8493151
 #> Equalized odds       0.8565697 1.0912463
+#> 
+#> $Metric_plot
+```
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="100%" />
+
+```
+#> 
+#> $Probability_plot
+```
+
+<img src="man/figures/README-unnamed-chunk-6-2.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="100%" />
+
+Metrics for equalized odds:     
+
+```
+#> Error in eval(expr, envir, enclos): object 'output' not found
 ```
 
 Bar chart for the equalized odds metric:

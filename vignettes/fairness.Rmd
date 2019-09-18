@@ -33,9 +33,9 @@ install.packages("fairness")
 library(fairness)
 ```
 
-## Description of data: *compas*
+## Description of data
 
-This package includes two datasets to study algorithmic fairness: *compas* and *german*. In this tutorial, you will be able to use a simlified version of the landmark COMPAS dataset. You can read more about the dataset [here](https://github.com/propublica/compas-analysis). To load the dataset, all you need to do is:
+This package includes two datasets to study algorithmic fairness: *compas* and *germancredit*. In this tutorial, you will be able to use a simlified version of the landmark COMPAS dataset. You can read more about the dataset [here](https://github.com/propublica/compas-analysis). To load the dataset, all you need to do is:
 
 ```{r eval = TRUE}
 data("compas")
@@ -44,6 +44,12 @@ data("compas")
 The compas dataframe contains nine columns: The outcome is *Two_yr_Recidivism*, i.e. whether an individual will commit a crime in two years or not. Variables exist in the data about prior criminal record (*Number_of_Priors* and *Misdemeanor*) and basic features such as age, categorized (*Age_Above_FourtyFive* and *Age_Below_TwentyFive*), sex (*Female*) and ethnicity (*ethnicity*). You don't really need to delve into the data much, we have already ran a prediction model using **all variables** to predict *Two_yr_Recidivism* and concatenated the predicted probabilities (*probability*) and predicted classes (*predicted*) to the data. You will be able to use the *probability* and *predicted* columns directly in your analysis.
 
 However, please feel free to set up other prediction models (e.g. excluding sensitive group information, such as sex and ethnicity) and use your generated predicted probabilities or classes to assess group fairness.
+
+As mentioned earlier, another dataset, *germancredit* is also included in this package. This dataset includes 20 potential predictor features and an outcome (target) column named *BAD*. Similarly to the *compas* dataset, this data also includes two pre-made columns named *probability* and *predicted*. Feel free to play wit this data as well! You can of course load it with:
+
+```{r eval = FALSE}
+data("germancredit")
+```
 
 ## Algorithmic group fairness metrics
 
