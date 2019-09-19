@@ -1,4 +1,11 @@
-## Submission of version 1.0.0
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Updated patch to 1.0.1
+
+* Corrected the LICENSE file
+
+* Added five references to the DESCRIPTION file about the used methodology
 
 ## Test environments
 * local OS X install, R 3.6.0
@@ -10,6 +17,3 @@ There were no ERRORs, WARNINGs or NOTEs.
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
-
-## Submission comments
-This is this first submission of the fairness R package to CRAN.   
