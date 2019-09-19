@@ -10,3 +10,6 @@ There were no ERRORs, WARNINGs or NOTEs.
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
+
+## Submission comments
+This is this first submission of the fairness R package to CRAN.   
