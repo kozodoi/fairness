@@ -17,7 +17,7 @@
 #' @param group Sensitive group to examine.
 #' @param probs The column name or vector of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds needs to be defined.
 #' @param preds The column name or vector of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.
-#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.
+#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). If not defined, all unique values of outcome are used.
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
 #' @param base Base level for sensitive group comparison
 #'
@@ -39,7 +39,7 @@
 #'
 #' @export
 
-acc_parity <- function(data, outcome, group, 
+acc_parity <- function(data, outcome, group,
                        probs = NULL, preds = NULL, outcome_levels = NULL, cutoff = 0.5, base = NULL) {
 
     # convert types, sync levels
@@ -97,7 +97,7 @@ acc_parity <- function(data, outcome, group,
     colnames(val_df) <- c("val")
     val_df$groupst <- rownames(val_df)
     val_df$groupst <- as.factor(val_df$groupst)
-    
+
     # relevel group
     if (is.null(base)) {
         val_df$groupst <- levels(val_df$groupst)[1]

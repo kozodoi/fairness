@@ -18,7 +18,7 @@ npv_parity(data, outcome, group, probs = NULL, preds = NULL,
 
 \item{preds}{The column name or vector of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.}
 
-\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.}
+\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). If not defined, all unique values of outcome are used.}
 
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
@@ -33,7 +33,7 @@ npv_parity(data, outcome, group, probs = NULL, preds = NULL,
 This function computes the Negative Predictive Value (NPV) parity metric
 }
 \details{
-This function computes the Negative Predictive Value (NPV) parity metric as described by the Aeuquitas bias toolkit.
+This function computes the Negative Predictive Value (NPV) parity metric as described by the Aequitas bias toolkit.
 Negative Predictive Values are calculated
 by the division of true negatives with all predicted negatives. In the returned
 named vector, the reference group will be assigned 1, while all other groups will be assigned values

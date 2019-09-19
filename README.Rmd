@@ -37,7 +37,7 @@ library(fairness)
 
 ## The fairness pipeline
 
-You will find a detailed tutorial in the missCompare vignette. We recommend that you spend some time going through the vignette, as it contains a much more in-depth description of the fairness package compared to this brief readme.
+You will find a detailed tutorial in the fairness vignette. We recommend that you spend some time going through the vignette, as it contains a much more in-depth description of the fairness package compared to this brief readme.
 
 ```{r eval = FALSE}
 vignette("fairness")

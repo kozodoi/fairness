@@ -5,11 +5,11 @@
 #'
 #' @details
 #' This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by
-#' Zafar et al., 2017. Predictive rate parity is calculated by the division of true positives with all 
-#' observations predicted positives. This metrics equals to what is traditionally known as precision 
-#' or positive predictive value. In the returned named vector, the reference group will be assigned 1, 
-#' while all other groups will be assigned values according to whether their precisions are lower or 
-#' higher compared to the reference group. Lower precisions will be reflected in numbers lower than 1 
+#' Zafar et al., 2017. Predictive rate parity is calculated by the division of true positives with all
+#' observations predicted positives. This metrics equals to what is traditionally known as precision
+#' or positive predictive value. In the returned named vector, the reference group will be assigned 1,
+#' while all other groups will be assigned values according to whether their precisions are lower or
+#' higher compared to the reference group. Lower precisions will be reflected in numbers lower than 1
 #' in the returned named vector, thus numbers lower than 1 mean WORSE prediction for the subgroup.
 #'
 #'
@@ -18,7 +18,7 @@
 #' @param group Sensitive group to examine.
 #' @param probs The column name or vector of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds needs to be defined.
 #' @param preds The column name or vector of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.
-#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.
+#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). If not defined, all unique values of outcome are used.
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
 #' @param base Base level for sensitive group comparison
 #'
@@ -40,7 +40,7 @@
 #'
 #' @export
 
-pred_rate_parity <- function(data, outcome, group, 
+pred_rate_parity <- function(data, outcome, group,
                              probs = NULL, preds = NULL, outcome_levels = NULL, cutoff = 0.5, base = NULL) {
 
     # convert types, sync levels
@@ -98,7 +98,7 @@ pred_rate_parity <- function(data, outcome, group,
     colnames(val_df) <- c("val")
     val_df$groupst <- rownames(val_df)
     val_df$groupst <- as.factor(val_df$groupst)
-    
+
     # relevel group
     if (is.null(base)) {
         val_df$groupst <- levels(val_df$groupst)[1]

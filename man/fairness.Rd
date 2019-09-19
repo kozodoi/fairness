@@ -6,7 +6,7 @@
 \alias{fairness-package}
 \title{fairness: Algorithmic Fairness Metrics}
 \description{
-The \strong{fairness} package arious different metrics of algorithmic fairness. Fairness in machine learning is an emerging
+The \strong{fairness} package offers various different metrics of algorithmic fairness. Fairness in machine learning is an emerging
 topic with the overarching aim to critically assess algorithms (predictive and classification models) whether
 their results reinforce existing social biases. While unfair algorithms can propagate such biases and offer
 prediction or classification results with a disparate impact on various sensitive subgroups of populations (defined

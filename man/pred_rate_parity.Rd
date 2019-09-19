@@ -18,7 +18,7 @@ pred_rate_parity(data, outcome, group, probs = NULL, preds = NULL,
 
 \item{preds}{The column name or vector of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.}
 
-\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.}
+\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). If not defined, all unique values of outcome are used.}
 
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
@@ -34,11 +34,11 @@ This function computes the Predictive Rate Parity metric
 }
 \details{
 This function computes the Predictive Rate Parity metric (also known as Sufficiency) as described by
-Zafar et al., 2017. Predictive rate parity is calculated by the division of true positives with all 
-observations predicted positives. This metrics equals to what is traditionally known as precision 
-or positive predictive value. In the returned named vector, the reference group will be assigned 1, 
-while all other groups will be assigned values according to whether their precisions are lower or 
-higher compared to the reference group. Lower precisions will be reflected in numbers lower than 1 
+Zafar et al., 2017. Predictive rate parity is calculated by the division of true positives with all
+observations predicted positives. This metrics equals to what is traditionally known as precision
+or positive predictive value. In the returned named vector, the reference group will be assigned 1,
+while all other groups will be assigned values according to whether their precisions are lower or
+higher compared to the reference group. Lower precisions will be reflected in numbers lower than 1
 in the returned named vector, thus numbers lower than 1 mean WORSE prediction for the subgroup.
 }
 \examples{

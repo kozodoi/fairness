@@ -14,7 +14,7 @@
 #' @param outcome The column name of the actual outcomes.
 #' @param group Sensitive group to examine.
 #' @param probs The column name or vector of the predicted probabilities (numeric between 0 - 1).
-#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.
+#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). If not defined, all unique values of outcome are used.
 #' @param base Base level for sensitive group comparison
 #'
 #' @name roc_parity
@@ -35,7 +35,7 @@
 #' @export
 
 
-roc_parity <- function(data, outcome, group, probs, 
+roc_parity <- function(data, outcome, group, probs,
                        outcome_levels = NULL, base = NULL) {
 
     # convert types, sync levels

@@ -18,7 +18,7 @@ mcc_parity(data, outcome, group, probs = NULL, preds = NULL,
 
 \item{preds}{The column name or vector of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.}
 
-\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). If not defined, all uniqe values of outcome are used.}
+\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). If not defined, all unique values of outcome are used.}
 
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
