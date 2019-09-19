@@ -13,9 +13,6 @@ test_that("number of cols in compas", {
 test_that("number of rows in compas", {
   expect_equal(nrow(compas), 6172)})
 
-#files <- lapply(list.files(system.file('extdata', package = 'fairness'), full.names = TRUE), read.delim, sep=" ")
-#german <- files[[1]]
-
 test_that("no warning when loading germancredit", {
   expect_warning(data("germancredit"), NA)})
 

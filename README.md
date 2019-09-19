@@ -85,38 +85,25 @@ equal_odds(data           = compas,
 ### Taking a look at the output
 
 
+
+Metrics for equalized odds:     
+
 ```
-#> $Metric
 #>                Caucasian African_American     Asian Hispanic
 #> Sensitivity    0.7782982        0.5845443 0.9130435 0.809375
 #> Equalized odds 1.0000000        0.7510544 1.1731281 1.039929
 #>                Native_American     Other
 #> Sensitivity          0.6666667 0.8493151
 #> Equalized odds       0.8565697 1.0912463
-#> 
-#> $Metric_plot
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="100%" />
+Bar chart for the equalized odds metric:    
 
-```
-#> 
-#> $Probability_plot
-```
-
-<img src="man/figures/README-unnamed-chunk-6-2.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="100%" />
-
-Metrics for equalized odds:     
-
-```
-#> Error in eval(expr, envir, enclos): object 'output' not found
-```
-
-Bar chart for the equalized odds metric:
 ![Bar plot](man/figures/Plot_bar.png)
 
 
-Predicted probability plot for all subgroups:
+Predicted probability plot for all subgroups:    
+
 ![Bar plot](man/figures/Plot_prob.png)
 
 

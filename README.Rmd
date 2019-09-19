@@ -90,14 +90,14 @@ equal_odds(data           = compas,
 ### Taking a look at the output
 
 ```{r eval = TRUE, echo = FALSE}
-equal_odds(data           = compas, 
-           outcome        = "Two_yr_Recidivism",
-           outcome_levels = c("no","yes"), 
-           group          = "ethnicity",
-           probs          = "probability", 
-           preds          = NULL,
-           cutoff         = 0.5, 
-           base           = "Caucasian")
+output <- equal_odds(data           = compas, 
+                     outcome        = "Two_yr_Recidivism",
+                     outcome_levels = c("no","yes"), 
+                     group          = "ethnicity",
+                     probs          = "probability", 
+                     preds          = NULL,
+                     cutoff         = 0.5, 
+                     base           = "Caucasian")
 ```
 
 Metrics for equalized odds:     
@@ -105,11 +105,13 @@ Metrics for equalized odds:
 output$Metric
 ```
 
-Bar chart for the equalized odds metric:
+Bar chart for the equalized odds metric:    
+
 ![Bar plot](man/figures/Plot_bar.png)
 
 
-Predicted probability plot for all subgroups:
+Predicted probability plot for all subgroups:    
+
 ![Bar plot](man/figures/Plot_prob.png)
 
 
