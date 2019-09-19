@@ -18,7 +18,7 @@ subgroups. The package also offers convenient visualizations to help understand 
 \details{
 \tabular{ll}{
 Package: \tab fairness\cr
-Depends: \tab R (>= 3.6.0)\cr
+Depends: \tab R (>= 3.5.0)\cr
 Type: \tab Package\cr
 Version:  \tab 1.0.0\cr
 Date:  \tab 2019-09-19\cr
