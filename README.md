@@ -4,6 +4,7 @@
 [![Licence](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/)
 [![Build Status](https://travis-ci.org/kozodoi/Fairness.svg?branch=master)](https://travis-ci.com/kozodoi/Fairness)
 [![Downloads](https://cranlogs.r-pkg.org/badges/fairness)](https://cran.rstudio.com/web/packages/fairness/index.html)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fairness?color=red)](https://cran.rstudio.com/web/packages/fairness/index.html)
 
 ---
 
