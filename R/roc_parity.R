@@ -14,6 +14,9 @@
 #' @param outcome The column name of the actual outcomes.
 #' @param group Sensitive group to examine.
 #' @param probs The column name or vector of the predicted probabilities (numeric between 0 - 1).
+#' @param preds_levels The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.
+#' @param base Base level for sensitive group comparison
+#' 
 #' @name roc_parity
 #'
 #' @return

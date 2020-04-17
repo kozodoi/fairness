@@ -17,6 +17,7 @@
 #' @param probs The column name or vector of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds needs to be defined.
 #' @param preds The column name or vector of the predicted binary outcome (0 or 1). If not defined, argument probs needs to be defined.
 #' @param preds_levels The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.
+#' @param outcome_base Base level for the target variable used to compute fairness metrics. Default is the first level of the outcome variable.
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
 #' @param base Base level for sensitive group comparison
 #'
