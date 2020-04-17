@@ -14,6 +14,10 @@ roc_parity(data, outcome, group, probs, preds_levels = NULL, base = NULL)
 \item{group}{Sensitive group to examine.}
 
 \item{probs}{The column name or vector of the predicted probabilities (numeric between 0 - 1).}
+
+\item{preds_levels}{The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.}
+
+\item{base}{Base level for sensitive group comparison}
 }
 \value{
 \item{Metric}{Raw ROC AUC metrics for all groups and metrics standardized for the base group (parity metric). Lower values compared to the reference group mean lower ROC AUC values in the selected subgroups}

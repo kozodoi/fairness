@@ -29,6 +29,8 @@ dem_parity(
 
 \item{preds_levels}{The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.}
 
+\item{outcome_base}{Base level for the target variable used to compute fairness metrics. Default is the first level of the outcome variable.}
+
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
 \item{base}{Base level for sensitive group comparison}
