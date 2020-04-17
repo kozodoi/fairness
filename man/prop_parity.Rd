@@ -11,6 +11,7 @@ prop_parity(
   probs = NULL,
   preds = NULL,
   preds_levels = NULL,
+  outcome_base = NULL,
   cutoff = 0.5,
   base = NULL
 )
@@ -28,11 +29,11 @@ prop_parity(
 
 \item{preds_levels}{The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.}
 
+\item{outcome_base}{Base level for the target variable used to compute fairness metrics. Default is the first level of the outcome variable.}
+
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
 \item{base}{Base level for sensitive group comparison}
-
-\item{outcome_base}{Base level for the target variable used to compute fairness metrics. Default is the first level of the outcome variable.}
 }
 \value{
 \item{Metric}{Raw proportions for all groups and metrics standardized for the base group (proportional parity metric). Lower values compared to the reference group mean lower proportion of positively predicted observations in the selected subgroups}
