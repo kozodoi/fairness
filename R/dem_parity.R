@@ -14,7 +14,9 @@
 #' @param data The dataframe that contains the necessary columns.
 #' @param group Sensitive group to examine.
 #' @param probs The column name or vector of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds needs to be defined.
-#' @param preds The column name or vector of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.
+#' @param preds The column name or vector of the predicted binary outcome (0 or 1). If not defined, argument probs needs to be defined.
+#' @param outcome_base Base level for the target variable used to compute fairness metrics. Default is the first level of the outcome variable.
+#' @param preds_levels The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
 #' @param base Base level for sensitive group comparison
 #'
@@ -37,10 +39,9 @@
 #' @export
 
 
-dem_parity <- function(data, group, probs = NULL, preds = NULL, cutoff = 0.5, base = NULL) {
+dem_parity <- function(data, group, probs = NULL, preds = NULL, preds_levels = NULL, outcome_base = NULL, cutoff = 0.5, base = NULL) {
 
     # convert types, sync levels
-    group_status <- as.factor(data[, group])
     if (is.null(probs) & is.null(preds)) {
         stop({"Either probs or preds have to be supplied"})
     }
@@ -48,14 +49,30 @@ dem_parity <- function(data, group, probs = NULL, preds = NULL, cutoff = 0.5, ba
         if (length(preds) == 1) {
             preds <- data[, preds]
         }
-        levels(preds) <- c(0, 1)
-        preds_status <- as.numeric(as.character(preds))
+        preds_status <- as.factor(preds)
     } else {
         if (length(probs) == 1) {
             probs <- data[, probs]
         }
-        preds_status <- as.numeric(probs > cutoff)
+        preds_status <- as.factor(as.numeric(probs > cutoff))
     }
+    
+    group_status   <- as.factor(data[, group])
+    outcome_status <- as.factor(data[, outcome])
+    
+    if (is.null(preds_levels)) {
+        preds_levels <- levels(outcome_status)
+    }
+    levels(preds_status) <- preds_levels
+    if (is.null(outcome_base)) {
+        outcome_base <- levels(outcome_status)[1]
+    }
+    outcome_status <- relevel(outcome_status, outcome_base)
+    preds_status   <- relevel(preds_status,   outcome_base)
+    
+    # convert to numeric
+    preds_status   <- 2 - as.numeric(preds_status)
+    outcome_status <- 2 - as.numeric(outcome_status)
 
     # check lengths
     if (length(group_status) != length(preds_status)) {
