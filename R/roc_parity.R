@@ -44,7 +44,7 @@ roc_parity <- function(data, outcome, group, probs,
     if (is.null(outcome_levels)) {
         outcome_levels <- unique(outcome_status)
     }
-    levels(outcome_status) <- outcome_levels
+    outcome_status <- relevel(outcome_status, outcome_levels[1])
     if (length(probs) == 1) {
         probs <- data[, probs]
     } else {
@@ -66,8 +66,13 @@ roc_parity <- function(data, outcome, group, probs,
     # placeholder
     val <- rep(NA, length(levels(group_status)))
     names(val) <- levels(group_status)
+    
+    # set outcome base
+    if (is.null(outcome_base)) {
+        outcome_base <- levels(preds_status)[1]
+    }
 
-    # compute value for all groups=
+    # compute value for all groups
     for (i in 1:length(levels(group_status))) {
         temproc <- pROC::roc(predictor = probs[group_status == levels(group_status)[i]],
             response = outcome_status[group_status == levels(group_status)[i]], levels = levels(outcome_status),

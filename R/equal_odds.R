@@ -18,6 +18,7 @@
 #' @param probs The column name or vector of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds needs to be defined.
 #' @param preds The column name or vector of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.
 #' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). If not defined, all unique values of outcome are used.
+#' @param outcome_base Base level for the target variable. Default is the first factor level.
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
 #' @param base Base level for sensitive group comparison
 #'
@@ -41,7 +42,8 @@
 #' @export
 
 equal_odds <- function(data, outcome, group,
-                       probs = NULL, preds = NULL, outcome_levels = NULL, cutoff = 0.5, base = NULL) {
+                       probs = NULL, preds = NULL, outcome_levels = NULL, outcome_base = NULL, 
+                       cutoff = 0.5, base = NULL) {
 
     # convert types, sync levels
     group_status <- as.factor(data[, group])
@@ -49,7 +51,7 @@ equal_odds <- function(data, outcome, group,
     if (is.null(outcome_levels)) {
         outcome_levels <- unique(outcome_status)
     }
-    levels(outcome_status) <- outcome_levels
+    outcome_status <- relevel(outcome_status, outcome_levels[1])
     if (is.null(probs) & is.null(preds)) {
         stop({"Either probs or preds have to be supplied"})
     }
@@ -65,7 +67,7 @@ equal_odds <- function(data, outcome, group,
         preds_status <- as.factor(as.numeric(probs > cutoff))
     }
     levels(preds_status) <- outcome_levels
-
+    
     # check lengths
     if ((length(outcome_status) != length(preds_status)) | (length(outcome_status) !=
         length(group_status))) {
@@ -81,15 +83,22 @@ equal_odds <- function(data, outcome, group,
     # placeholder
     val <- rep(NA, length(levels(group_status)))
     names(val) <- levels(group_status)
+    
+    # set outcome base
+    if (is.null(outcome_base)) {
+        outcome_base <- levels(preds_status)[1]
+    }
 
     # compute value for all groups
     for (i in levels(group_status)) {
-        cm <- caret::confusionMatrix(preds_status[group_status == i], outcome_status[group_status ==
-            i], mode = "everything")
+        cm <- caret::confusionMatrix(preds_status[group_status   == i], 
+                                     outcome_status[group_status == i], 
+                                     mode = "everything", 
+                                     positive = outcome_base)
         metric_i <- cm$byClass[1]
         val[i] <- metric_i
     }
-
+    
     res_table <- rbind(val, val/val[[1]])
     rownames(res_table) <- c("Sensitivity", "Equalized odds")
 
@@ -121,5 +130,4 @@ equal_odds <- function(data, outcome, group,
     } else {
         list(Metric = res_table, Metric_plot = p, Probability_plot = q)
     }
-
 }
