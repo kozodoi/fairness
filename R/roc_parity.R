@@ -66,11 +66,6 @@ roc_parity <- function(data, outcome, group, probs,
     # placeholder
     val <- rep(NA, length(levels(group_status)))
     names(val) <- levels(group_status)
-    
-    # set outcome base
-    if (is.null(outcome_base)) {
-        outcome_base <- levels(preds_status)[1]
-    }
 
     # compute value for all groups
     for (i in 1:length(levels(group_status))) {
