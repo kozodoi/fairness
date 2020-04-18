@@ -4,17 +4,32 @@
 \alias{dem_parity}
 \title{Demographic parity}
 \usage{
-dem_parity(data, group, probs = NULL, preds = NULL, cutoff = 0.5,
-  base = NULL)
+dem_parity(
+  data,
+  outcome,
+  group,
+  probs = NULL,
+  preds = NULL,
+  preds_levels = NULL,
+  outcome_base = NULL,
+  cutoff = 0.5,
+  base = NULL
+)
 }
 \arguments{
 \item{data}{The dataframe that contains the necessary columns.}
+
+\item{outcome}{The column name of the actual outcomes.}
 
 \item{group}{Sensitive group to examine.}
 
 \item{probs}{The column name or vector of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds needs to be defined.}
 
-\item{preds}{The column name or vector of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.}
+\item{preds}{The column name or vector of the predicted binary outcome (0 or 1). If not defined, argument probs needs to be defined.}
+
+\item{preds_levels}{The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.}
+
+\item{outcome_base}{Base level for the target variable used to compute fairness metrics. Default is the first level of the outcome variable.}
 
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
@@ -38,10 +53,10 @@ proportions will be reflected in numbers lower than 1 in the returned named vect
 }
 \examples{
 data(compas)
-dem_parity(data = compas, group = 'ethnicity',
+dem_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
 probs = 'probability', preds = NULL,
 cutoff = 0.4, base = 'Caucasian')
-dem_parity(data = compas, group = 'ethnicity',
+dem_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
 probs = NULL, preds = 'predicted',
 cutoff = 0.5, base = 'Hispanic')
 

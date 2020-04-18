@@ -4,8 +4,7 @@
 \alias{roc_parity}
 \title{ROC AUC parity}
 \usage{
-roc_parity(data, outcome, group, probs, outcome_levels = NULL,
-  base = NULL)
+roc_parity(data, outcome, group, probs, preds_levels = NULL, base = NULL)
 }
 \arguments{
 \item{data}{The dataframe that contains the necessary columns.}
@@ -16,7 +15,7 @@ roc_parity(data, outcome, group, probs, outcome_levels = NULL,
 
 \item{probs}{The column name or vector of the predicted probabilities (numeric between 0 - 1).}
 
-\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). If not defined, all unique values of outcome are used.}
+\item{preds_levels}{The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.}
 
 \item{base}{Base level for sensitive group comparison}
 }
@@ -39,8 +38,8 @@ lower than 1 mean WORSE prediction for the subgroup.
 \examples{
 data(compas)
 roc_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
-probs = 'probability', outcome_levels = c('no', 'yes'), base = 'Caucasian')
+probs = 'probability', base = 'Caucasian')
 roc_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
-probs = 'probability', outcome_levels = c('no', 'yes'), base = 'African_American')
+probs = 'probability', base = 'African_American')
 
 }
