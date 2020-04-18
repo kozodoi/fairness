@@ -4,10 +4,11 @@
 - added outcome_base argument to set base level for target varible used to compute fairness metrics
 
 # fairness 1.0.2
-Small fixes in documentation.
+- small fixes in documentatio
 
 # fairness 1.0.1
-CRAN resubmission of fairness. Fix of DESCRIPTION and LICENSE files.
+- CRAN resubmission of fairness
+- fix of DESCRIPTION and LICENSE files
 
 # fairness 1.0.0
-The first stable version of fairness.
+- the first stable version of fairness
