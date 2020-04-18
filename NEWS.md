@@ -5,7 +5,7 @@
 - documentation updates
 
 # fairness 1.0.2
-- small fixes in documentatio
+- small fixes in documentation
 
 # fairness 1.0.1
 - CRAN resubmission of fairness
