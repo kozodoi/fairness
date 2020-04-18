@@ -1,7 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Updated version number to 1.0.0
+* Updated version number to 1.1.0
 * Fixed `outcome_levels` issue when levels of provided predictions do not match outcome levels
 * Renamed `outcome_levels` to `preds_levels` to imporve clarity
 * Added `outcome_base` argument to fairness metric functions to set base level for target varible used to compute fairness metrics
