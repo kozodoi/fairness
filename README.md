@@ -20,24 +20,7 @@
 
 The fairness R package provides a tool to easily calculate algorithmic fairness metrics for given predicted probabilities or predicted classes between different sensitive groups. It also provides additional opportunities to visualize and compare other prediction metrics between the subgroups. 
 
-You can instal the latest stable package version from CRAN by running:
-
-```r
-install.packages('fairness')
-library(fairness)
-```
-
-You may also install the development version from Github:
-
-```r
-library(devtools)
-devtools::install_github('kozodoi/fairness')
-library(fairness)
-```
-
-## Description
-
-This package contains functions to compute the most commonly used metrics of algorithmic fairness such as:   
+The package contains functions to compute the most commonly used metrics of algorithmic fairness such as:   
 
 - Demographic parity
 - Proportional parity
@@ -56,6 +39,23 @@ In addition, the following comparisons are also implemented:
 
 Most fairness measures are computed based on the confusion matrix resulting from fitting a binary classification model.
 
+
+## Installation
+
+You can instal the latest stable package version from CRAN by running:
+
+```r
+install.packages('fairness')
+library(fairness)
+```
+
+You may also install the development version from Github:
+
+```r
+library(devtools)
+devtools::install_github('kozodoi/fairness')
+library(fairness)
+```
 
 ## Fairness pipeline
 
