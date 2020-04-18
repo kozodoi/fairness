@@ -256,7 +256,7 @@ output <- pred_rate_parity(data = compas,
 output$Metric
 ```
 
-A standard output is a barchart that shows the relative metrics for all subgoups. For the previous case (when Hispanic is defined as the base group), this plot would look like this:
+A standard output is a barchart that shows the relative metrics for all subgroups. For the previous case (when Hispanic is defined as the base group), this plot would look like this:
 ```{r , fig.width=5, fig.height=3}
 output$Metric_plot
 ```
