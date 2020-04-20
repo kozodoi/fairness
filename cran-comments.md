@@ -1,7 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Updated patch to 1.0.1
+* Updated patch to 1.1.0
 
 * Corrected the LICENSE file
 
