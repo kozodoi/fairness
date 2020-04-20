@@ -97,10 +97,10 @@ mcc_parity <- function(data, outcome, group,
                                      positive = outcome_base)
         cm_positive <- cm$positive
         cm_negative <- preds_levels[!(preds_levels %in% cm_positive)]
-        TP <- cm$table[cm_positive, cm_positive]
-        TN <- cm$table[cm_negative, cm_negative]
-        FP <- cm$table[cm_positive, cm_negative]
-        FN <- cm$table[cm_negative, cm_positive]
+        TP <- as.numeric(cm$table[cm_positive, cm_positive])
+        TN <- as.numeric(cm$table[cm_negative, cm_negative])
+        FP <- as.numeric(cm$table[cm_positive, cm_negative])
+        FN <- as.numeric(cm$table[cm_negative, cm_positive])
         numerator <- (TP * TN) - (FP * FN)
         denominator <- sqrt((TP + FP) * (TP + FN) * (TN + FP) * (TN + FN))
         if (denominator == 0) {
