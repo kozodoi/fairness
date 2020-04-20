@@ -45,7 +45,7 @@ fnr_parity <- function(data, outcome, group,
 
     # convert types, sync levels
     if (is.null(probs) & is.null(preds)) {
-        stop({"Either probs or preds have to be supplied"})
+        stop({'Either probs or preds have to be supplied'})
     }
     if (is.null(probs)) {
         if (length(preds) == 1) {
@@ -72,7 +72,7 @@ fnr_parity <- function(data, outcome, group,
     # check lengths
     if ((length(outcome_status) != length(preds_status)) | (length(outcome_status) !=
         length(group_status))) {
-        stop("Outcomes, predictions/probabilities and group status must be of the same length")
+        stop('Outcomes, predictions/probabilities and group status must be of the same length')
     }
 
     # relevel group
@@ -94,18 +94,24 @@ fnr_parity <- function(data, outcome, group,
     for (i in levels(group_status)) {
         cm <- caret::confusionMatrix(preds_status[group_status == i], 
                                      outcome_status[group_status == i], 
-                                     mode = "everything", 
+                                     mode = 'everything', 
                                      positive = outcome_base)
-        metric_i <- cm$table[3]/sum(cm$table[3], cm$table[4])
+        cm_positive <- cm$positive
+        cm_negative <- preds_levels[!(preds_levels %in% cm_positive)]
+        TP <- cm$table[cm_positive, cm_positive]
+        TN <- cm$table[cm_negative, cm_negative]
+        FP <- cm$table[cm_positive, cm_negative]
+        FN <- cm$table[cm_negative, cm_positive]
+        metric_i <- FN / (FN + TP)
         val[i] <- metric_i
     }
 
-    res_table <- rbind(val, val/val[[1]])
-    rownames(res_table) <- c("FNR", "FNR Parity")
+    res_table <- rbind(val, val / val[[1]])
+    rownames(res_table) <- c('FNR', 'FNR Parity')
 
     # conversion of metrics to df
     val_df <- as.data.frame(res_table[2, ])
-    colnames(val_df) <- c("val")
+    colnames(val_df) <- c('val')
     val_df$groupst <- rownames(val_df)
     val_df$groupst <- as.factor(val_df$groupst)
 
@@ -116,14 +122,14 @@ fnr_parity <- function(data, outcome, group,
     val_df$groupst <- relevel(val_df$groupst, base)
 
     p <- ggplot(val_df, aes(x = groupst, weight = val, fill = groupst)) + geom_bar(alpha = 0.5) +
-        coord_flip() + theme(legend.position = "none") + labs(x = "", y = "False Negative Rate Parity")
+        coord_flip() + theme(legend.position = 'none') + labs(x = '', y = 'False Negative Rate Parity')
 
     # plotting
     if (!is.null(probs)) {
         q <- ggplot(data, aes(x = probs, fill = group_status)) + geom_density(alpha = 0.5) +
-            labs(x = "Predicted probabilities") + guides(fill = guide_legend(title = "")) +
+            labs(x = 'Predicted probabilities') + guides(fill = guide_legend(title = '')) +
             theme(plot.title = element_text(hjust = 0.5)) + xlim(0, 1) + geom_vline(xintercept = cutoff,
-            linetype = "dashed")
+            linetype = 'dashed')
     }
 
     if (is.null(probs)) {
