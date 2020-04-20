@@ -44,7 +44,7 @@ mcc_parity <- function(data, outcome, group,
 
     # convert types, sync levels
     if (is.null(probs) & is.null(preds)) {
-        stop({"Either probs or preds have to be supplied"})
+        stop({'Either probs or preds have to be supplied'})
     }
     if (is.null(probs)) {
         if (length(preds) == 1) {
@@ -71,7 +71,7 @@ mcc_parity <- function(data, outcome, group,
     # check lengths
     if ((length(outcome_status) != length(preds_status)) | (length(outcome_status) !=
         length(group_status))) {
-        stop("Outcomes, predictions/probabilities and group status must be of the same length")
+        stop('Outcomes, predictions/probabilities and group status must be of the same length')
     }
 
     # relevel group
@@ -93,28 +93,30 @@ mcc_parity <- function(data, outcome, group,
     for (i in levels(group_status)) {
         cm <- caret::confusionMatrix(preds_status[group_status == i], 
                                      outcome_status[group_status == i], 
-                                     mode = "everything",
+                                     mode = 'everything',
                                      positive = outcome_base)
-        TP <- as.numeric(cm$table[4])
-        TN <- as.numeric(cm$table[1])
-        FP <- as.numeric(cm$table[2])
-        FN <- as.numeric(cm$table[3])
+        cm_positive <- cm$positive
+        cm_negative <- preds_levels[!(preds_levels %in% cm_positive)]
+        TP <- as.numeric(cm$table[cm_positive, cm_positive])
+        TN <- as.numeric(cm$table[cm_negative, cm_negative])
+        FP <- as.numeric(cm$table[cm_positive, cm_negative])
+        FN <- as.numeric(cm$table[cm_negative, cm_positive])
         numerator <- (TP * TN) - (FP * FN)
         denominator <- sqrt((TP + FP) * (TP + FN) * (TN + FP) * (TN + FN))
         if (denominator == 0) {
             metric_i <- 0
         } else {
-            metric_i <- numerator/denominator
+            metric_i <- numerator / denominator
         }
         val[i] <- metric_i
     }
 
     res_table <- rbind(val, val/val[[1]])
-    rownames(res_table) <- c("MCC", "MCC Parity")
+    rownames(res_table) <- c('MCC', 'MCC Parity')
 
     # conversion of metrics to df
     val_df <- as.data.frame(res_table[2, ])
-    colnames(val_df) <- c("val")
+    colnames(val_df) <- c('val')
     val_df$groupst <- rownames(val_df)
     val_df$groupst <- as.factor(val_df$groupst)
 
@@ -125,14 +127,14 @@ mcc_parity <- function(data, outcome, group,
     val_df$groupst <- relevel(val_df$groupst, base)
 
     p <- ggplot(val_df, aes(x = groupst, weight = val, fill = groupst)) + geom_bar(alpha = 0.5) +
-        coord_flip() + theme(legend.position = "none") + labs(x = "", y = "Matthews Correlation Coefficient Parity")
+        coord_flip() + theme(legend.position = 'none') + labs(x = '', y = 'Matthews Correlation Coefficient Parity')
 
     # plotting
     if (!is.null(probs)) {
         q <- ggplot(data, aes(x = probs, fill = group_status)) + geom_density(alpha = 0.5) +
-            labs(x = "Predicted probabilities") + guides(fill = guide_legend(title = "")) +
+            labs(x = 'Predicted probabilities') + guides(fill = guide_legend(title = '')) +
             theme(plot.title = element_text(hjust = 0.5)) + xlim(0, 1) + geom_vline(xintercept = cutoff,
-            linetype = "dashed")
+            linetype = 'dashed')
     }
 
     if (is.null(probs)) {

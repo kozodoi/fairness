@@ -1,6 +1,9 @@
+# fairness 1.1.1
+- fixed `fnr_parity()` and `fpr_parity()` calculations for different outcome bases
+
 # fairness 1.1.0
 - fixed `outcome_levels` issue when levels of provided predictions do not match outcome levels
-- renamed `outcome_levels` to `preds_levels` to improve clarity
+- renamed `outcome_levels` to `preds_levels` to imporve clarity
 - added `outcome_base` argument to set base level for target variable used to compute fairness metrics
 - updates in package documentation
 
