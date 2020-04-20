@@ -110,6 +110,15 @@ Predicted probability plot for all subgroups:
 ![Bar plot](man/figures/Plot_prob.png)
 
 
+## Dependencies
+
+Installation requires R 3.6+ and the following packages:
+- [caret](https://cran.r-project.org/package=caret)
+- [ggplot2](https://cran.r-project.org/package=ggplot2)
+- [pROC](https://cran.r-project.org/package=pROC)
+- [e1071](https://cran.r-project.org/package=e1071g)
+
+
 ## Acknowledgments
 - Calders, T., & Verwer, S. (2010). Three naive Bayes approaches for discrimination-free classification. Data Mining and Knowledge Discovery, 21(2), 277-292.
 - Chouldechova, A. (2017). Fair prediction with disparate impact: A study of bias in recidivism prediction instruments. Big data, 5(2), 153-163.
