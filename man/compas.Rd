@@ -4,7 +4,8 @@
 \name{compas}
 \alias{compas}
 \title{Modified COMPAS dataset}
-\format{A data frame with 6172 rows and 9 variables:
+\format{
+A data frame with 6172 rows and 9 variables:
 \describe{
   \item{Two_yr_Recidivism}{factor, yes/no for recidivism or no recidivism. This is the outcome or target in this dataset}
   \item{Number_of_Priors}{numeric, number of priors, normalized to mean = 0 and standard deviation = 1}
@@ -15,7 +16,8 @@
   \item{ethnicity}{factor, Caucasian, African American, Asian, Hispanic, Native American or Other}
   \item{probability}{numeric, predicted probabilities for recidivism, ranges from 0 to 1}
   \item{predicted}{numeric, predicted values for recidivism, 0/1 for no/yes}
-}}
+}
+}
 \source{
 The dataset is downloaded from Kaggle \url{https://www.kaggle.com/danofer/compass} and has undergone modifications (e.g. ethnicity was originally encoded using one-hot encoding, number or priors have been normalized, variables have been renamed, prediction model was fit and predicted probabilities and predicted status were concatenated to the original dataset).
 }

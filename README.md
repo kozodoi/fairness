@@ -1,7 +1,9 @@
-<!-- rmarkdown v1 -->
+# fairness: computing measures of algorithmic fairness in R
+
+---
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Licence](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/)
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/)
 [![Build Status](https://travis-ci.org/kozodoi/Fairness.svg?branch=master)](https://travis-ci.com/kozodoi/Fairness)
 [![Downloads](https://cranlogs.r-pkg.org/badges/fairness)](https://cran.rstudio.com/web/packages/fairness/index.html)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fairness?color=red)](https://cran.rstudio.com/web/packages/fairness/index.html)
@@ -10,38 +12,15 @@
 
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.6.0-6666ff.svg)](https://cran.r-project.org/)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/fairness)](https://www.r-pkg.org/badges/version/fairness)
-[![packageversion](https://img.shields.io/badge/Package%20version-1.0.1-orange.svg?style=flat-square)](commits/master)
+[![packageversion](https://img.shields.io/badge/Package%20version-1.1.0-orange.svg?style=flat-square)](commits/master)
 
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-
-
-
-# Overview of the fairness R package
+## Package overview
 
 The fairness R package provides a tool to easily calculate algorithmic fairness metrics for given predicted probabilities or predicted classes between different sensitive groups. It also provides additional opportunities to visualize and compare other prediction metrics between the subgroups. 
 
-You can load the package by running:
-
-```r
-install.packages("fairness")
-library(fairness)
-```
-
-## The fairness pipeline
-
-You will find a detailed tutorial in the fairness vignette. We recommend that you spend some time going through the vignette, as it contains a much more in-depth description of the fairness package compared to this brief readme.
-
-
-```r
-vignette("fairness")
-```
-
-## Description
-
-This package contains functions to compute the most commonly used metrics of algorithmic fairness such as:   
+The package contains functions to compute the most commonly used metrics of algorithmic fairness such as:   
 
 - Demographic parity
 - Proportional parity
@@ -60,34 +39,55 @@ In addition, the following comparisons are also implemented:
 
 Most fairness measures are computed based on the confusion matrix resulting from fitting a binary classification model.
 
-## Brief tutorial
 
-### Loading the COMPAS sample data set
+## Installation
 
+You can instal the latest stable package version from CRAN by running:
 
 ```r
-data("compas")
+install.packages('fairness')
+library(fairness)
+```
+
+You may also install the development version from Github:
+
+```r
+library(devtools)
+devtools::install_github('kozodoi/fairness')
+library(fairness)
+```
+
+## Fairness pipeline
+
+You will find a detailed tutorial in the fairness vignette. We recommend that you spend some time going through the vignette, as it contains a much more in-depth description of the fairness package compared to this brief readme.
+
+```r
+vignette('fairness')
+```
+
+## Brief tutorial
+
+### Loading the COMPAS sample dataset
+
+```r
+data('compas')
 ```
 
 The data already contains all variables necessary to run all parity metrics. In case you set up your own predictive model, you will need to concatenate predicted probabilities or predictions (0/1) to your original dataset or supply them as a vector to the corresponding metric function.
 
 ### Running a selected function
 
-
 ```r
-equal_odds(data           = compas, 
-           outcome        = "Two_yr_Recidivism",
-           outcome_levels = c("no","yes"), 
-           group          = "ethnicity",
-           probs          = "probability", 
-           preds          = NULL,
-           cutoff         = 0.5, 
-           base           = "Caucasian")
+equal_odds(data         = compas, 
+           outcome      = 'Two_yr_Recidivism',
+           group        = 'ethnicity',
+           probs        = 'probability', 
+           preds_levels = c('no', 'yes'), 
+           cutoff       = 0.5, 
+           base         = 'Caucasian')
 ```
 
 ### Taking a look at the output
-
-
 
 Metrics for equalized odds:     
 
@@ -110,6 +110,14 @@ Predicted probability plot for all subgroups:
 ![Bar plot](man/figures/Plot_prob.png)
 
 
+## Dependencies
+
+Installation requires R 3.6+ and the following packages:
+- [caret](https://cran.r-project.org/package=caret)
+- [ggplot2](https://cran.r-project.org/package=ggplot2)
+- [pROC](https://cran.r-project.org/package=pROC)
+- [e1071](https://cran.r-project.org/package=e1071g)
+
 
 ## Acknowledgments
 - Calders, T., & Verwer, S. (2010). Three naive Bayes approaches for discrimination-free classification. Data Mining and Knowledge Discovery, 21(2), 277-292.
@@ -119,7 +127,6 @@ Predicted probability plot for all subgroups:
 - Zafar, M. B., Valera, I., Gomez Rodriguez, M., & Gummadi, K. P. (2017, April). Fairness beyond disparate treatment & disparate impact: Learning classification without disparate mistreatment. In Proceedings of the 26th International Conference on World Wide Web (pp. 1171-1180). International World Wide Web Conferences Steering Committee.
 
 
-## Issues, questions
+## Issues & questions
 
-In case you need help or advice on fairness metrics or you want to report an issue, please do so in a reproducible example at the [fairness GitHub](https://github.com/kozodoi/Fairness/issues) page.
-
+In case you need help or advice on fairness metrics or you want to report an issue, please do so in a reproducible example at the corresponding [GitHub page](https://github.com/kozodoi/fairness/issues).

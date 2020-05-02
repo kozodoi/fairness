@@ -4,7 +4,8 @@
 \name{germancredit}
 \alias{germancredit}
 \title{Modified german credit dataset}
-\format{A data frame with 1000 rows and 23 variables:
+\format{
+A data frame with 1000 rows and 23 variables:
 \describe{
   \item{Account_status}{factor, status of existing checking account}
   \item{Duration}{numeric, loan duration in month}
@@ -29,7 +30,8 @@
   \item{Female}{factor, female/male for gender}
   \item{probability}{numeric, predicted probabilities for default, ranges from 0 to 1}
   \item{predicted}{numeric, predicted values for default, 0/1 for no/yes}
-}}
+}
+}
 \source{
 The dataset has undergone modifications (e.g. categorical variables were encoded, prediction model was fit and predicted probabilities and predicted status were concatenated to the original dataset).
 }

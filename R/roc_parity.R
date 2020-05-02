@@ -14,9 +14,9 @@
 #' @param outcome The column name of the actual outcomes.
 #' @param group Sensitive group to examine.
 #' @param probs The column name or vector of the predicted probabilities (numeric between 0 - 1).
-#' @param outcome_levels The desired levels of the predicted outcome (categorical outcome). If not defined, all unique values of outcome are used.
+#' @param preds_levels The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.
 #' @param base Base level for sensitive group comparison
-#'
+#' 
 #' @name roc_parity
 #'
 #' @return
@@ -28,29 +28,28 @@
 #' @examples
 #' data(compas)
 #' roc_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
-#' probs = 'probability', outcome_levels = c('no', 'yes'), base = 'Caucasian')
+#' probs = 'probability', base = 'Caucasian')
 #' roc_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
-#' probs = 'probability', outcome_levels = c('no', 'yes'), base = 'African_American')
+#' probs = 'probability', base = 'African_American')
 #'
 #' @export
 
 
 roc_parity <- function(data, outcome, group, probs,
-                       outcome_levels = NULL, base = NULL) {
+                       preds_levels = NULL, base = NULL) {
 
     # convert types, sync levels
-    group_status <- as.factor(data[, group])
-    outcome_status <- as.factor(data[, outcome])
-    if (is.null(outcome_levels)) {
-        outcome_levels <- unique(outcome_status)
-    }
-    levels(outcome_status) <- outcome_levels
-    if (length(probs) == 1) {
-        probs <- data[, probs]
-    } else {
-        probs <- probs
+    if (is.null(probs)) {
+        stop({"Probs have to be supplied"})
     }
 
+    if (length(probs) == 1) {
+        probs <- data[, probs]
+    }
+
+    group_status   <- as.factor(data[, group])
+    outcome_status <- as.factor(data[, outcome])
+    
     # check lengths
     if ((length(outcome_status) != length(probs)) | (length(outcome_status) !=
         length(group_status))) {
@@ -66,8 +65,8 @@ roc_parity <- function(data, outcome, group, probs,
     # placeholder
     val <- rep(NA, length(levels(group_status)))
     names(val) <- levels(group_status)
-
-    # compute value for all groups=
+    
+    # compute value for all groups
     for (i in 1:length(levels(group_status))) {
         temproc <- pROC::roc(predictor = probs[group_status == levels(group_status)[i]],
             response = outcome_status[group_status == levels(group_status)[i]], levels = levels(outcome_status),
