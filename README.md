@@ -18,7 +18,7 @@
 
 ## Package overview
 
-The fairness R package provides a tool to easily calculate algorithmic fairness metrics for given predicted probabilities or predicted classes between different sensitive groups. It also provides additional opportunities to visualize and compare other prediction metrics between the subgroups. 
+The fairness R package provides tools to easily calculate algorithmic fairness metrics for given predicted probabilities or predicted classes between different sensitive groups. It also provides opportunities to visualize and compare other prediction metrics between the subgroups. 
 
 The package contains functions to compute the most commonly used metrics of algorithmic fairness such as:   
 
