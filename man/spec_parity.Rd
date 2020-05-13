@@ -4,8 +4,17 @@
 \alias{spec_parity}
 \title{Specificity parity}
 \usage{
-spec_parity(data, outcome, group, probs = NULL, preds = NULL,
-  outcome_levels = NULL, cutoff = 0.5, base = NULL)
+spec_parity(
+  data,
+  outcome,
+  group,
+  probs = NULL,
+  preds = NULL,
+  preds_levels = NULL,
+  outcome_base = NULL,
+  cutoff = 0.5,
+  base = NULL
+)
 }
 \arguments{
 \item{data}{The dataframe that contains the necessary columns.}
@@ -16,9 +25,11 @@ spec_parity(data, outcome, group, probs = NULL, preds = NULL,
 
 \item{probs}{The column name or vector of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds needs to be defined.}
 
-\item{preds}{The column name or vector of the predicted outcome (categorical outcome). If not defined, argument probs needs to be defined.}
+\item{preds}{The column name or vector of the predicted binary outcome (0 or 1). If not defined, argument probs needs to be defined.}
 
-\item{outcome_levels}{The desired levels of the predicted outcome (categorical outcome). If not defined, all unique values of outcome are used.}
+\item{preds_levels}{The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.}
+
+\item{outcome_base}{Base level for the target variable used to compute fairness metrics. Default is the first level of the outcome variable.}
 
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
@@ -43,10 +54,10 @@ lower than 1 mean WORSE prediction for the subgroup.
 \examples{
 data(compas)
 spec_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
-probs = 'probability', preds = NULL, outcome_levels = c('no', 'yes'),
+probs = 'probability', preds = NULL, preds_levels = c('no', 'yes'),
 cutoff = 0.4, base = 'Caucasian')
 spec_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
-probs = NULL, preds = 'predicted', outcome_levels = c('no', 'yes'),
+probs = NULL, preds = 'predicted', preds_levels = c('no', 'yes'),
 cutoff = 0.5, base = 'Hispanic')
 
 }
