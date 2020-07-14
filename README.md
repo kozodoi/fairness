@@ -59,7 +59,7 @@ library(fairness)
 
 ## Fairness pipeline
 
-You will find a detailed tutorial in the fairness vignette. We recommend that you spend some time going through the vignette, as it contains a much more in-depth description of the fairness package compared to this brief readme. The vignette is also available in [this blogpost](https://kozodoi.github.io/blog/r/fairness/2019/09/29/fairness-tutorial.html).
+You will find a detailed tutorial in the fairness vignette. We recommend that you spend some time going through the vignette, as it contains a much more in-depth description of the fairness package compared to this brief readme. The more detailed tutorial is also available in [this blogpost](https://kozodoi.github.io/blog/r/fairness/packages/2020/05/01/fairness-tutorial.html).
 
 ```r
 vignette('fairness')
