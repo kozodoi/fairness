@@ -37,6 +37,12 @@
 
 roc_parity <- function(data, outcome, group, probs,
                        preds_levels = NULL, base = NULL) {
+    
+    # check if data is data.frame
+    if (class(data)[1] != 'data.frame') {
+        warning(paste0('Converting ', class(data)[1], ' to data.frame'))
+        data <- as.data.frame(data)
+    }
 
     # convert types, sync levels
     if (is.null(probs)) {
@@ -69,8 +75,8 @@ roc_parity <- function(data, outcome, group, probs,
     # compute value for all groups
     for (i in 1:length(levels(group_status))) {
         temproc <- pROC::roc(predictor = probs[group_status == levels(group_status)[i]],
-            response = outcome_status[group_status == levels(group_status)[i]], levels = levels(outcome_status),
-            ci = T)
+            response = outcome_status[group_status == levels(group_status)[i]], 
+            levels = levels(outcome_status), ci = T, quiet = T)
         val[i] <- as.numeric(temproc[[9]])
         assign(paste0("grouproc_", i), temproc)
     }

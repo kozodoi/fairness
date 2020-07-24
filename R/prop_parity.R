@@ -40,6 +40,12 @@
 
 prop_parity <- function(data, outcome, group, probs = NULL, preds = NULL, preds_levels = NULL, outcome_base = NULL, cutoff = 0.5, base = NULL) {
 
+    # check if data is data.frame
+    if (class(data)[1] != 'data.frame') {
+        warning(paste0('Converting ', class(data)[1], ' to data.frame'))
+        data <- as.data.frame(data)
+    }
+    
     # convert types, sync levels
     if (is.null(probs) & is.null(preds)) {
         stop({"Either probs or preds have to be supplied"})
