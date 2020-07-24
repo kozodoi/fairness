@@ -5,10 +5,10 @@
 #' @details
 #' \tabular{ll}{
 #' Package: \tab fairness\cr
-#' Depends: \tab R (>= 3.6.0)\cr
+#' Depends: \tab R (>= 3.5.0)\cr
 #' Type: \tab Package\cr
-#' Version:  \tab 1.1.0\cr
-#' Date:  \tab 2020-04-26\cr
+#' Version:  \tab 1.1.1\cr
+#' Date:  \tab 2020-07-24\cr
 #' License:  \tab MIT\cr
 #' LazyLoad:  \tab Yes
 #' }
@@ -21,6 +21,7 @@
 #'
 #' @seealso
 #' \url{https://github.com/kozodoi/fairness}
+#' \url{https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html}
 #'
 #' @name fairness
 #' @docType package

@@ -22,6 +22,8 @@ knitr::opts_chunk$set(
 library(fairness)
 ```
 
+This vignette provides a tutorial on using the fairness R package. A more detailed tutorial is also provided in [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html).
+
 To date, a number of algorithmic group fairness metrics have been proposed. Demographic parity, proportional parity, equalized odds and predictive rate parity are the most commonly used metrics to evaluate fairness between groups in classification problems (supervised machine learning algorithms). Multiple other metrics have been proposed that use various metrics from the confusion matrix (e.g. false positive rate parity, false negative rate parity). The fairness R package provides a tool to easily calculate these metrics for given predicted probabilities or predicted classes between sensitive groups of populations. The package also provides visualizations that makes it easier to comprehend these metrics and biases between subgroups of the data.
 
 Disclaimer! None of the implemented metrics are supposed to replace critical thinking about the problem in question.

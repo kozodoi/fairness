@@ -1,3 +1,8 @@
+# fairness 1.1.1
+- added check and conversion of data to `data.frame` in metric functions
+- quiet AUC computation in `roc_parity()`
+- small updates in documentation
+
 # fairness 1.1.0
 - fixed `outcome_levels` issue when levels of provided predictions do not match outcome levels
 - renamed `outcome_levels` to `preds_levels` to improve clarity
