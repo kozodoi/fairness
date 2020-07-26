@@ -1,0 +1,4 @@
+^CRAN-RELEASE$
+README.md
+.travis.yml
+cran-comments.md
