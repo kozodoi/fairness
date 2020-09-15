@@ -18,7 +18,7 @@
 
 ## Package overview
 
-The fairness R package provides tools to easily calculate algorithmic fairness metrics for given predicted probabilities or predicted classes between different sensitive groups. It also provides opportunities to visualize and compare other prediction metrics between the subgroups. 
+The fairness R package provides tools to easily calculate algorithmic fairness metrics across different sensitive groups based on model predictions in a binary classification task. It also provides opportunities to visualize and compare other prediction metrics between the groups. 
 
 The package contains functions to compute the most commonly used metrics of algorithmic fairness such as:   
 
@@ -37,10 +37,11 @@ In addition, the following comparisons are also implemented:
 - ROC AUC comparison
 - MCC comparison
 
-Most fairness measures are computed based on the confusion matrix resulting from fitting a binary classification model.
+The comprehensive tutorial on using the package is provided in [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html). We recommend that you go through the blogpost, as it contains a more in-depth description of the fairness package compared to this README. You will also find a brief tutorial in the fairness [vignette](https://github.com/kozodoi/fairness/blob/master/vignettes/fairness.Rmd):
 
-The comprehensive tutorial on using the package is provided in [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html).
-
+```r
+vignette('fairness')
+```
 
 ## Installation
 
@@ -57,14 +58,6 @@ You may also install the development version from Github:
 library(devtools)
 devtools::install_github('kozodoi/fairness')
 library(fairness)
-```
-
-## Fairness pipeline
-
-You will find a brief tutorial in the fairness [vignette](https://github.com/kozodoi/fairness/blob/master/vignettes/fairness.Rmd). We recommend that you go through the vignette, as it contains a more in-depth description of the fairness package compared to this brief README. The more detailed tutorial is also available in [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html).
-
-```r
-vignette('fairness')
 ```
 
 ## Brief tutorial
@@ -112,6 +105,15 @@ Predicted probability plot for all subgroups:
 ![Bar plot](man/figures/Plot_prob.png)
 
 
+## Citing the package
+
+To cite package in scientific publications, please use the following query to generate a text and BibTeX reference entry:
+```r
+citation('fairness')
+```
+> Nikita Kozodoi and Tibor V. Varga (2020). fairness: Algorithmic Fairness Metrics. R package version 1.1.1.
+
+
 ## Dependencies
 
 Installation requires R 3.6+ and the following packages:
@@ -122,6 +124,7 @@ Installation requires R 3.6+ and the following packages:
 
 
 ## Acknowledgments
+
 - Calders, T., & Verwer, S. (2010). Three naive Bayes approaches for discrimination-free classification. Data Mining and Knowledge Discovery, 21(2), 277-292.
 - Chouldechova, A. (2017). Fair prediction with disparate impact: A study of bias in recidivism prediction instruments. Big data, 5(2), 153-163.
 - Feldman, M., Friedler, S. A., Moeller, J., Scheidegger, C., & Venkatasubramanian, S. (2015, August). Certifying and removing disparate impact. In Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (pp. 259-268). ACM.
