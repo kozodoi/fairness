@@ -107,7 +107,7 @@ Predicted probability plot for all subgroups:
 
 ## Citing the package
 
-To cite package in scientific publications, please use the following query to generate a text and BibTeX reference entry:
+To cite this package in scientific publications, please use the following query to generate a reference as a text or a BibTeX entry:
 ```r
 citation('fairness')
 ```
