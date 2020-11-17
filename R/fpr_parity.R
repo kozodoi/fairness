@@ -87,9 +87,10 @@ fpr_parity <- function(data, outcome, group,
     }
     group_status <- relevel(group_status, base)
 
-    # placeholder
-    val <- rep(NA, length(levels(group_status)))
-    names(val) <- levels(group_status)
+    # placeholders
+    val         <- rep(NA, length(levels(group_status)))
+    names(val)  <- levels(group_status)
+    sample_size <- val
     
     # set outcome base
     if (is.null(outcome_base)) {
@@ -110,10 +111,12 @@ fpr_parity <- function(data, outcome, group,
         FN <- cm$table[cm_negative, cm_positive]
         metric_i <- FP / (FP + TN)
         val[i] <- metric_i
+        sample_size[i] <- sum(cm$table)
     }
 
-    res_table <- rbind(val, val/val[[1]])
-    rownames(res_table) <- c('FPR', 'FPR Parity')
+    # aggregate results
+    res_table <- rbind(val, val/val[[1]], sample_size)
+    rownames(res_table) <- c('FPR', 'FPR Parity', 'Sample size')
 
     # conversion of metrics to df
     val_df <- as.data.frame(res_table[2, ])

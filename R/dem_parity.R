@@ -92,18 +92,21 @@ dem_parity <- function(data, outcome, group, probs = NULL, preds = NULL, preds_l
     }
     group_status <- relevel(group_status, base)
 
-    # placeholder
-    val <- rep(NA, length(levels(group_status)))
-    names(val) <- levels(group_status)
+    # placeholders
+    val         <- rep(NA, length(levels(group_status)))
+    names(val)  <- levels(group_status)
+    sample_size <- val
 
     # compute value for all groups
     for (i in levels(group_status)) {
-        metric_i <- sum(preds_status[group_status == i])
-        val[i] <- metric_i
+        metric_i       <- sum(preds_status[group_status == i])
+        val[i]         <- metric_i
+        sample_size[i] <- length(preds_status[group_status == i])
     }
-
-    res_table <- rbind(val, val/val[[1]])
-    rownames(res_table) <- c("Positively classified", "Demographic Parity")
+    
+    # aggregate results
+    res_table <- rbind(val, val/val[[1]], sample_size)
+    rownames(res_table) <- c('Positively classified', 'Demographic Parity', 'Sample size')
 
     # conversion of metrics to df
     val_df <- as.data.frame(res_table[2, ])

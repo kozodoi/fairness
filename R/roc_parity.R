@@ -68,9 +68,10 @@ roc_parity <- function(data, outcome, group, probs,
     }
     group_status <- relevel(group_status, base)
 
-    # placeholder
-    val <- rep(NA, length(levels(group_status)))
-    names(val) <- levels(group_status)
+    # placeholders
+    val         <- rep(NA, length(levels(group_status)))
+    names(val)  <- levels(group_status)
+    sample_size <- val
     
     # compute value for all groups
     for (i in 1:length(levels(group_status))) {
@@ -79,6 +80,7 @@ roc_parity <- function(data, outcome, group, probs,
             levels = levels(outcome_status), ci = T, quiet = T)
         val[i] <- as.numeric(temproc[[9]])
         assign(paste0("grouproc_", i), temproc)
+        sample_size[i] <- length(probs[group_status == levels(group_status)[i]])
     }
 
     if (length(levels(group_status)) == 2) {
@@ -104,15 +106,17 @@ roc_parity <- function(data, outcome, group, probs,
     } else {
         r <- NULL
     }
-
-    res_table <- rbind(val, val/val[[1]])
-    rownames(res_table) <- c("ROC AUC", "ROC AUC Parity")
+    
+    # aggregate results
+    res_table <- rbind(val, val/val[[1]], sample_size)
+    rownames(res_table) <- c('ROC AUC', 'ROC AUC Parity', 'Sample size')
 
     # conversion of metrics to df
     val_df <- as.data.frame(res_table[2, ])
     colnames(val_df) <- c("val")
-    val_df$groupst <- rownames(val_df)
-    val_df$groupst <- as.factor(val_df$groupst)
+    val_df$groupst   <- rownames(val_df)
+    val_df$groupst   <- as.factor(val_df$groupst)
+    
     # relevel group
     if (is.null(base)) {
         val_df$groupst <- levels(val_df$groupst)[1]

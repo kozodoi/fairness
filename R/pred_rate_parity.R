@@ -89,9 +89,10 @@ pred_rate_parity <- function(data, outcome, group,
     }
     group_status <- relevel(group_status, base)
 
-    # placeholder
-    val <- rep(NA, length(levels(group_status)))
-    names(val) <- levels(group_status)
+    # placeholders
+    val         <- rep(NA, length(levels(group_status)))
+    names(val)  <- levels(group_status)
+    sample_size <- val
     
     # set outcome base
     if (is.null(outcome_base)) {
@@ -106,10 +107,12 @@ pred_rate_parity <- function(data, outcome, group,
                                      positive = outcome_base)
         metric_i <- cm$byClass['Precision']
         val[i] <- metric_i
+        sample_size[i] <- sum(cm$table)
     }
-
-    res_table <- rbind(val, val/val[[1]])
-    rownames(res_table) <- c('Precision', 'Predictive Rate Parity')
+    
+    # aggregate results
+    res_table <- rbind(val, val/val[[1]], sample_size)
+    rownames(res_table) <- c('Precision', 'Predictive Rate Parity', 'Sample size')
 
     # conversion of metrics to df
     val_df <- as.data.frame(res_table[2, ])
