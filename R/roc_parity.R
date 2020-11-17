@@ -15,7 +15,8 @@
 #' @param group Sensitive group to examine.
 #' @param probs The column name or vector of the predicted probabilities (numeric between 0 - 1).
 #' @param preds_levels The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.
-#' @param base Base level for sensitive group comparison
+#' @param base Base level for sensitive group comparison.
+#' @param group_breaks If group is continuous (e.g., age): either a numeric vector of two or more unique cut points or a single number >= 2 giving the number of intervals into which group feature is to be cut.
 #' 
 #' @name roc_parity
 #'
@@ -36,7 +37,9 @@
 
 
 roc_parity <- function(data, outcome, group, probs,
-                       preds_levels = NULL, base = NULL) {
+                       preds_levels = NULL, 
+                       base = NULL,
+                       group_breaks = NULL) {
     
     # check if data is data.frame
     if (class(data)[1] != 'data.frame') {
@@ -51,6 +54,18 @@ roc_parity <- function(data, outcome, group, probs,
 
     if (length(probs) == 1) {
         probs <- data[, probs]
+    }
+    
+    # check group feature and cut if needed
+    if ((length(unique(data[, group])) > 10) & (is.null(group_breaks))) {
+        warning('Number of unqiue group levels exceeds 10. Consider specifying `group_breaks`.')
+    }
+    if (!is.null(group_breaks)) {
+        if (is.numeric(data[, group])) {
+            data[, group] <- cut(data[, group], breaks = group_breaks)
+        }else{
+            warning('Attempting to bin a non-numeric group feature.')
+        }
     }
 
     group_status   <- as.factor(data[, group])

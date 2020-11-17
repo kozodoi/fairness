@@ -19,7 +19,8 @@
 #' @param preds_levels The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.
 #' @param outcome_base Base level for the target variable used to compute fairness metrics. Default is the first level of the outcome variable.
 #' @param cutoff Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.
-#' @param base Base level for sensitive group comparison
+#' @param base Base level for sensitive group comparison.
+#' @param group_breaks If group is continuous (e.g., age): either a numeric vector of two or more unique cut points or a single number >= 2 giving the number of intervals into which group feature is to be cut.
 #'
 #' @name fpr_parity
 #'
@@ -40,8 +41,13 @@
 #' @export
 
 fpr_parity <- function(data, outcome, group,
-                       probs = NULL, preds = NULL, preds_levels = NULL, outcome_base = NULL, 
-                       cutoff = 0.5, base = NULL) {
+                       probs = NULL, 
+                       preds = NULL, 
+                       preds_levels = NULL, 
+                       outcome_base = NULL, 
+                       cutoff = 0.5, 
+                       base = NULL,
+                       group_breaks = NULL) {
     
     # check if data is data.frame
     if (class(data)[1] != 'data.frame') {
@@ -63,6 +69,18 @@ fpr_parity <- function(data, outcome, group,
             probs <- data[, probs]
         }
         preds_status <- as.factor(as.numeric(probs > cutoff))
+    }
+    
+    # check group feature and cut if needed
+    if ((length(unique(data[, group])) > 10) & (is.null(group_breaks))) {
+        warning('Number of unqiue group levels exceeds 10. Consider specifying `group_breaks`.')
+    }
+    if (!is.null(group_breaks)) {
+        if (is.numeric(data[, group])) {
+            data[, group] <- cut(data[, group], breaks = group_breaks)
+        }else{
+            warning('Attempting to bin a non-numeric group feature.')
+        }
     }
     
     group_status   <- as.factor(data[, group])
