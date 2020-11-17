@@ -115,7 +115,7 @@ acc_parity <- function(data, outcome, group,
 
     # aggregate results
     res_table <- rbind(val, val/val[[1]], sample_size)
-    rownames(res_table) <- c('Accuracy', 'Accuracy Parity', 'Sample size')
+    rownames(res_table) <- c('Accuracy', 'Accuracy Parity', 'Group size')
 
     # conversion of metrics to df
     val_df <- as.data.frame(res_table[2, ])

@@ -46,7 +46,7 @@ roc_parity <- function(data, outcome, group, probs,
 
     # convert types, sync levels
     if (is.null(probs)) {
-        stop({"Probs have to be supplied"})
+        stop({'Probs have to be supplied'})
     }
 
     if (length(probs) == 1) {
@@ -59,7 +59,7 @@ roc_parity <- function(data, outcome, group, probs,
     # check lengths
     if ((length(outcome_status) != length(probs)) | (length(outcome_status) !=
         length(group_status))) {
-        stop("Outcomes, probabilities and group status must be of the same length")
+        stop('Outcomes, probabilities and group status must be of the same length')
     }
 
     # relevel group
@@ -79,41 +79,41 @@ roc_parity <- function(data, outcome, group, probs,
             response = outcome_status[group_status == levels(group_status)[i]], 
             levels = levels(outcome_status), ci = T, quiet = T)
         val[i] <- as.numeric(temproc[[9]])
-        assign(paste0("grouproc_", i), temproc)
+        assign(paste0('grouproc_', i), temproc)
         sample_size[i] <- length(probs[group_status == levels(group_status)[i]])
     }
 
     if (length(levels(group_status)) == 2) {
         r <- pROC::ggroc(list(grouproc_1, grouproc_2)) + geom_abline(intercept = 1,
-            slope = 1) + labs(x = "Specificity", y = "Sensitivity") + theme(legend.title = element_blank()) +
+            slope = 1) + labs(x = 'Specificity', y = 'Sensitivity') + theme(legend.title = element_blank()) +
             scale_color_discrete(labels = names(val))
     } else if (length(levels(group_status)) == 3) {
         r <- pROC::ggroc(list(grouproc_1, grouproc_2, grouproc_3)) + geom_abline(intercept = 1,
-            slope = 1) + labs(x = "Specificity", y = "Sensitivity") + theme(legend.title = element_blank()) +
+            slope = 1) + labs(x = 'Specificity', y = 'Sensitivity') + theme(legend.title = element_blank()) +
             scale_color_discrete(labels = names(val))
     } else if (length(levels(group_status)) == 4) {
         r <- pROC::ggroc(list(grouproc_1, grouproc_2, grouproc_3, grouproc_4)) + geom_abline(intercept = 1,
-            slope = 1) + labs(x = "Specificity", y = "Sensitivity") + theme(legend.title = element_blank()) +
+            slope = 1) + labs(x = 'Specificity', y = 'Sensitivity') + theme(legend.title = element_blank()) +
             scale_color_discrete(labels = names(val))
     } else if (length(levels(group_status)) == 5) {
         r <- pROC::ggroc(list(grouproc_1, grouproc_2, grouproc_3, grouproc_4, grouproc_5)) +
-            geom_abline(intercept = 1, slope = 1) + labs(x = "Specificity", y = "Sensitivity") +
+            geom_abline(intercept = 1, slope = 1) + labs(x = 'Specificity', y = 'Sensitivity') +
             theme(legend.title = element_blank()) + scale_color_discrete(labels = names(val))
     } else if (length(levels(group_status)) == 6) {
         r <- pROC::ggroc(list(grouproc_1, grouproc_2, grouproc_3, grouproc_4, grouproc_5,
-            grouproc_6)) + geom_abline(intercept = 1, slope = 1) + labs(x = "Specificity",
-            y = "Sensitivity") + theme(legend.title = element_blank()) + scale_color_discrete(labels = names(val))
+            grouproc_6)) + geom_abline(intercept = 1, slope = 1) + labs(x = 'Specificity',
+            y = 'Sensitivity') + theme(legend.title = element_blank()) + scale_color_discrete(labels = names(val))
     } else {
         r <- NULL
     }
     
     # aggregate results
     res_table <- rbind(val, val/val[[1]], sample_size)
-    rownames(res_table) <- c('ROC AUC', 'ROC AUC Parity', 'Sample size')
+    rownames(res_table) <- c('ROC AUC', 'ROC AUC Parity', 'Group size')
 
     # conversion of metrics to df
     val_df <- as.data.frame(res_table[2, ])
-    colnames(val_df) <- c("val")
+    colnames(val_df) <- c('val')
     val_df$groupst   <- rownames(val_df)
     val_df$groupst   <- as.factor(val_df$groupst)
     
@@ -124,10 +124,10 @@ roc_parity <- function(data, outcome, group, probs,
     val_df$groupst <- relevel(val_df$groupst, base)
 
     p <- ggplot(val_df, aes(x = groupst, weight = val, fill = groupst)) + geom_bar(alpha = 0.5) +
-        coord_flip() + theme(legend.position = "none") + labs(x = "", y = "Predictive Rate Parity")
+        coord_flip() + theme(legend.position = 'none') + labs(x = '', y = 'Predictive Rate Parity')
 
     q <- ggplot(data, aes(x = probs, fill = group_status)) + geom_density(alpha = 0.5) +
-        labs(x = "Predicted probabilities") + guides(fill = guide_legend(title = "")) +
+        labs(x = 'Predicted probabilities') + guides(fill = guide_legend(title = '')) +
         theme(plot.title = element_text(hjust = 0.5)) + xlim(0, 1)
 
     list(Metric = res_table, Metric_plot = p, Probability_plot = q, ROCAUC_plot = r)

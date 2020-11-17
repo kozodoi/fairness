@@ -48,7 +48,7 @@ prop_parity <- function(data, outcome, group, probs = NULL, preds = NULL, preds_
     
     # convert types, sync levels
     if (is.null(probs) & is.null(preds)) {
-        stop({"Either probs or preds have to be supplied"})
+        stop({'Either probs or preds have to be supplied'})
     }
     if (is.null(probs)) {
         if (length(preds) == 1) {
@@ -81,7 +81,7 @@ prop_parity <- function(data, outcome, group, probs = NULL, preds = NULL, preds_
 
     # check lengths
     if (length(group_status) != length(preds_status)) {
-        stop("Predictions/probabilities and group status must be of the same length")
+        stop('Predictions/probabilities and group status must be of the same length')
     }
 
     # relevel group
@@ -104,11 +104,11 @@ prop_parity <- function(data, outcome, group, probs = NULL, preds = NULL, preds_
 
     # aggregate results
     res_table <- rbind(val, val/val[[1]], sample_size)
-    rownames(res_table) <- c('Proportion', 'Proportional Parity', 'Sample size')
+    rownames(res_table) <- c('Proportion', 'Proportional Parity', 'Group size')
 
     # conversion of metrics to df
     val_df <- as.data.frame(res_table[2, ])
-    colnames(val_df) <- c("val")
+    colnames(val_df) <- c('val')
     val_df$groupst <- rownames(val_df)
     val_df$groupst <- as.factor(val_df$groupst)
 
@@ -119,15 +119,15 @@ prop_parity <- function(data, outcome, group, probs = NULL, preds = NULL, preds_
     val_df$groupst <- relevel(val_df$groupst, base)
 
     p <- ggplot(val_df, aes(x = groupst, weight = val, fill = groupst)) + geom_bar(alpha = 0.5) +
-        coord_flip() + theme(legend.position = "none") + labs(x = "", y = "Proportional Parity")
+        coord_flip() + theme(legend.position = 'none') + labs(x = '', y = 'Proportional Parity')
 
     # plotting
     if (!is.null(probs)) {
         probs_vals <- data[, probs]
         q <- ggplot(data, aes(x = probs, fill = group_status)) + geom_density(alpha = 0.5) +
-            labs(x = "Predicted probabilities") + guides(fill = guide_legend(title = "")) +
+            labs(x = 'Predicted probabilities') + guides(fill = guide_legend(title = '')) +
             theme(plot.title = element_text(hjust = 0.5)) + xlim(0, 1) + geom_vline(xintercept = cutoff,
-            linetype = "dashed")
+            linetype = 'dashed')
     }
 
     if (is.null(probs)) {
