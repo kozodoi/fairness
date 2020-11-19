@@ -13,7 +13,8 @@ pred_rate_parity(
   preds_levels = NULL,
   outcome_base = NULL,
   cutoff = 0.5,
-  base = NULL
+  base = NULL,
+  group_breaks = NULL
 )
 }
 \arguments{
@@ -33,7 +34,9 @@ pred_rate_parity(
 
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
-\item{base}{Base level for sensitive group comparison}
+\item{base}{Base level for sensitive group comparison.}
+
+\item{group_breaks}{If group is continuous (e.g., age): either a numeric vector of two or more unique cut points or a single number >= 2 giving the number of intervals into which group feature is to be cut.}
 }
 \value{
 \item{Metric}{Raw precision metrics for all groups and metrics standardized for the base group (predictive rate parity metric). Lower values compared to the reference group mean lower precisions in the selected subgroups}

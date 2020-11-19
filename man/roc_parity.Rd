@@ -4,7 +4,15 @@
 \alias{roc_parity}
 \title{ROC AUC parity}
 \usage{
-roc_parity(data, outcome, group, probs, preds_levels = NULL, base = NULL)
+roc_parity(
+  data,
+  outcome,
+  group,
+  probs,
+  preds_levels = NULL,
+  base = NULL,
+  group_breaks = NULL
+)
 }
 \arguments{
 \item{data}{The dataframe that contains the necessary columns.}
@@ -17,7 +25,9 @@ roc_parity(data, outcome, group, probs, preds_levels = NULL, base = NULL)
 
 \item{preds_levels}{The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.}
 
-\item{base}{Base level for sensitive group comparison}
+\item{base}{Base level for sensitive group comparison.}
+
+\item{group_breaks}{If group is continuous (e.g., age): either a numeric vector of two or more unique cut points or a single number >= 2 giving the number of intervals into which group feature is to be cut.}
 }
 \value{
 \item{Metric}{Raw ROC AUC metrics for all groups and metrics standardized for the base group (parity metric). Lower values compared to the reference group mean lower ROC AUC values in the selected subgroups}

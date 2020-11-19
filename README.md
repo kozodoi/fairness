@@ -18,16 +18,16 @@
 
 ## Package overview
 
-The fairness R package provides tools to easily calculate algorithmic fairness metrics across different sensitive groups based on model predictions in a binary classification task. It also provides opportunities to visualize and compare other prediction metrics between the groups. 
+The fairness R package provides tools to calculate algorithmic fairness metrics across different sensitive groups based on model predictions in a binary classification task. It also provides opportunities to visualize and compare other prediction metrics between the sensitive groups. 
 
-The package contains functions to compute the most commonly used metrics of algorithmic fairness such as:   
+The package contains functions to compute the commonly used fair machine learning metrics such as:   
 
 - Demographic parity
 - Proportional parity
 - Equalized odds
 - Predictive rate parity
 
-In addition, the following comparisons are also implemented:    
+In addition, the following metrics are implemented:    
 
 - False positive rate parity
 - False negative rate parity
@@ -37,7 +37,7 @@ In addition, the following comparisons are also implemented:
 - ROC AUC comparison
 - MCC comparison
 
-The comprehensive tutorial on using the package is provided in [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html). We recommend that you go through the blogpost, as it contains a more in-depth description of the fairness package compared to this README. You will also find a brief tutorial in the fairness [vignette](https://github.com/kozodoi/fairness/blob/master/vignettes/fairness.Rmd):
+The comprehensive tutorial on using the package is provided in [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html). We recommend that you go through the post, as it contains a more in-depth description of the fairness package compared to this README. You will also find a brief tutorial in the fairness [vignette](https://github.com/kozodoi/fairness/blob/master/vignettes/fairness.Rmd):
 
 ```r
 vignette('fairness')
