@@ -18,7 +18,7 @@
 
 ## Package overview
 
-The `fairness` R package offers tools to calculate metrics of algorithmic fairness across different sensitive groups. The metrics are computed based on model predictions in a binary classification task. The package also provides opportunities to visualize and compare other prediction metrics between the sensitive groups. 
+The `fairness` R package offers tools to calculate metrics of algorithmic fairness across different sensitive groups. The metrics are computed based on model predictions in a binary classification task. The package also provides opportunities to visualize and compare other prediction metrics between the sensitive groups.
 
 The package contains functions to compute the commonly used fair machine learning metrics such as:   
 - Demographic parity
@@ -73,11 +73,11 @@ The data already contains all variables necessary to run all parity metrics. In 
 All fairness metrics are implemented as separate functions with the same structure of inputs including the outcome variable, model predictions and a sensitive group feature.
 
 ```r
-equal_odds(data    = compas, 
+equal_odds(data    = compas,
            outcome = 'Two_yr_Recidivism',
-           probs   = 'probability', 
+           probs   = 'probability',
            group   = 'ethnicity',
-           cutoff  = 0.5, 
+           cutoff  = 0.5,
            base    = 'Caucasian')
 ```
 
