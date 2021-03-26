@@ -112,10 +112,10 @@ fnr_parity <- function(data, outcome, group,
     for (i in levels(group_status)) {
         cm <- caret::confusionMatrix(preds_status[group_status   == i], 
                                      outcome_status[group_status == i], 
-                                     mode = 'everything', 
+                                     mode     = 'everything', 
                                      positive = outcome_positive)
         cm_positive <- cm$positive
-        cm_negative <- preds_levels[!(preds_levels %in% cm_positive)]
+        cm_negative <- levels(outcome_status)[!(levels(outcome_status) %in% cm_positive)]
         TP <- cm$table[cm_positive, cm_positive]
         TN <- cm$table[cm_negative, cm_negative]
         FP <- cm$table[cm_positive, cm_negative]
