@@ -10,7 +10,6 @@ mcc_parity(
   group,
   probs = NULL,
   preds = NULL,
-  preds_levels = NULL,
   outcome_base = NULL,
   cutoff = 0.5,
   base = NULL,
@@ -18,23 +17,21 @@ mcc_parity(
 )
 }
 \arguments{
-\item{data}{The dataframe that contains the necessary columns.}
+\item{data}{Data.frame that contains the necessary columns.}
 
-\item{outcome}{The column name of the actual outcomes.}
+\item{outcome}{Column name indicating the binary outcome variable (character).}
 
-\item{group}{Sensitive group to examine.}
+\item{group}{Column name indicating the sensitive group (character).}
 
-\item{probs}{The column name or vector of the predicted probabilities (numeric between 0 - 1). If not defined, argument preds needs to be defined.}
+\item{probs}{Column name or vector with the predicted probabilities (numeric between 0 - 1). Either probs or preds need to be supplied.}
 
-\item{preds}{The column name or vector of the predicted binary outcome (0 or 1). If not defined, argument probs needs to be defined.}
+\item{preds}{Column name or vector with the predicted binary outcome (0 or 1). Either probs or preds need to be supplied.}
 
-\item{preds_levels}{The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.}
-
-\item{outcome_base}{Base level for the target variable used to compute fairness metrics. Default is the first level of the outcome variable.}
+\item{outcome_base}{Base level of the outcome variable (i.e., negative class). Default is the first level of the outcome variable.}
 
 \item{cutoff}{Cutoff to generate predicted outcomes from predicted probabilities. Default set to 0.5.}
 
-\item{base}{Base level for sensitive group comparison.}
+\item{base}{Base level of the sensitive group (character).}
 
 \item{group_breaks}{If group is continuous (e.g., age): either a numeric vector of two or more unique cut points or a single number >= 2 giving the number of intervals into which group feature is to be cut.}
 }
@@ -45,6 +42,8 @@ mcc_parity(
 }
 \description{
 This function computes the Matthews Correlation Coefficient (MCC) parity metric
+
+Formula: (TP × TN - FP × FN) / sqrt((TP + FP) × (TP + FN) × (TN + FP) × (TN + FN))
 }
 \details{
 This function computes the Matthews Correlation Coefficient (MCC) parity metric. In the returned
@@ -56,10 +55,10 @@ lower than 1 mean WORSE prediction for the subgroup.
 \examples{
 data(compas)
 mcc_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
-probs = 'probability', preds = NULL, preds_levels = c('no', 'yes'),
+probs = 'probability', preds = NULL,
 cutoff = 0.4, base = 'Caucasian')
 mcc_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
-probs = NULL, preds = 'predicted', preds_levels = c('no', 'yes'),
+probs = NULL, preds = 'predicted', 
 cutoff = 0.5, base = 'Hispanic')
 
 }

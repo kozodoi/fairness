@@ -4,28 +4,18 @@
 \alias{roc_parity}
 \title{ROC AUC parity}
 \usage{
-roc_parity(
-  data,
-  outcome,
-  group,
-  probs,
-  preds_levels = NULL,
-  base = NULL,
-  group_breaks = NULL
-)
+roc_parity(data, outcome, group, probs, base = NULL, group_breaks = NULL)
 }
 \arguments{
-\item{data}{The dataframe that contains the necessary columns.}
+\item{data}{Data.frame that contains the necessary columns.}
 
-\item{outcome}{The column name of the actual outcomes.}
+\item{outcome}{Column name indicating the binary outcome variable (character).}
 
-\item{group}{Sensitive group to examine.}
+\item{group}{Column name indicating the sensitive group (character).}
 
-\item{probs}{The column name or vector of the predicted probabilities (numeric between 0 - 1).}
+\item{probs}{Column name or vector with the predicted probabilities (numeric between 0 - 1).}
 
-\item{preds_levels}{The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.}
-
-\item{base}{Base level for sensitive group comparison.}
+\item{base}{Base level of the sensitive group (character).}
 
 \item{group_breaks}{If group is continuous (e.g., age): either a numeric vector of two or more unique cut points or a single number >= 2 giving the number of intervals into which group feature is to be cut.}
 }
