@@ -10,13 +10,12 @@
 #' ROC AUC will be reflected in numbers lower than 1 in the returned named vector, thus numbers
 #' lower than 1 mean WORSE prediction for the subgroup.
 #'
-#' @param data The dataframe that contains the necessary columns.
-#' @param outcome The column name of the actual outcomes.
-#' @param group Sensitive group to examine.
-#' @param probs The column name or vector of the predicted probabilities (numeric between 0 - 1).
-#' @param preds_levels The desired levels of the predicted binary outcome. If not defined, levels of the outcome variable are used.
-#' @param base Base level for sensitive group comparison.
+#' @param data Data.frame that contains the necessary columns.
+#' @param group Column name indicating the sensitive group (character).
+#' @param base Base level of the sensitive group (character).
 #' @param group_breaks If group is continuous (e.g., age): either a numeric vector of two or more unique cut points or a single number >= 2 giving the number of intervals into which group feature is to be cut.
+#' @param outcome Column name indicating the binary outcome variable (character).
+#' @param probs Column name or vector with the predicted probabilities (numeric between 0 - 1). 
 #' 
 #' @name roc_parity
 #'
@@ -37,7 +36,6 @@
 
 
 roc_parity <- function(data, outcome, group, probs,
-                       preds_levels = NULL, 
                        base = NULL,
                        group_breaks = NULL) {
     
