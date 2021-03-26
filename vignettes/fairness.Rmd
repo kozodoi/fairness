@@ -1,5 +1,5 @@
 ---
-title: 'A complete tutorial to the fairness R package'
+title: 'Tutorial to the fairness R package'
 author: 'Tibor V. Varga & Nikita Kozodoi'
 date: '`r Sys.Date()`'
 output: rmarkdown::html_vignette
@@ -22,20 +22,20 @@ knitr::opts_chunk$set(
 library(fairness)
 ```
 
-This vignette provides a tutorial on using the fairness R package. A more detailed tutorial is also provided in [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html).
+This vignette provides a brief tutorial on the fairness R package. A more detailed tutorial is provided in [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html).
 
 To date, a number of algorithmic group fairness metrics have been proposed. Demographic parity, proportional parity, equalized odds and predictive rate parity are the most commonly used metrics to evaluate fairness between groups in classification problems (supervised machine learning algorithms). Multiple other metrics have been proposed that use various metrics from the confusion matrix (e.g. false positive rate parity, false negative rate parity). The fairness R package provides a tool to easily calculate these metrics for given predicted probabilities or predicted classes between sensitive groups of populations. The package also provides visualizations that makes it easier to comprehend these metrics and biases between subgroups of the data.
 
 Disclaimer! None of the implemented metrics are supposed to replace critical thinking about the problem in question.
 
-## Installation of the fairness R package
+## Installation
 
 ```{r eval = FALSE}
 install.packages('fairness')
 library(fairness)
 ```
 
-## Description of data
+## Data description
 
 This package includes two datasets to study algorithmic fairness: *compas* and *germancredit*. In this tutorial, you will be able to use a simplified version of the landmark COMPAS dataset. You can read more about the dataset [here](https://github.com/propublica/compas-analysis). To load the dataset, all you need to do is:
 
@@ -45,15 +45,10 @@ data('compas')
 
 The compas dataframe contains nine columns: The outcome is *Two_yr_Recidivism*, i.e. whether an individual will commit a crime in two years or not. Variables exist in the data about prior criminal record (*Number_of_Priors* and *Misdemeanor*) and basic features such as age, categorized (*Age_Above_FourtyFive* and *Age_Below_TwentyFive*), sex (*Female*) and ethnicity (*ethnicity*). You don't really need to delve into the data much, we have already ran a prediction model using **all variables** to predict *Two_yr_Recidivism* and concatenated the predicted probabilities (*probability*) and predicted classes (*predicted*) to the data. You will be able to use the *probability* and *predicted* columns directly in your analysis.
 
-However, please feel free to set up other prediction models (e.g. excluding sensitive group information, such as sex and ethnicity) and use your generated predicted probabilities or classes to assess group fairness.
+Please feel free to set up other prediction models (e.g. excluding sensitive group information, such as sex and ethnicity) and use your generated predicted probabilities or classes to assess group fairness.
 
-As mentioned earlier, another dataset, *germancredit* is also included in this package. This dataset includes 20 potential predictor features and an outcome (target) column named *BAD*. Similarly to the *compas* dataset, this data also includes two pre-made columns named *probability* and *predicted*. Feel free to play wit this data as well! You can of course load it with:
 
-```{r eval = FALSE}
-data('germancredit')
-```
-
-## Algorithmic group fairness metrics
+## Group fairness metrics
 
 The package currently includes nine fairness metrics and two other comparisons implemented. Many of these metrics are mutually exclusive - results from a given classification most often cannot be fair in terms of all evaluated group fairness metrics. Below, all these functions will be introduced in detail - for the sake of simplicity, we will use predicted probabilities for all these functions instead of predicted classes. Note that for all functions, in case of defining predicted probabilities, a cutoff needs to be defined in order to generate positive (1) or negative (0) predicted classes. Also, for all functions, a base group needs to be defined - all other groups will be compared to this subgroup in terms of fairness metrics.
 
@@ -78,7 +73,6 @@ dem_parity(data    = compas,
            outcome = 'Two_yr_Recidivism',
            group   = 'ethnicity',
            probs   = 'probability', 
-           preds_levels = c('no','yes'), 
            cutoff  = 0.5, 
            base    = 'Caucasian')
 ```
@@ -92,7 +86,6 @@ prop_parity(data    = compas,
             outcome = 'Two_yr_Recidivism',
             group   = 'ethnicity',
             probs   = 'probability', 
-            preds_levels = c('no','yes'), 
             cutoff  = 0.5, 
             base    = 'Caucasian')
 ```
@@ -108,7 +101,6 @@ equal_odds(data    = compas,
            outcome = 'Two_yr_Recidivism', 
            group   = 'ethnicity',
            probs   = 'probability', 
-           preds_levels = c('no','yes'), 
            cutoff = 0.5, 
            base   = 'African_American')
 ```
@@ -122,7 +114,6 @@ pred_rate_parity(data    = compas,
                  outcome = 'Two_yr_Recidivism', 
                  group   = 'ethnicity',
                  probs   = 'probability', 
-                 preds_levels = c('no','yes'), 
                  cutoff = 0.5, 
                  base   = 'African_American')
 ```
@@ -137,9 +128,8 @@ acc_parity(data    = compas,
            group   = 'ethnicity',
            probs   = 'probability', 
            preds   = NULL,
-           preds_levels = c('no','yes'), 
-           cutoff = 0.5, 
-           base   = 'African_American')
+           cutoff  = 0.5, 
+           base    = 'African_American')
 ```
 
 ### *False negative rate parity*
@@ -151,9 +141,8 @@ fnr_parity(data    = compas,
            outcome = 'Two_yr_Recidivism', 
            group   = 'ethnicity',
            probs   = 'probability', 
-           preds_levels = c('no','yes'), 
-           cutoff = 0.5, 
-           base   = 'African_American')
+           cutoff  = 0.5, 
+           base    = 'African_American')
 ```
 
 ### *False positive rate parity*
@@ -165,9 +154,8 @@ fpr_parity(data    = compas,
            outcome = 'Two_yr_Recidivism', 
            group   = 'ethnicity',
            probs   = 'probability', 
-           preds_levels = c('no','yes'), 
-           cutoff = 0.5, 
-           base   = 'African_American')
+           cutoff  = 0.5, 
+           base    = 'African_American')
 ```
 
 ### *Negative predictive value parity*
@@ -179,9 +167,8 @@ npv_parity(data    = compas,
            outcome = 'Two_yr_Recidivism', 
            group   = 'ethnicity',
            probs   = 'probability', 
-           preds_levels = c('no','yes'), 
-           cutoff = 0.5, 
-           base   = 'African_American')
+           cutoff  = 0.5, 
+           base    = 'African_American')
 ```
 
 ### *Specificity parity*
@@ -193,9 +180,8 @@ spec_parity(data    = compas,
             outcome = 'Two_yr_Recidivism', 
             group   = 'ethnicity',
             probs   = 'probability', 
-            preds_levels = c('no','yes'), 
-            cutoff = 0.5, 
-            base   = 'African_American')
+            cutoff  = 0.5, 
+            base    = 'African_American')
 ```
 
 Two additional comparisons are implemented, namely ROC AUC and Matthews correlation coefficient comparisons.    
@@ -208,8 +194,7 @@ roc_parity(data    = compas,
            outcome = 'Two_yr_Recidivism', 
            group   = 'ethnicity',
            probs   = 'probability', 
-           preds_levels = c('no','yes'), 
-           base = 'African_American')
+           base    = 'African_American')
 ```
 
 ### *Matthews correlation coefficient comparison*
@@ -221,9 +206,8 @@ mcc_parity(data    = compas,
            outcome = 'Two_yr_Recidivism', 
            group   = 'ethnicity',
            probs   = 'probability', 
-           preds_levels = c('no','yes'), 
-           cutoff = 0.5, 
-           base   = 'African_American')
+           cutoff  = 0.5, 
+           base    = 'African_American')
 ```
 
 
@@ -236,9 +220,8 @@ output <- pred_rate_parity(data = compas,
                            outcome = 'Two_yr_Recidivism', 
                            group   = 'ethnicity',
                            probs   = 'probability', 
-                           preds_levels = c('no','yes'), 
-                           cutoff = 0.5, 
-                           base   = 'Caucasian')
+                           cutoff  = 0.5, 
+                           base    = 'Caucasian')
 ```
 ```{r }
 output$Metric
@@ -250,9 +233,8 @@ output <- pred_rate_parity(data = compas,
                            outcome = 'Two_yr_Recidivism', 
                            group   = 'ethnicity',
                            probs   = 'probability', 
-                           preds_levels = c('no','yes'), 
-                           cutoff = 0.5, 
-                           base   = 'Hispanic')
+                           cutoff  = 0.5, 
+                           base    = 'Hispanic')
 ```
 ```{r }
 output$Metric
@@ -274,9 +256,8 @@ output <- pred_rate_parity(data = compas,
                            outcome = 'Two_yr_Recidivism', 
                            group   = 'Female',
                            probs   = 'probability', 
-                           preds_levels = c('no','yes'), 
-                           cutoff = 0.4, 
-                           base = 'Male')
+                           cutoff  = 0.4, 
+                           base    = 'Male')
 ```
 ```{r , fig.width=5, fig.height=3}
 output$Probability_plot
@@ -288,8 +269,7 @@ output <- roc_parity(data = compas,
                      outcome  = 'Two_yr_Recidivism', 
                      group    = 'Female',
                      probs    = 'probability', 
-                     preds_levels = c('no', 'yes'), 
-                     base = 'Male')
+                     base     = 'Male')
 ```
 ```{r , fig.width=5, fig.height=3}
 output$ROCAUC_plot
@@ -297,10 +277,7 @@ output$ROCAUC_plot
 
 ## Closing words
 
-You have read through the fairness R package tutorial and by now, you have a solid grip on algorithmic group fairness metrics. We hope that you will be able to use this R package in your data analysis! Please let us know if you have any issues here -  [fairness GitHub](https://github.com/kozodoi/Fairness/issues) - or contact the authors if you have any feedback!
-
- -- authors of the fairness R package
-
+You have read through the fairness R package tutorial and by now, you have a solid grip on algorithmic group fairness metrics. If something is not clear, check out [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html) with a more detailed tutorial. We hope that you will be able to use this R package in your data analysis! Please let us know if you have any issues here -[fairness GitHub](https://github.com/kozodoi/Fairness/issues) - or contact the authors if you have any feedback!
 
 
 
