@@ -12,8 +12,8 @@ The \strong{fairness} package offers calculation, visualization and comparison o
 Package: \tab fairness\cr
 Depends: \tab R (>= 3.5.0)\cr
 Type: \tab Package\cr
-Version:  \tab 1.1.1\cr
-Date:  \tab 2020-11-18\cr
+Version:  \tab 1.2.1\cr
+Date:  \tab 2021-03-26\cr
 License:  \tab MIT\cr
 LazyLoad:  \tab Yes
 }

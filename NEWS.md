@@ -1,3 +1,8 @@
+# fairness 1.2.1
+- fixed inconsistencies with `outcome_base` values
+- removed `preds_levels` argument
+- improved documentation of metric functions
+
 # fairness 1.2.0
 - added support for continuous group feature with binning options
 - added group size to metric outputs
