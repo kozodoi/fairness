@@ -114,7 +114,7 @@ mcc_parity <- function(data, outcome, group,
                                      mode     = 'everything',
                                      positive = outcome_positive)
         cm_positive <- cm$positive
-        cm_negative <- preds_levels[!(preds_levels %in% cm_positive)]
+        cm_negative <- levels(outcome_status)[!(levels(outcome_status) %in% cm_positive)]
         TP <- as.numeric(cm$table[cm_positive, cm_positive])
         TN <- as.numeric(cm$table[cm_negative, cm_negative])
         FP <- as.numeric(cm$table[cm_positive, cm_negative])
