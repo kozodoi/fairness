@@ -27,9 +27,10 @@
 #'
 #' @examples
 #' data(compas)
-#' roc_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
+#' compas$Two_yr_Recidivism_01 <- ifelse(compas$Two_yr_Recidivism == 'yes', 1, 0) 
+#' roc_parity(data = compas, outcome = 'Two_yr_Recidivism_01', group = 'ethnicity',
 #' probs = 'probability', base = 'Caucasian')
-#' roc_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
+#' roc_parity(data = compas, outcome = 'Two_yr_Recidivism_01', group = 'ethnicity',
 #' probs = 'probability', base = 'African_American')
 #'
 #' @export
