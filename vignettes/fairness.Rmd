@@ -10,7 +10,8 @@ vignette: >
   %\VignetteDepends{devtools}
 ---
 
-```{r, include=FALSE}
+
+```{r include = FALSE}
 devtools::load_all('.')
 ```
 
@@ -24,16 +25,42 @@ library(fairness)
 
 This vignette provides a brief tutorial on the fairness R package. A more detailed tutorial is provided in [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html).
 
-To date, a number of algorithmic group fairness metrics have been proposed. Demographic parity, proportional parity, equalized odds and predictive rate parity are the most commonly used metrics to evaluate fairness between groups in classification problems (supervised machine learning algorithms). Multiple other metrics have been proposed that use various metrics from the confusion matrix (e.g. false positive rate parity, false negative rate parity). The fairness R package provides a tool to easily calculate these metrics for given predicted probabilities or predicted classes between sensitive groups of populations. The package also provides visualizations that makes it easier to comprehend these metrics and biases between subgroups of the data.
+To date, a number of algorithmic fairness metrics have been proposed. Demographic parity, proportional parity and equalized odds are among the most commonly used metrics to evaluate fairness across sensitive groups in binary classification problems (with supervised machine learning algorithms). Multiple other metrics have been proposed based on performance measures extracted from the confusion matrix (e.g., false positive rate parity, false negative rate parity).
 
-Disclaimer! None of the implemented metrics are supposed to replace critical thinking about the problem in question.
+The fairness R package provides tools to easily calculate fairness metrics across different sensitive groups given predicted probabilities or predicted classes  The package also provides visualizations that make it easier to comprehend these metrics and biases between subgroups of the data.
+
+The package implements the following metrics and parities:
+
+- Demographic parity
+- Proportional parity
+- Equalized odds
+- Predictive rate parity
+- False positive rate parity
+- False negative rate parity
+- Accuracy parity
+- Negative predictive value parity
+- Specificity parity
+- ROC AUC parity
+- MCC parity
+
 
 ## Installation
+
+Install the latest stable package version from CRAN:
 
 ```{r eval = FALSE}
 install.packages('fairness')
 library(fairness)
 ```
+
+...or get the most recent development version from Github:
+
+```{r eval = FALSE}
+library(devtools)
+devtools::install_github('kozodoi/fairness')
+library(fairness)
+```
+
 
 ## Data description
 
@@ -48,29 +75,48 @@ The compas dataframe contains nine columns: The outcome is *Two_yr_Recidivism*, 
 Please feel free to set up other prediction models (e.g. excluding sensitive group information, such as sex and ethnicity) and use your generated predicted probabilities or classes to assess group fairness.
 
 
-## Group fairness metrics
+## An outlook on the confusion matrix
 
-The package currently includes nine fairness metrics and two other comparisons implemented. Many of these metrics are mutually exclusive - results from a given classification most often cannot be fair in terms of all evaluated group fairness metrics. Below, all these functions will be introduced in detail - for the sake of simplicity, we will use predicted probabilities for all these functions instead of predicted classes. Note that for all functions, in case of defining predicted probabilities, a cutoff needs to be defined in order to generate positive (1) or negative (0) predicted classes. Also, for all functions, a base group needs to be defined - all other groups will be compared to this subgroup in terms of fairness metrics.
+Most fairness metrics are calculated based on a confusion matrix produced by a classification model. The confusion matrix is comprised of four classes:
 
-### An outlook on the confusion matrix
+- **True positives** (TP): the true class is positive and the prediction is positive (correct classification)
+- **False positives** (FP): the true class is negative and the prediction is positive (incorrect classification)
+- **True negatives** (TN): the true class is negative and the prediction is negative (correct classification)
+- **False negatives** (FN): the true class is positive and the prediction is negative (incorrect classification)
 
-Most fairness metrics use various measures calculated from the confusion matrix. The confusion matrix is comprised of four distinct classes:    
+Fairness metrics are calculated by comparing one or more of these measures across sensitive subgroups (e.g., male and female). For a detailed overview of measures coming from the confusion matrix and precise definitions, click [here](https://en.wikipedia.org/wiki/Confusion_matrix) or [here](https://towardsdatascience.com/understanding-confusion-matrix-a9ad42dcfd62).
 
-1. **True positives (TP)**: True class positive and predicted positive (correct classification)     
-2. **False positives (FP)**: True class negative and predicted positive (incorrect classification)     
-3. **True negatives (TN)**: True class negative and predicted negative (correct classification)    
-4. **False negatives (FN)**: True class positive and predicted negative (incorrect classification)    
 
-All fairness metrics are calculated using one or more of these measures. For a detailed overview of various measures and precise definitions, please click [here](https://en.wikipedia.org/wiki/Confusion_matrix), [here](https://towardsdatascience.com/understanding-confusion-matrix-a9ad42dcfd62) or [here](https://www.geeksforgeeks.org/confusion-matrix-machine-learning/).
+## Fairness metrics functions
+
+The package implements 11 fairness metrics. Many of these are mutually exclusive: results for a given classification problem often cannot be fair in terms of all metrics. Depending on a context, it is important to select an appropriate metric to evaluate fairness.
+
+Below, we describe functions used to compute the implemented metrics. Every function has a similar set of arguments:
+
+- `data`: data.frame containing the input data and model predictions
+- `group`: column name indicating the sensitive group (factor variable)
+- `base`: base level of the sensitive group for fairness metrics calculation
+- `outcome`: column name indicating the binary outcome variable
+- `outcome_base`: base level of the outcome variable (i.e., negative class) for fairness metrics calculation
+
+We also need to supply model predictions. Depending on the metric, we need to provide either probabilistic predictions as `probs` or class predictions as `preds`. The model predictions can be appended to the original data.frame or provided as a vector. In this tutorial, we will use probabilistic predictions with all functions. When working with probabilistic predictions, some metrics require a cutoff value to convert probabilities into class predictions supplied as `cutoff`. 
+
+Before looking at different metrics, we will create a binary numeric version of the outcome variable that we will supply as `outcome` in fairness metrics functions:
+
+```{r eval = TRUE}
+compas$Two_yr_Recidivism_01 <- ifelse(compas$Two_yr_Recidivism == 'yes', 1, 0) 
+```
 
 
 ### *Demographic parity*
-Demographic parity is achieved if the absolute number of positive predictions in the subgroups are close to each other. This measure does not take true class into consideration, only positive predictions.    
+
+Demographic parity is one of the most popular fairness indicators in the literature. Demographic parity is achieved if the absolute number of positive predictions in the subgroups are close to each other. This measure does not take true class into consideration and only depends on the model predictions.
+
 Formula: **(TP + FP)**
 
 ```{r eval = FALSE}
 dem_parity(data    = compas, 
-           outcome = 'Two_yr_Recidivism',
+           outcome = 'Two_yr_Recidivism_01',
            group   = 'ethnicity',
            probs   = 'probability', 
            cutoff  = 0.5, 
@@ -78,12 +124,14 @@ dem_parity(data    = compas,
 ```
 
 ### *Proportional parity*
-Proportional parity is very similar to Demographic parity. Proportional parity is achieved if the proportion of positive predictions in the subgroups are close to each other. This measure does not take true class into consideration, only positive predictions.    
+
+Proportional parity is very similar to demographic parity but modifies it to address the issue discussed above. Proportional parity is achieved if the proportion of positive predictions in the subgroups are close to each other. Similar to the demographic parity, this measure also does not depend on the true labels.
+
 Formula: **(TP + FP) / (TP + FP + TN + FN)**
 
 ```{r eval = FALSE}
 prop_parity(data    = compas, 
-            outcome = 'Two_yr_Recidivism',
+            outcome = 'Two_yr_Recidivism_01',
             group   = 'ethnicity',
             probs   = 'probability', 
             cutoff  = 0.5, 
@@ -93,38 +141,44 @@ prop_parity(data    = compas,
 All the rest of the functions take the true class into consideration.    
 
 ### *Equalized odds*
-Equalized odds are achieved if the sensitivities (true positives divided by all positives) in the subgroups are close to each other.     
+
+Equalized odds are achieved if the sensitivities in the subgroups are close to each other. The group-specific sensitivities indicate the number of the true positives divided by the total number of positives in that group. 
+
 Formula: **TP / (TP + FN)**
 
 ```{r eval = FALSE}
 equal_odds(data    = compas, 
-           outcome = 'Two_yr_Recidivism', 
+           outcome = 'Two_yr_Recidivism_01', 
            group   = 'ethnicity',
            probs   = 'probability', 
-           cutoff = 0.5, 
-           base   = 'African_American')
+           cutoff  = 0.5, 
+           base    = 'African_American')
 ```
 
 ### *Predictive rate parity*
-Predictive rate parity is achieved if the precisions or positive predictive values (true positives divided by all predicted positive) in the subgroups are close to each other.     
+
+Predictive rate parity is achieved if the precisions (or positive predictive values) in the subgroups are close to each other. The precision stands for the number of the true positives divided by the total number of examples predicted positive within a group.
+    
 Formula: **TP / (TP + FP)**
 
 ```{r eval = FALSE}
 pred_rate_parity(data    = compas, 
-                 outcome = 'Two_yr_Recidivism', 
+                 outcome = 'Two_yr_Recidivism_01', 
                  group   = 'ethnicity',
                  probs   = 'probability', 
-                 cutoff = 0.5, 
-                 base   = 'African_American')
+                 cutoff  = 0.5, 
+                 base    = 'African_American')
 ```
 
 ### *Accuracy parity*
-Accuracy parity is achieved if the accuracies (all accurately classified divided by all predictions) in the subgroups are close to each other.     
+
+Accuracy parity is achieved if the accuracies (all accurately classified examples divided by the total number of examples) in the subgroups are close to each other.
+
 Formula: **(TP + TN) / (TP + FP + TN + FN)**
 
 ```{r eval = FALSE}
 acc_parity(data    = compas, 
-           outcome = 'Two_yr_Recidivism', 
+           outcome = 'Two_yr_Recidivism_01', 
            group   = 'ethnicity',
            probs   = 'probability', 
            preds   = NULL,
@@ -133,12 +187,14 @@ acc_parity(data    = compas,
 ```
 
 ### *False negative rate parity*
-False negative rate parity is achieved if the false negative rates (division of false negatives with all positives) in the subgroups are close to each other.     
+
+False negative rate parity is achieved if the false negative rates (the ratio between the number of false negatives and the total number of positives) in the subgroups are close to each other.
+
 Formula: **FN / (TP + FN)**
 
 ```{r eval = FALSE}
 fnr_parity(data    = compas, 
-           outcome = 'Two_yr_Recidivism', 
+           outcome = 'Two_yr_Recidivism_01', 
            group   = 'ethnicity',
            probs   = 'probability', 
            cutoff  = 0.5, 
@@ -146,12 +202,14 @@ fnr_parity(data    = compas,
 ```
 
 ### *False positive rate parity*
-False positive rate parity is achieved if the false positive rates (division of false positives with all negatives) in the subgroups are close to each other.     
+
+False positive rate parity is achieved if the false positive rates (the ratio between the number of false positives and the total number of negatives) in the subgroups are close to each other.
+
 Formula: **FP / (TN + FP)**
 
 ```{r eval = FALSE}
 fpr_parity(data    = compas, 
-           outcome = 'Two_yr_Recidivism', 
+           outcome = 'Two_yr_Recidivism_01', 
            group   = 'ethnicity',
            probs   = 'probability', 
            cutoff  = 0.5, 
@@ -159,12 +217,14 @@ fpr_parity(data    = compas,
 ```
 
 ### *Negative predictive value parity*
-Negative predictive value parity is achieved if the negative predictive values (division of true negatives with all predicted negatives) in the subgroups are close to each other. This function can be considered the 'inverse' of Predictive rate parity.      
+
+Negative predictive value parity is achieved if the negative predictive values in the subgroups are close to each other. The negative predictive value is computed as a ratio between the number of true negatives and the total number of predicted negatives. This function can be considered the ‘inverse’ of the predictive rate parity.
+
 Formula: **TN / (TN + FN)**
 
 ```{r eval = FALSE}
 npv_parity(data    = compas, 
-           outcome = 'Two_yr_Recidivism', 
+           outcome = 'Two_yr_Recidivism_01', 
            group   = 'ethnicity',
            probs   = 'probability', 
            cutoff  = 0.5, 
@@ -172,12 +232,14 @@ npv_parity(data    = compas,
 ```
 
 ### *Specificity parity*
-Specificity parity is achieved if the specificities (division of true negatives with all negatives) in the subgroups are close to each other. This function can be considered the 'inverse' of Equalized odds.        
+
+Specificity parity is achieved if the specificities (the ratio of the number of the true negatives and the total number of negatives) in the subgroups are close to each other. This function can be considered the ‘inverse’ of the equalized odds.
+
 Formula: **TN / (TN + FP)**
 
 ```{r eval = FALSE}
 spec_parity(data    = compas, 
-            outcome = 'Two_yr_Recidivism', 
+            outcome = 'Two_yr_Recidivism_01', 
             group   = 'ethnicity',
             probs   = 'probability', 
             cutoff  = 0.5, 
@@ -187,23 +249,26 @@ spec_parity(data    = compas,
 Two additional comparisons are implemented, namely ROC AUC and Matthews correlation coefficient comparisons.    
 
 ### *ROC AUC comparison*
-This function calculates ROC AUC and visualizes ROC curves for all subgroups. Note that probabilities must be defined for this function. Also, as ROC evaluates all possible cutoffs, the cutoff argument is excluded from this function.    
+
+This function calculates ROC AUC and visualizes ROC curves for all subgroups. Note that probabilities must be defined for this function. Also, as ROC evaluates all possible cutoffs, the cutoff argument is excluded from this function.  
 
 ```{r eval = FALSE}
 roc_parity(data    = compas, 
-           outcome = 'Two_yr_Recidivism', 
+           outcome = 'Two_yr_Recidivism_01', 
            group   = 'ethnicity',
            probs   = 'probability', 
            base    = 'African_American')
 ```
 
 ### *Matthews correlation coefficient comparison*
-The Matthews correlation coefficient takes all 4 classes of the confusion matrix into consideration. According to some, it is the single most powerful metric in binary classification problems, especially for data with class imbalances.     
+
+The Matthews correlation coefficient (MCC) takes all four classes of the confusion matrix into consideration. [MCC](https://en.wikipedia.org/wiki/Matthews_correlation_coefficient) is sometimes referred to as the single most powerful metric in binary classification problems, especially for data with class imbalances.
+
 Formula: **(TP×TN-FP×FN)/√((TP+FP)×(TP+FN)×(TN+FP)×(TN+FN))**
 
 ```{r eval = FALSE}
 mcc_parity(data    = compas, 
-           outcome = 'Two_yr_Recidivism', 
+           outcome = 'Two_yr_Recidivism_01', 
            group   = 'ethnicity',
            probs   = 'probability', 
            cutoff  = 0.5, 
@@ -216,11 +281,11 @@ mcc_parity(data    = compas,
 All functions output results and matching barcharts that provide visual cues about the parity metrics for the defined sensitive subgroups. For instance, let's look at predictive rate parity with ethnicity being set as the sensitive group and considering Caucasians as the 'base' group:
 
 ```{r echo = FALSE}
-output <- pred_rate_parity(data = compas, 
-                           outcome = 'Two_yr_Recidivism', 
+output <- pred_rate_parity(data    = compas,
+                           outcome = 'Two_yr_Recidivism_01',
                            group   = 'ethnicity',
-                           probs   = 'probability', 
-                           cutoff  = 0.5, 
+                           probs   = 'probability',
+                           cutoff  = 0.5,
                            base    = 'Caucasian')
 ```
 ```{r }
@@ -229,8 +294,8 @@ output$Metric
 
 In the upper row, the raw precision values are shown for all ethnicities, and in the row below, the relative precisions compared to Caucasians (1) are shown. Note that in case an other ethnic group is set as the base group (e.g. Hispanic), the raw precision values do not change, only the relative metrics:
 ```{r echo = FALSE}
-output <- pred_rate_parity(data = compas, 
-                           outcome = 'Two_yr_Recidivism', 
+output <- pred_rate_parity(data    = compas, 
+                           outcome = 'Two_yr_Recidivism_01', 
                            group   = 'ethnicity',
                            probs   = 'probability', 
                            cutoff  = 0.5, 
@@ -252,8 +317,8 @@ output$Probability_plot
 
 Another example would be comparing males vs. females in terms of recidivism prediction and defining a 0.4 cutoff:
 ```{r echo = FALSE}
-output <- pred_rate_parity(data = compas, 
-                           outcome = 'Two_yr_Recidivism', 
+output <- pred_rate_parity(data    = compas, 
+                           outcome = 'Two_yr_Recidivism_01', 
                            group   = 'Female',
                            probs   = 'probability', 
                            cutoff  = 0.4, 
@@ -265,8 +330,8 @@ output$Probability_plot
 
 The function related to ROC AUC comparisons will output ROC curves for each subgroups. Let's look at the plot, also comparing males vs. females:
 ```{r echo = FALSE, message=FALSE}
-output <- roc_parity(data = compas, 
-                     outcome  = 'Two_yr_Recidivism', 
+output <- roc_parity(data     = compas, 
+                     outcome  = 'Two_yr_Recidivism_01', 
                      group    = 'Female',
                      probs    = 'probability', 
                      base     = 'Male')
@@ -277,10 +342,4 @@ output$ROCAUC_plot
 
 ## Closing words
 
-You have read through the fairness R package tutorial and by now, you have a solid grip on algorithmic group fairness metrics. If something is not clear, check out [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html) with a more detailed tutorial. We hope that you will be able to use this R package in your data analysis! Please let us know if you have any issues here -[fairness GitHub](https://github.com/kozodoi/Fairness/issues) - or contact the authors if you have any feedback!
-
-
-
-
-
-
+You have read through the fairness R package tutorial and by now, you have a solid grip on algorithmic group fairness metrics. If something is not clear, check out [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html) with a more detailed tutorial. We hope that you will be able to use this R package in your data analysis! Please let us know if you have any issues here - [fairness GitHub](https://github.com/kozodoi/Fairness/issues) - or contact the authors if you have any feedback!
