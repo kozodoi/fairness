@@ -54,11 +54,10 @@ proportions will be reflected in numbers lower than 1 in the returned named vect
 }
 \examples{
 data(compas)
-prop_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
-probs = 'probability', preds = NULL,
-cutoff = 0.4, base = 'Caucasian')
-prop_parity(data = compas, outcome = 'Two_yr_Recidivism', group = 'ethnicity',
-probs = NULL, preds = 'predicted',
-cutoff = 0.5, base = 'Hispanic')
+compas$Two_yr_Recidivism_01 <- ifelse(compas$Two_yr_Recidivism == 'yes', 1, 0) 
+prop_parity(data = compas, outcome = 'Two_yr_Recidivism_01', group = 'ethnicity',
+probs = 'probability', cutoff = 0.4, base = 'Caucasian')
+prop_parity(data = compas, outcome = 'Two_yr_Recidivism_01', group = 'ethnicity',
+preds = 'predicted', cutoff = 0.5, base = 'Hispanic')
 
 }
