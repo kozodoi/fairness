@@ -10,6 +10,7 @@ Language: en-US
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
+URL: https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html
 BugReports: https://github.com/kozodoi/fairness/issues
 Depends: R (>= 3.5.0)
 Imports:

@@ -73,8 +73,9 @@ The data already contains all variables necessary to run all parity metrics. In 
 All fairness metrics are implemented as separate functions with the same structure of inputs including the outcome variable, model predictions and a sensitive group feature.
 
 ```r
+compas$Two_yr_Recidivism_01 <- ifelse(compas$Two_yr_Recidivism == 'yes', 1, 0)
 equal_odds(data    = compas,
-           outcome = 'Two_yr_Recidivism',
+           outcome = 'Two_yr_Recidivism_01',
            probs   = 'probability',
            group   = 'ethnicity',
            cutoff  = 0.5,
@@ -85,12 +86,12 @@ equal_odds(data    = compas,
 
 ```
 #>                Caucasian African_American     Asian Hispanic
-#> Sensitivity       0.7783           0.5845    0.9130   0.8094
-#> Equalized odds    1.0000           0.7511    1.1731   1.0399
+#> Sensitivity       0.4720           0.7526    0.2500   0.4656
+#> Equalized odds    1.0000           1.5943    0.5296   0.9864
 #> Group size     2103.0000        3175.0000   31.0000 509.0000
 #>                Native_American     Other
-#> Sensitivity             0.6667    0.8493
-#> Equalized odds          0.8566    1.0912
+#> Sensitivity             0.6000    0.4194
+#> Equalized odds          1.2711    0.8884
 #> Group size             11.0000  343.0000
 ```
 
@@ -107,7 +108,17 @@ To cite this package in scientific publications, please use the following query 
 ```r
 citation('fairness')
 ```
-> Nikita Kozodoi and Tibor V. Varga (2020). fairness: Algorithmic Fairness Metrics. R package version 1.2.0.
+> Nikita Kozodoi and Tibor V. Varga (2020). fairness: Algorithmic Fairness Metrics. R package version 1.2.1.
+
+```
+ @Manual{,
+    title = {fairness: Algorithmic Fairness Metrics},
+    author = {Nikita Kozodoi and Tibor {V. Varga}},
+    year = {2021},
+    note = {R package version 1.2.1},
+    url = {https://CRAN.R-project.org/package=fairness},
+  }
+```
 
 
 ## Dependencies
