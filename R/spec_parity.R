@@ -67,7 +67,8 @@ spec_parity <- function(data, outcome, group,
         if (length(probs) == 1) {
             probs <- data[, probs]
         }
-        preds_status <- as.factor(as.numeric(probs > cutoff))
+        preds_status         <- as.factor(as.numeric(probs > cutoff))
+        levels(preds_status) <- levels(as.factor(data[, outcome]))
     }
     
     # check group feature and cut if needed
@@ -86,8 +87,21 @@ spec_parity <- function(data, outcome, group,
     group_status   <- as.factor(data[, group])
     outcome_status <- as.factor(data[, outcome])
     
+    # check levels matching
+    if (!identical(levels(outcome_status), levels(preds_status))) {
+        warn_preds   <- paste0(levels(preds_status),   collapse = ', ')
+        warn_outcome <- paste0(levels(outcome_status), collapse = ', ')
+        stop({paste0(c('Levels of predictions and outcome do not match. ',
+                       'Please relevel predictions or outcome.\n',
+                       'Outcome levels: ', warn_preds, '\n',
+                       'Preds   levels: ', warn_outcome))})}
+    
     # relevel preds & outcomes
-    if (is.null(outcome_base)) {outcome_base <- levels(outcome_status)[1]}
+    if (is.null(outcome_base)) {
+        outcome_base <- levels(outcome_status)[1]
+    }else{
+        outcome_base <- as.character(outcome_base)
+    }
     outcome_status   <- relevel(outcome_status, outcome_base)
     preds_status     <- relevel(preds_status,   outcome_base)
     outcome_positive <- levels(outcome_status)[2]
