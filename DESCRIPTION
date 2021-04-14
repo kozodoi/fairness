@@ -1,6 +1,6 @@
 Package: fairness
 Title: Algorithmic Fairness Metrics
-Version: 1.2.1
+Version: 1.2.2
 Authors@R: c(person('Nikita', 'Kozodoi', email = 'n.kozodoi@icloud.com', role = c('aut', 'cre')),
             person('Tibor', 'V. Varga', email = 'tirgit@hotmail.com', role = c('aut'), comment = c(ORCID = '0000-0002-2383-699X')))
 Maintainer: Nikita Kozodoi <n.kozodoi@icloud.com>

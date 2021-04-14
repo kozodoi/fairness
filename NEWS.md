@@ -1,3 +1,7 @@
+# fairness 1.2.2
+- more detailed error messages for factor level mismatch
+- fixed errors for some factor outcomes
+
 # fairness 1.2.1
 - fixed inconsistencies with `outcome_base` values
 - removed `preds_levels` argument
