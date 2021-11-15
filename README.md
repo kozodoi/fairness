@@ -1,41 +1,35 @@
 # fairness: measuring algorithmic fairness in R
 
----
+![](https://kozodoi.me/images/covers/fairness.png)
 
+[![minimal R version](https://img.shields.io/badge/R%3E%3D-3.6.0-6666ff.svg)](https://cran.r-project.org/)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/fairness)](https://www.r-pkg.org/badges/version/fairness)
+[![packageversion](https://img.shields.io/badge/Package%20version-1.2.2-orange.svg)](commits/master)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/)
 [![Build Status](https://travis-ci.org/kozodoi/Fairness.svg?branch=master)](https://travis-ci.com/kozodoi/Fairness)
 [![Downloads](https://cranlogs.r-pkg.org/badges/fairness)](https://cran.rstudio.com/web/packages/fairness/index.html)
-[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fairness?color=red)](https://cran.rstudio.com/web/packages/fairness/index.html)
-
----
-
-[![minimal R version](https://img.shields.io/badge/R%3E%3D-3.6.0-6666ff.svg)](https://cran.r-project.org/)
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/fairness)](https://www.r-pkg.org/badges/version/fairness)
-[![packageversion](https://img.shields.io/badge/Package%20version-1.2.2-orange.svg?style=flat-square)](commits/master)
 
 ---
 
 ## Package overview
 
-The `fairness` R package offers tools to calculate metrics of algorithmic fairness across different sensitive groups. The metrics are computed based on model predictions in a binary classification task. The package also provides opportunities to visualize and compare other prediction metrics between the sensitive groups.
+The `fairness` R package offers tools to calculate fair ML metrics across different sensitive groups. The metrics are computed based on model predictions in a binary classification task. The package also provides opportunities to visualize and compare prediction metrics between the groups.
 
-The package contains functions to compute the commonly used fair machine learning metrics such as:   
-- Demographic parity
+The package implements the following fairness metrics:
+- Demographic parity (also known as independence)
 - Proportional parity
-- Equalized odds
+- Equalized odds (also known as separation)
 - Predictive rate parity
-
-In addition, the following metrics are implemented:    
 - False positive rate parity
 - False negative rate parity
 - Accuracy parity
 - Negative predictive value parity
 - Specificity parity
-- ROC AUC comparison
-- MCC comparison
+- ROC AUC parity
+- MCC parity
 
-The comprehensive tutorial on using the package is provided in [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html). We recommend that you go through the tutorial, as it contains a more in-depth description of the fairness package compared to this README. You will also find a brief tutorial in the fairness [vignette](https://github.com/kozodoi/fairness/blob/master/vignettes/fairness.Rmd):
+The comprehensive tutorial is provided in [this blog post](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html). We recommend that you go through the tutorial, as it contains a more in-depth description of the package compared to this README. You will also find a brief tutorial in the fairness [vignette](https://github.com/kozodoi/fairness/blob/master/vignettes/fairness.Rmd):
 
 ```r
 vignette('fairness')
