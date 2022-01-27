@@ -10,6 +10,15 @@
 [![Build Status](https://travis-ci.org/kozodoi/Fairness.svg?branch=master)](https://travis-ci.com/kozodoi/Fairness)
 [![Downloads](https://cranlogs.r-pkg.org/badges/fairness)](https://cran.rstudio.com/web/packages/fairness/index.html)
 
+- [Package overview](#package-overview)
+- [Installation](#installation)
+- [Brief tutorial](#brief-tutorial)
+- [Citing](#citing-the-package)
+- [Dependencies](#dependencies)
+- [Acknowledgments](#acknowledgments)
+- [Issues and questions](#issues-and-questions)
+
+
 ---
 
 ## Package overview
@@ -133,6 +142,6 @@ Installation requires R 3.6+ and the following packages:
 - Zafar, M. B., Valera, I., Gomez Rodriguez, M., & Gummadi, K. P. (2017, April). Fairness beyond disparate treatment & disparate impact: Learning classification without disparate mistreatment. In Proceedings of the 26th International Conference on World Wide Web (pp. 1171-1180). International World Wide Web Conferences Steering Committee.
 
 
-## Issues & questions
+## Issues and questions
 
 In case you need help or advice on fairness metrics or you want to report an issue, please do so in a reproducible example at the corresponding [GitHub page](https://github.com/kozodoi/fairness/issues).
