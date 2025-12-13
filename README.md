@@ -38,7 +38,7 @@ The package implements the following fairness metrics:
 - ROC AUC parity
 - MCC parity
 
-The comprehensive tutorial is provided in [this blog post](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html). We recommend that you go through the tutorial, as it contains a more in-depth description of the package compared to this README. You will also find a brief tutorial in the fairness [vignette](https://github.com/kozodoi/fairness/blob/master/vignettes/fairness.Rmd):
+The comprehensive tutorial is provided in [this blog post](https://kozodoi.me/blog/20200501/fairness-tutorial). We recommend that you go through the tutorial, as it contains a more in-depth description of the package compared to this README. You will also find a brief tutorial in the fairness [vignette](https://github.com/kozodoi/fairness/blob/master/vignettes/fairness.Rmd):
 
 ```r
 vignette('fairness')
