@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 library(fairness)
 ```
 
-This vignette provides a brief tutorial on the fairness R package. A more detailed tutorial is provided in [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html).
+This vignette provides a brief tutorial on the fairness R package. A more detailed tutorial is provided in [this blogpost](https://www.kozodoi.me/blog/algorithmic-fairness-in-r).
 
 To date, a number of algorithmic fairness metrics have been proposed. Demographic parity, proportional parity and equalized odds are among the most commonly used metrics to evaluate fairness across sensitive groups in binary classification problems (with supervised machine learning algorithms). Multiple other metrics have been proposed based on performance measures extracted from the confusion matrix (e.g., false positive rate parity, false negative rate parity).
 
@@ -342,4 +342,4 @@ output$ROCAUC_plot
 
 ## Closing words
 
-You have read through the fairness R package tutorial and by now, you have a solid grip on algorithmic group fairness metrics. If something is not clear, check out [this blogpost](https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html) with a more detailed tutorial. We hope that you will be able to use this R package in your data analysis! Please let us know if you have any issues here - [fairness GitHub](https://github.com/kozodoi/Fairness/issues) - or contact the authors if you have any feedback!
+You have read through the fairness R package tutorial and by now, you have a solid grip on algorithmic group fairness metrics. If something is not clear, check out [this blogpost](https://www.kozodoi.me/blog/algorithmic-fairness-in-r) with a more detailed tutorial. We hope that you will be able to use this R package in your data analysis! Please let us know if you have any issues here - [fairness GitHub](https://github.com/kozodoi/Fairness/issues) - or contact the authors if you have any feedback!

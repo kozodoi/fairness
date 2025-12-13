@@ -2,3 +2,4 @@
 README.md
 .travis.yml
 cran-comments.md
+^CRAN-SUBMISSION$

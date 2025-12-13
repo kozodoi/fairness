@@ -21,7 +21,7 @@
 #'
 #' @seealso
 #' \url{https://github.com/kozodoi/fairness}
-#' \url{https://kozodoi.me/r/fairness/packages/2020/05/01/fairness-tutorial.html}
+#' \url{https://www.kozodoi.me/blog/algorithmic-fairness-in-r}
 #'
 #' @name fairness
 #' @docType package
