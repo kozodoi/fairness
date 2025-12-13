@@ -1,3 +1,8 @@
+# fairness 1.2.3
+- fixed namespace conflicts with ggplot2 4.0.0
+- removed unused e1071 dependency
+- moved devtools to Suggests
+
 # fairness 1.2.2
 - more detailed error messages for factor level mismatch
 - fixed errors for some factor outcomes
