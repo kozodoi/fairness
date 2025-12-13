@@ -84,7 +84,7 @@ Most fairness metrics are calculated based on a confusion matrix produced by a c
 - **True negatives** (TN): the true class is negative and the prediction is negative (correct classification)
 - **False negatives** (FN): the true class is positive and the prediction is negative (incorrect classification)
 
-Fairness metrics are calculated by comparing one or more of these measures across sensitive subgroups (e.g., male and female). For a detailed overview of measures coming from the confusion matrix and precise definitions, click [here](https://en.wikipedia.org/wiki/Confusion_matrix) or [here](https://towardsdatascience.com/understanding-confusion-matrix-a9ad42dcfd62).
+Fairness metrics are calculated by comparing one or more of these measures across sensitive subgroups (e.g., male and female). For a detailed overview of measures coming from the confusion matrix and precise definitions, click [here](https://en.wikipedia.org/wiki/Confusion_matrix) or [here](https://towardsdatascience.com/performance-metrics-confusion-matrix-precision-recall-and-f1-score-a8fe076a2262/).
 
 
 ## Fairness metrics functions
